@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MisYemek | Lezzet Kapında</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #ea004b;
+            --primary-hover: #c9003f;
+            --bg-color: #f4f5f7;
+            --text-dark: #1f1f1f;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
+
+        /* HEADER */
+        header {
+            background-color: var(--white); padding: 15px 5%; display: flex;
+            justify-content: space-between; align-items: center; box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { font-size: 28px; font-weight: 900; color: var(--primary); cursor: pointer; letter-spacing: -1px; }
+        
+        .search-bar { flex-grow: 0.4; display: flex; align-items: center; background: #f3f4f6; border-radius: 12px; padding: 12px 20px; transition: 0.3s; }
+        .search-bar:focus-within { background: var(--white); box-shadow: 0 0 0 2px var(--primary); }
+        .search-bar input { border: none; background: transparent; outline: none; width: 100%; margin-left: 10px; font-size: 15px; }
+
+        .header-actions { display: flex; gap: 12px; }
+        
+        .cart-btn {
+            background: var(--primary); color: white; border: none; padding: 12px 24px; 
+            border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; gap: 10px; align-items: center;
+            transition: all 0.2s; font-size: 15px; box-shadow: 0 4px 12px rgba(234, 0, 75, 0.25);
+        }
+        .cart-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .cart-badge { background: white; color: var(--primary); padding: 2px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+
+        /* MAIN & HERO BANNER */
+        main { padding: 30px 5%; max-width: 1400px; margin: 0 auto; }
+        
+        .hero-banner {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border-radius: 20px; padding: 40px; color: white; display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(255, 65, 108, 0.2);
+        }
+        .hero-banner h1 { font-size: 32px; margin-bottom: 10px; }
+        .hero-banner p { font-size: 18px; opacity: 0.9; }
+        .hero-banner img { width: 150px; transform: scale(1.2); }
+
+        /* CATEGORIES */
+        .categories-wrapper { margin-bottom: 40px; }
+        .categories-wrapper h3 { margin-bottom: 15px; font-size: 20px; }
+        .categories { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
+        .categories::-webkit-scrollbar { display: none; }
+        .cat-box { 
+            min-width: 110px; background: var(--white); border-radius: 16px; padding: 15px; text-align: center;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 2px solid transparent;
+        }
+        .cat-box:hover { transform: translateY(-3px); }
+        .cat-box.active { border-color: var(--primary); background: #fff0f4; } /* Aktif Kategori Stili */
+        .cat-box img { width: 60px; height: 60px; object-fit: cover; border-radius: 50%; margin-bottom: 10px; }
+        .cat-box span { font-weight: 600; font-size: 14px; }
+
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .section-header h2 { font-size: 24px; color: var(--text-dark); }
+        .status-badge { background: #e8f5e9; color: var(--success); padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+
+        /* RESTAURANTS GRID */
+        .restaurants-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .restaurant-card { 
+            background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative;
+        }
+        .restaurant-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: transparent; }
+        
+        .res-img-wrap { position: relative; width: 100%; height: 200px; }
+        .res-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        .promos { position: absolute; top: 15px; left: 15px; display: flex; flex-direction: column; gap: 5px; }
+        .badge { background: var(--primary); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .badge.sponsor { background: #8b5cf6; }
+        .distance-tag { position: absolute; bottom: 15px; right: 15px; background: rgba(255,255,255,0.95); padding: 6px 12px; border-radius: 10px; font-weight: bold; font-size: 13px; color: var(--text-dark); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        
+        .res-info { padding: 20px; }
+        .res-info h3 { font-size: 20px; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .res-info p { color: var(--text-light); font-size: 14px; margin-bottom: 15px; }
+        .res-meta { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: var(--text-dark); padding-top: 15px; border-top: 1px dashed var(--border); }
+        .res-meta .rating { color: var(--warning); display: flex; align-items: center; gap: 4px; font-size: 14px; }
+        .res-meta .delivery-fee { color: var(--success); display: flex; align-items: center; gap: 4px; }
+
+        .empty-state { grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-light); font-size: 18px; }
+
+        /* MODALS (Değişmedi) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 35px; border-radius: 24px; width: 90%; max-width: 600px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 28px; cursor: pointer; color: #a0aec0; transition: 0.2s; z-index: 1001; }
+        .close-btn:hover { color: var(--text-dark); }
+        
+        .res-header-modal { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--bg-color); }
+        .res-header-modal img { width: 70px; height: 70px; border-radius: 15px; object-fit: cover; }
+        .res-header-modal h2 { font-size: 22px; }
+        .res-header-modal p { color: var(--text-light); font-size: 14px; }
+
+        .menu-item { display: flex; gap: 15px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item-img { width: 90px; height: 90px; border-radius: 12px; object-fit: cover; }
+        .menu-item-info { flex-grow: 1; }
+        .menu-item-info h4 { margin-bottom: 5px; font-size: 16px; }
+        .menu-item-info p { font-size: 13px; color: var(--text-light); margin-bottom: 8px; line-height: 1.4; }
+        .menu-item-info span { color: var(--primary); font-weight: 800; font-size: 16px; }
+        .add-btn { background: var(--white); border: 2px solid var(--border); width: 40px; height: 40px; border-radius: 12px; font-size: 20px; cursor: pointer; color: var(--primary); transition: 0.2s; display: flex; justify-content: center; align-items: center; }
+        .add-btn:hover { border-color: var(--primary); background: var(--primary); color: white; }
+
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--bg-color); }
+        .cart-item-info { display: flex; flex-direction: column; gap: 4px; }
+        .cart-item-name { font-weight: 600; font-size: 15px; }
+        .cart-item-price { color: var(--primary); font-weight: bold; }
+        .cart-qty-controls { display: flex; align-items: center; gap: 10px; background: var(--bg-color); padding: 5px 10px; border-radius: 10px; }
+        .qty-btn { background: transparent; border: none; font-size: 18px; cursor: pointer; color: var(--text-dark); font-weight: bold; width: 25px; }
+        .qty-btn:hover { color: var(--primary); }
+
+        .cart-total { display: flex; justify-content: space-between; font-size: 22px; font-weight: 800; margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--border); }
+        .checkout-btn { width: 100%; background: var(--primary); color: white; padding: 18px; border: none; border-radius: 16px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(234, 0, 75, 0.3); }
+        .checkout-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+        .address-list { margin-top: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .address-item { padding: 20px; border: 2px solid var(--border); border-radius: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; background: var(--white); }
+        .address-item:hover, .address-item.selected { border-color: var(--primary); background: #fff0f4; }
+        
+        #map-container { width: 100%; height: 380px; border-radius: 16px; margin-top: 20px; border: 1px solid var(--border); }
+        .leaflet-routing-container { display: none !important; }
+        .eta-box { background: #fff8eb; border: 1px solid #ffe8c3; padding: 15px; border-radius: 12px; margin-top: 15px; display: flex; align-items: center; gap: 15px; }
+        .eta-box i { font-size: 24px; color: var(--warning); }
+        .eta-details p { margin: 0; font-size: 14px; color: var(--text-light); }
+        .eta-details h4 { margin: 0; font-size: 18px; color: var(--text-dark); }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 15px; }
+            .search-bar { width: 100%; order: 3; }
+            .header-actions { width: 100%; justify-content: space-between; }
+            .hero-banner { flex-direction: column; text-align: center; padding: 25px; }
+            .hero-banner img { margin-top: 20px; width: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MisYemek</div>
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass" style="color: var(--text-light)"></i>
+            <input type="text" placeholder="Canın ne çekiyor? (Örn: İskender, Burger...)">
+        </div>
+        <div class="header-actions">
+            <button id="track-order-btn" class="cart-btn" style="display: none; background: var(--success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);" onclick="openTrackingModal()">
+                <i class="fa-solid fa-motorcycle"></i> Harita
+            </button>
+            <button class="cart-btn" onclick="openCart()">
+                <i class="fa-solid fa-basket-shopping"></i> Sepet
+                <span class="cart-badge" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-banner">
+            <div>
+                <h1>İlk siparişine özel %30 İndirim!</h1>
+                <p>MisYemek ile en sevdiğin lezzetler sıcak sıcak kapında.</p>
+            </div>
+            <img src="https://cdn-icons-png.flaticon.com/512/3081/3081333.png" alt="Yemek">
+        </div>
+
+        <div class="categories-wrapper">
+            <h3>Mutfaklar</h3>
+            <div class="categories">
+                <div class="cat-box" id="cat-Burger" onclick="filterCategory('Burger')">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80"><span>Burger</span>
+                </div>
+                <div class="cat-box" id="cat-Pizza" onclick="filterCategory('Pizza')">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&q=80"><span>Pizza</span>
+                </div>
+                <div class="cat-box" id="cat-Kebap" onclick="filterCategory('Kebap')">
+                    <img src="https://images.unsplash.com/photo-1645696301019-35adcc18fc21?w=200&q=80"><span>Kebap</span>
+                </div>
+                <div class="cat-box" id="cat-Döner" onclick="filterCategory('Döner')">
+                    <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=200&q=80"><span>Döner</span>
+                </div>
+                <div class="cat-box" id="cat-Tatlı" onclick="filterCategory('Tatlı')">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=200&q=80"><span>Tatlı</span>
+                </div>
+                <div class="cat-box" id="cat-Tavuk" onclick="filterCategory('Tavuk')">
+                    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=200&q=80"><span>Tavuk</span>
+                </div>
+                <div class="cat-box" id="cat-Kahve" onclick="filterCategory('Kahve')">
+                    <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&q=80"><span>Kahve</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2 id="section-title">Sana Özel Restoranlar</h2>
+            <div class="status-badge" id="location-status">
+                <i class="fa-solid fa-location-crosshairs fa-spin"></i> Konum aranıyor...
+            </div>
+        </div>
+        
+        <div class="restaurants-grid" id="restaurants-container"></div>
+    </main>
+
+    <div class="modal-overlay" id="menu-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+            <div class="res-header-modal" id="menu-res-header"></div>
+            <div id="menu-items-container"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="cart-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+            <h2 style="margin-bottom: 20px; font-size: 24px;">Sepetim</h2>
+            <div id="cart-items-container"></div>
+            <div class="cart-total" style="display: none;" id="cart-total-section">
+                <span>Ödenecek Tutar:</span>
+                <span id="cart-total-price">0 TL</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn" style="display: none;" onclick="openAddressSelection()">Siparişi Onayla</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="address-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+            <h2 style="margin-bottom: 10px;">Teslimat Adresi</h2>
+            <p style="color: var(--text-light); font-size: 14px;">Lütfen siparişin teslim edileceği adresi seçin.</p>
+            <div class="address-list">
+                <div class="address-item selected" onclick="selectAddressOption(this)">
+                    <div>
+                        <strong>📍 Mevcut Konum (GPS)</strong>
+                        <p style="font-size: 13px; color: var(--text-light); margin-top: 4px;">Haritada tespit edilen anlık konumunuz</p>
+                    </div>
+                    <i class="fa-solid fa-circle-check" style="color: var(--primary); font-size: 24px;"></i>
+                </div>
+            </div>
+            <button class="checkout-btn" onclick="startOrderSimulation()">Bu Adrese Söyle</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="tracking-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+            <div style="text-align: center;">
+                <h3 id="order-status-text" style="color: var(--primary); font-size: 24px; margin-bottom: 5px;">Sipariş Hazırlanıyor... <i class="fa-solid fa-spinner fa-spin"></i></h3>
+                <p id="time-text" style="color: var(--text-light); font-size: 15px;">Restoran siparişi onayladı, rota çiziliyor...</p>
+            </div>
+            <div class="eta-box" id="eta-box" style="display: none;">
+                <i class="fa-regular fa-clock"></i>
+                <div class="eta-details">
+                    <p>Tahmini Teslimat Süresi</p>
+                    <h4 id="dynamic-eta">Hesaplanıyor...</h4>
+                </div>
+            </div>
+            <div id="map-container"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    
+    <script>
+        let userLat = 39.9207; 
+        let userLng = 32.8541;
+        let cart = [];
+        let activeRestaurant = null;
+        let activeCategory = 'All'; // Filtreleme için durum değişkeni
+        let mapInitialized = false;
+        let map, routeControl, kuryeMarker, animasyonInterval;
+
+        // 14 FARKLI RESTORAN VE MENÜSÜ EKLENDİ
+        const resTemplates = [
+            { name: "Burger Station", type: "Burger", sponsor: true, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=500&q=80",
+                menu: [ { id: 101, name: "Texas Burger", price: 210, desc: "Füme et, cheddar", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150" } ] },
+            { name: "Smash Burger Co.", type: "Burger", sponsor: false, img: "https://images.unsplash.com/photo-1586816001966-79b736744398?w=500&q=80",
+                menu: [ { id: 102, name: "Double Smash", price: 240, desc: "Çift köfte, özel sos", img: "https://images.unsplash.com/photo-1594212691516-e82fa43ba62a?w=150" } ] },
+            
+            { name: "Napoli Pizza", type: "Pizza", sponsor: false, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&q=80",
+                menu: [ { id: 201, name: "Margarita Pizza", price: 190, desc: "Mozzarella, fesleğen", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=150" } ] },
+            { name: "Pizza Roma", type: "Pizza", sponsor: true, img: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=500&q=80",
+                menu: [ { id: 202, name: "Pepperoni", price: 230, desc: "Bol pepperoni", img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=150" } ] },
+            
+            { name: "Usta Kebap", type: "Kebap", sponsor: true, img: "https://images.unsplash.com/photo-1645696301019-35adcc18fc21?w=500&q=80",
+                menu: [ { id: 301, name: "Adana Kebap", price: 220, desc: "Zırh kıyması", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=150" } ] },
+            { name: "Antep Sofrası", type: "Kebap", sponsor: false, img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500&q=80",
+                menu: [ { id: 302, name: "Urfa Porsiyon", price: 210, desc: "Acısız kebap", img: "https://images.unsplash.com/photo-1654877395066-5867ec6b80d0?w=150" } ] },
+            
+            { name: "Sokak Dönercisi", type: "Döner", sponsor: false, img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=500&q=80",
+                menu: [ { id: 401, name: "Et Döner Dürüm", price: 160, desc: "Özel lavaş arası", img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=150" } ] },
+            { name: "Tarihi Dönerci", type: "Döner", sponsor: true, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
+                menu: [ { id: 402, name: "Tavuk Döner", price: 110, desc: "Bol soslu", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=150" } ] },
+            
+            { name: "Tatlıcı Bey", type: "Tatlı", sponsor: true, img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&q=80",
+                menu: [ { id: 501, name: "Soğuk Baklava", price: 250, desc: "Fıstıklı, sütlü", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=150" } ] },
+            { name: "Çikolata Atölyesi", type: "Tatlı", sponsor: false, img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500&q=80",
+                menu: [ { id: 502, name: "San Sebastian", price: 120, desc: "Çikolata soslu", img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=150" } ] },
+
+            { name: "Piliç Dünyası", type: "Tavuk", sponsor: false, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
+                menu: [ { id: 601, name: "Kekikli Tavuk", price: 180, desc: "Makarna ve salata ile", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=150" } ] },
+            { name: "Çıtır Kova", type: "Tavuk", sponsor: true, img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500&q=80",
+                menu: [ { id: 602, name: "Karışık Kova", price: 210, desc: "Kanat ve but", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=150" } ] },
+
+            { name: "Kahve Durağı", type: "Kahve", sponsor: false, img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80",
+                menu: [ { id: 701, name: "Iced Latte", price: 85, desc: "Buz gibi", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" } ] },
+            { name: "Roastery Co.", type: "Kahve", sponsor: true, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=500&q=80",
+                menu: [ { id: 702, name: "Filtre Kahve", price: 65, desc: "%100 Arabica", img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=150" } ] }
+        ];
+
+        let dynamicRestaurants = [];
+
+        window.onload = () => {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLat = position.coords.latitude;
+                        userLng = position.coords.longitude;
+                        document.getElementById('location-status').innerHTML = '<i class="fa-solid fa-check"></i> Konum Bulundu';
+                        generateNearbyRestaurants();
+                    },
+                    (error) => {
+                        document.getElementById('location-status').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Varsayılan Konum Kullanılıyor';
+                        generateNearbyRestaurants();
+                    }
+                );
+            } else {
+                generateNearbyRestaurants();
+            }
+        };
+
+        function generateNearbyRestaurants() {
+            dynamicRestaurants = resTemplates.map((template, index) => {
+                let latOffset = (Math.random() - 0.5) * 0.04; 
+                let lngOffset = (Math.random() - 0.5) * 0.04;
+                let rLat = userLat + latOffset;
+                let rLng = userLng + lngOffset;
+                let distance = calculateDistance(userLat, userLng, rLat, rLng);
+
+                return {
+                    id: index, name: template.name, img: template.img, type: template.type,
+                    sponsor: template.sponsor, menu: template.menu,
+                    lat: rLat, lng: rLng, distance: distance.toFixed(1),
+                    rating: (Math.random() * (5.0 - 4.0) + 4.0).toFixed(1)
+                };
+            });
+            dynamicRestaurants.sort((a, b) => a.distance - b.distance);
+            renderRestaurants();
+        }
+
+        // KATEGORİ FİLTRELEME FONKSİYONU
+        function filterCategory(category) {
+            // Eğer seçili olan kategoriye tekrar tıklanırsa filtreyi kaldır
+            if (activeCategory === category) {
+                activeCategory = 'All';
+                document.querySelectorAll('.cat-box').forEach(el => el.classList.remove('active'));
+                document.getElementById('section-title').innerText = "Sana Özel Restoranlar";
+            } else {
+                // Yeni bir kategori seçilirse
+                activeCategory = category;
+                document.querySelectorAll('.cat-box').forEach(el => el.classList.remove('active'));
+                document.getElementById('cat-' + category).classList.add('active');
+                document.getElementById('section-title').innerText = `Yakındaki ${category} Restoranları`;
+            }
+            renderRestaurants();
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        }
+
+        function renderRestaurants() {
+            const container = document.getElementById('restaurants-container');
+            container.innerHTML = '';
+            
+            // Aktif kategori 'All' değilse listeyi filtrele
+            let listToRender = activeCategory === 'All' 
+                ? dynamicRestaurants 
+                : dynamicRestaurants.filter(res => res.type === activeCategory);
+
+            if(listToRender.length === 0) {
+                container.innerHTML = `<div class="empty-state">Bu kategoride yakınlarda restoran bulunamadı. <i class="fa-regular fa-face-frown"></i></div>`;
+                return;
+            }
+
+            listToRender.forEach(res => {
+                let sponsorBadge = res.sponsor ? `<span class="badge sponsor">Sponsorlu</span>` : `<span class="badge">Yeni</span>`;
+                container.innerHTML += `
+                    <div class="restaurant-card" onclick="openMenu(${res.id})">
+                        <div class="res-img-wrap">
+                            <div class="promos">${sponsorBadge}</div>
+                            <div class="distance-tag"><i class="fa-solid fa-location-dot" style="color:var(--primary)"></i> ${res.distance} km</div>
+                            <img src="${res.img}" alt="${res.name}">
+                        </div>
+                        <div class="res-info">
+                            <h3>${res.name}</h3>
+                            <p>${res.type}</p>
+                            <div class="res-meta">
+                                <span class="rating"><i class="fa-solid fa-star"></i> ${res.rating} (500+)</span>
+                                <span class="delivery-fee"><i class="fa-solid fa-motorcycle"></i> Ücretsiz Teslimat</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openMenu(resId) {
+            activeRestaurant = dynamicRestaurants.find(r => r.id === resId);
+            document.getElementById('menu-res-header').innerHTML = `
+                <img src="${activeRestaurant.img}" alt="Res">
+                <div>
+                    <h2>${activeRestaurant.name}</h2>
+                    <p>${activeRestaurant.type} • <i class="fa-solid fa-star" style="color:var(--warning)"></i> ${activeRestaurant.rating}</p>
+                </div>
+            `;
+            const menuContainer = document.getElementById('menu-items-container');
+            menuContainer.innerHTML = '';
+            activeRestaurant.menu.forEach(item => {
+                menuContainer.innerHTML += `
+                    <div class="menu-item">
+                        <img class="menu-item-img" src="${item.img}" alt="${item.name}">
+                        <div class="menu-item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.desc}</p>
+                            <span>${item.price} TL</span>
+                        </div>
+                        <button class="add-btn" onclick="addToCart(${item.id}, '${item.name}', ${item.price})"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                `;
+            });
+            document.getElementById('menu-modal').style.display = 'flex';
+        }
+
+        function addToCart(id, name, price) {
+            let existingItem = cart.find(item => item.id === id);
+            if(existingItem) existingItem.qty += 1;
+            else cart.push({ id, name, price, qty: 1 });
+            updateCartUI();
+        }
+
+        function changeQty(id, amount) {
+            let item = cart.find(item => item.id === id);
+            if(item) {
+                item.qty += amount;
+                if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-count').innerText = totalItems;
+            const cartContainer = document.getElementById('cart-items-container');
+            const totalSection = document.getElementById('cart-total-section');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px 0;">Sepetiniz şu an boş.</p>';
+                totalSection.style.display = 'none';
+                checkoutBtn.style.display = 'none';
+                return;
+            }
+            cartContainer.innerHTML = '';
+            let total = 0;
+            cart.forEach((item) => {
+                total += (item.price * item.qty);
+                cartContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <span class="cart-item-name">${item.name}</span>
+                            <span class="cart-item-price">${item.price} TL</span>
+                        </div>
+                        <div class="cart-qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                            <span style="font-weight:bold; font-size: 16px;">${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-total-price').innerText = total + " TL";
+            totalSection.style.display = 'flex';
+            checkoutBtn.style.display = 'block';
+        }
+
+        function openCart() { closeModals(); document.getElementById('cart-modal').style.display = 'flex'; }
+        function openAddressSelection() { closeModals(); document.getElementById('address-modal').style.display = 'flex'; }
+        function selectAddressOption(element) {
+            document.querySelectorAll('.address-item').forEach(el => { el.classList.remove('selected'); el.querySelector('i')?.remove(); });
+            element.classList.add('selected'); element.innerHTML += '<i class="fa-solid fa-circle-check" style="color: var(--primary); font-size: 24px;"></i>';
+        }
+        function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+        function openTrackingModal() { closeModals(); document.getElementById('tracking-modal').style.display = 'flex'; }
+
+        function startOrderSimulation() {
+            if(!activeRestaurant) return; 
+            closeModals();
+            document.getElementById('tracking-modal').style.display = 'flex';
+            document.getElementById('track-order-btn').style.display = 'flex'; 
+            document.getElementById('eta-box').style.display = 'none';
+            document.getElementById('order-status-text').innerHTML = 'Sipariş Hazırlanıyor... <i class="fa-solid fa-spinner fa-spin"></i>';
+            document.getElementById('time-text').innerText = 'Restoran siparişi onayladı, kurye atanıyor...';
+            setTimeout(() => { if (!mapInitialized) { initMapAndRoute(); mapInitialized = true; } else { startCourierJourney(); } }, 500);
+        }
+
+        function initMapAndRoute() {
+            map = L.map('map-container').setView([userLat, userLng], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+            const userIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/25/25694.png', iconSize: [35, 35], iconAnchor: [17, 35] });
+            const bikeIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png', iconSize: [45, 45], iconAnchor: [22, 45] });
+            L.marker([userLat, userLng], {icon: userIcon}).addTo(map).bindPopup("Teslimat Adresiniz").openPopup();
+            kuryeMarker = L.marker([activeRestaurant.lat, activeRestaurant.lng], {icon: bikeIcon}).addTo(map);
+
+            routeControl = L.Routing.control({
+                waypoints: [ L.latLng(activeRestaurant.lat, activeRestaurant.lng), L.latLng(userLat, userLng) ],
+                createMarker: function() { return null; }, addWaypoints: false, routeWhileDragging: false, fitSelectedRoutes: true, show: false,
+                lineOptions: { styles: [{color: '#ea004b', opacity: 0.8, weight: 6}] }
+            }).addTo(map);
+
+            routeControl.on('routesfound', function(e) {
+                var pathCoords = e.routes[0].coordinates;
+                var totalTimeSeconds = e.routes[0].summary.totalTime;
+                var estimatedMinutes = Math.round(totalTimeSeconds / 60) + 15;
+                document.getElementById('eta-box').style.display = 'flex';
+                document.getElementById('dynamic-eta').innerText = estimatedMinutes + " Dakika";
+                startCourierAnimation(pathCoords);
+            });
+        }
+
+        function startCourierAnimation(pathCoords) {
+            document.getElementById('order-status-text').innerHTML = "Kurye Yolda! <i class='fa-solid fa-motorcycle'></i>";
+            document.getElementById('time-text').innerHTML = `Siparişin <strong>${activeRestaurant.name}</strong> adlı restorandan geliyor!`;
+            let i = 0; if(animasyonInterval) clearInterval(animasyonInterval);
+            animasyonInterval = setInterval(() => {
+                if (i < pathCoords.length) {
+                    kuryeMarker.setLatLng([pathCoords[i].lat, pathCoords[i].lng]);
+                    if(i % 5 === 0) map.panTo([pathCoords[i].lat, pathCoords[i].lng]);
+                    i++;
+                } else {
+                    clearInterval(animasyonInterval);
+                    document.getElementById('order-status-text').innerHTML = "Sipariş Teslim Edildi! <i class='fa-solid fa-check-circle' style='color:var(--success);'></i>";
+                    document.getElementById('time-text').innerHTML = "Afiyet olsun! MisYemek'i tercih ettiğiniz için teşekkürler.";
+                    document.getElementById('eta-box').style.display = 'none';
+                    kuryeMarker.bindPopup("Sipariş ulaştı!").openPopup();
+                    document.getElementById('track-order-btn').style.display = 'none'; 
+                    cart = []; updateCartUI();
+                }
+            }, 80); 
+        }
+    </script>
+</body>
+</html>
