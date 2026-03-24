@@ -46,6 +46,100 @@
         .cart-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
         .cart-badge { background: white; color: var(--primary); padding: 2px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; }
 
+        .profile-btn {
+            background: var(--white); color: var(--text-dark); border: 2px solid var(--border); padding: 10px 20px;
+            border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; gap: 10px; align-items: center;
+            transition: all 0.2s; font-size: 15px;
+        }
+        .profile-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        .profile-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #ea004b, #ff6b6b); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; }
+
+        /* PROFILE MODAL */
+        .profile-header { display: flex; align-items: center; gap: 20px; padding: 25px; background: linear-gradient(135deg, #ff416c, #ff4b2b); border-radius: 16px; color: white; margin-bottom: 25px; }
+        .profile-avatar-large { width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; border: 3px solid rgba(255,255,255,0.5); cursor: pointer; transition: 0.2s; }
+        .profile-avatar-large:hover { background: rgba(255,255,255,0.45); }
+        .profile-header h2 { font-size: 22px; margin-bottom: 4px; }
+        .profile-header p { font-size: 14px; opacity: 0.85; }
+        .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: var(--bg-color); border-radius: 14px; padding: 18px; text-align: center; }
+        .stat-card .stat-num { font-size: 26px; font-weight: 900; color: var(--primary); }
+        .stat-card .stat-label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+        .profile-menu-list { display: flex; flex-direction: column; gap: 8px; }
+        .profile-menu-item { display: flex; align-items: center; gap: 15px; padding: 16px 18px; border-radius: 14px; cursor: pointer; transition: 0.2s; border: 1px solid var(--border); background: var(--white); }
+        .profile-menu-item:hover { background: #fff0f4; border-color: var(--primary); }
+        .profile-menu-item i.icon { width: 20px; color: var(--primary); font-size: 16px; }
+        .profile-menu-item span { flex-grow: 1; font-weight: 600; font-size: 15px; }
+        .profile-menu-item .arrow { color: var(--text-light); font-size: 12px; }
+        .logout-item { border-color: #fee2e2 !important; }
+        .logout-item:hover { background: #fff5f5 !important; border-color: #ef4444 !important; }
+        .logout-item i, .logout-item span { color: #ef4444 !important; }
+
+        /* SUB PANEL */
+        .sub-panel { display: none; }
+        .sub-panel.active { display: block; }
+        .sub-panel-back { display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--primary); font-weight: 700; margin-bottom: 20px; font-size: 15px; }
+        .sub-panel-back:hover { opacity: 0.8; }
+        .sub-panel h3 { font-size: 20px; margin-bottom: 20px; }
+
+        /* FORM STYLES */
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-light); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select { width: 100%; padding: 13px 16px; border: 2px solid var(--border); border-radius: 12px; font-size: 15px; outline: none; transition: 0.2s; background: var(--white); }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+        .save-btn { width: 100%; background: var(--primary); color: white; padding: 15px; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-top: 5px; }
+        .save-btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        /* ADDRESS & BANK CARDS */
+        .saved-card { background: var(--bg-color); border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 2px solid transparent; transition: 0.2s; }
+        .saved-card:hover { border-color: var(--primary); background: #fff0f4; }
+        .saved-card-info strong { display: block; font-size: 15px; margin-bottom: 3px; }
+        .saved-card-info span { font-size: 13px; color: var(--text-light); }
+        .card-actions { display: flex; gap: 8px; }
+        .card-del-btn { background: #fee2e2; color: #ef4444; border: none; padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.2s; }
+        .card-del-btn:hover { background: #ef4444; color: white; }
+        .add-new-btn { width: 100%; padding: 13px; border: 2px dashed var(--border); border-radius: 14px; background: transparent; color: var(--text-light); font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 5px; }
+        .add-new-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .bank-card-visual { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 16px; padding: 22px; color: white; margin-bottom: 20px; position: relative; overflow: hidden; }
+        .bank-card-visual::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+        .bank-card-visual .card-num { font-size: 18px; letter-spacing: 3px; margin: 15px 0 10px; font-family: monospace; }
+        .bank-card-visual .card-meta { display: flex; justify-content: space-between; font-size: 13px; opacity: 0.7; }
+        .success-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--success); color: white; padding: 14px 28px; border-radius: 14px; font-weight: 700; font-size: 15px; z-index: 9999; display: none; box-shadow: 0 8px 20px rgba(16,185,129,0.3); }
+
+        /* LOGIN SCREEN */
+        #login-screen { position: fixed; inset: 0; background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
+        .login-box { background: white; border-radius: 28px; padding: 35px; width: 90%; max-width: 440px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
+        .login-logo { font-size: 36px; font-weight: 900; color: var(--primary); text-align: center; margin-bottom: 6px; letter-spacing: -1px; }
+        .login-sub { text-align: center; color: var(--text-light); font-size: 14px; margin-bottom: 28px; }
+        .login-tabs { display: flex; background: var(--bg-color); border-radius: 12px; padding: 4px; margin-bottom: 24px; }
+        .login-tab { flex: 1; padding: 10px; text-align: center; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 14px; color: var(--text-light); transition: 0.2s; }
+        .login-tab.active { background: white; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .login-form { display: none; }
+        .login-form.active { display: block; }
+        .login-divider { text-align: center; color: var(--text-light); font-size: 12px; margin: 16px 0; position: relative; }
+        .login-divider::before, .login-divider::after { content:''; position:absolute; top:50%; width:42%; height:1px; background:var(--border); }
+        .login-divider::before { left:0; } .login-divider::after { right:0; }
+        .login-error { background: #fee2e2; color: #ef4444; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 14px; display: none; }
+
+        /* TOGGLE SWITCH */
+        .notif-row { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:var(--bg-color); border-radius:14px; }
+        .notif-row div p { font-size:12px; color:var(--text-light); margin-top:3px; }
+        .toggle { position:relative; display:inline-block; width:48px; height:26px; flex-shrink:0; }
+        .toggle input { opacity:0; width:0; height:0; }
+        .slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; border-radius:26px; transition:.3s; }
+        .slider:before { position:absolute; content:""; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:.3s; }
+        .toggle input:checked + .slider { background:var(--primary); }
+        .toggle input:checked + .slider:before { transform:translateX(22px); }
+
+        /* FAQ */
+        .support-item { border:1px solid var(--border); border-radius:14px; overflow:hidden; cursor:pointer; }
+        .support-item-head { display:flex; justify-content:space-between; align-items:center; padding:15px 18px; font-weight:600; font-size:14px; background:var(--white); transition:0.2s; }
+        .support-item:hover .support-item-head { background:#fff0f4; color:var(--primary); }
+        .support-item-head i { transition:0.3s; color:var(--text-light); font-size:12px; }
+        .support-item.open .support-item-head i { transform:rotate(180deg); color:var(--primary); }
+        .faq-body { display:none; padding:0 18px 15px; font-size:13px; color:var(--text-light); line-height:1.6; background:var(--white); }
+        .support-item.open .faq-body { display:block; }
+
         /* MAIN & HERO BANNER */
         main { padding: 30px 5%; max-width: 1400px; margin: 0 auto; }
         
@@ -155,6 +249,49 @@
 </head>
 <body>
 
+    <!-- LOGIN EKRANI (başlangıçta gizli) -->
+    <div id="login-screen" style="display:none;">
+        <div class="login-box">
+            <div class="login-logo">MisYemek</div>
+            <div class="login-sub">Lezzet kapında, hesabın hazır.</div>
+            <div class="login-tabs">
+                <div class="login-tab active" onclick="switchLoginTab('login')">Giriş Yap</div>
+                <div class="login-tab" onclick="switchLoginTab('register')">Kayıt Ol</div>
+            </div>
+
+            <!-- GİRİŞ FORMU -->
+            <div class="login-form active" id="tab-login">
+                <div class="login-error" id="login-error"></div>
+                <div class="form-group"><label>E-posta</label><input type="email" id="login-email" placeholder="ornek@email.com"></div>
+                <div class="form-group"><label>Şifre</label><input type="password" id="login-password" placeholder="Şifreniz"></div>
+                <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+            </div>
+
+            <!-- KAYIT FORMU -->
+            <div class="login-form" id="tab-register">
+                <div class="login-error" id="register-error"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Ad</label><input type="text" id="reg-firstname" placeholder="Adınız"></div>
+                    <div class="form-group"><label>Soyad</label><input type="text" id="reg-lastname" placeholder="Soyadınız"></div>
+                </div>
+                <div class="form-group"><label>E-posta</label><input type="email" id="reg-email" placeholder="ornek@email.com"></div>
+                <div class="form-group"><label>Telefon</label><input type="tel" id="reg-phone" placeholder="+90 5xx xxx xx xx" maxlength="13" oninput="this.value=this.value.replace(/[^0-9+]/g,'').substring(0,13)"></div>
+                <div class="form-group"><label>Şifre</label><input type="password" id="reg-password" placeholder="En az 8 karakter"></div>
+                <div class="login-divider">Teslimat Adresi</div>
+                <div class="form-group"><label>Adres Başlığı</label><input type="text" id="reg-addr-title" placeholder="Ev, İş..."></div>
+                <div class="form-group"><label>İl</label>
+                    <select id="reg-addr-city"><option>Ankara</option><option>İstanbul</option><option>İzmir</option><option>Bursa</option><option>Antalya</option><option>Adana</option><option>Konya</option><option>Gaziantep</option></select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>İlçe</label><input type="text" id="reg-addr-district" placeholder="İlçe"></div>
+                    <div class="form-group"><label>Bina / Daire</label><input type="text" id="reg-addr-no" placeholder="No" maxlength="10" oninput="this.value=this.value.replace(/[^0-9\/\-]/g,'')"></div>
+                </div>
+                <div class="form-group"><label>Mahalle / Sokak</label><input type="text" id="reg-addr-street" placeholder="Mahalle, cadde, sokak"></div>
+                <button class="save-btn" onclick="doRegister()"><i class="fa-solid fa-user-plus"></i> Hesap Oluştur</button>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="logo">MisYemek</div>
         <div class="search-bar">
@@ -168,6 +305,13 @@
             <button class="cart-btn" onclick="openCart()">
                 <i class="fa-solid fa-basket-shopping"></i> Sepet
                 <span class="cart-badge" id="cart-count">0</span>
+            </button>
+            <button class="profile-btn" onclick="openProfile()" id="hesabim-btn" style="display:none;">
+                <div class="profile-avatar" id="header-avatar">?</div>
+                Hesabım
+            </button>
+            <button class="cart-btn" id="login-header-btn" onclick="showLoginRequired()" style="background: var(--white); color: var(--primary); border: 2px solid var(--primary); box-shadow: none;">
+                <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap
             </button>
         </div>
     </header>
@@ -204,6 +348,18 @@
                 </div>
                 <div class="cat-box" id="cat-Kahve" onclick="filterCategory('Kahve')">
                     <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&q=80"><span>Kahve</span>
+                </div>
+                <div class="cat-box" id="cat-Deniz Ürünleri" onclick="filterCategory('Deniz Ürünleri')">
+                    <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=200&q=80"><span>Deniz</span>
+                </div>
+                <div class="cat-box" id="cat-Vegan" onclick="filterCategory('Vegan')">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80"><span>Vegan</span>
+                </div>
+                <div class="cat-box" id="cat-Çorba" onclick="filterCategory('Çorba')">
+                    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&q=80"><span>Çorba</span>
+                </div>
+                <div class="cat-box" id="cat-Börek" onclick="filterCategory('Börek')">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80"><span>Börek</span>
                 </div>
             </div>
         </div>
@@ -244,18 +400,187 @@
             <span class="close-btn" onclick="closeModals()">&times;</span>
             <h2 style="margin-bottom: 10px;">Teslimat Adresi</h2>
             <p style="color: var(--text-light); font-size: 14px;">Lütfen siparişin teslim edileceği adresi seçin.</p>
-            <div class="address-list">
-                <div class="address-item selected" onclick="selectAddressOption(this)">
-                    <div>
-                        <strong>📍 Mevcut Konum (GPS)</strong>
-                        <p style="font-size: 13px; color: var(--text-light); margin-top: 4px;">Haritada tespit edilen anlık konumunuz</p>
-                    </div>
-                    <i class="fa-solid fa-circle-check" style="color: var(--primary); font-size: 24px;"></i>
-                </div>
-            </div>
+            <div class="address-list" id="delivery-address-list"></div>
             <button class="checkout-btn" onclick="startOrderSimulation()">Bu Adrese Söyle</button>
         </div>
     </div>
+
+    <div class="modal-overlay" id="profile-modal">
+        <div class="modal-content" style="max-width: 480px;">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+
+            <!-- ANA PANEL -->
+            <div id="profile-main" class="sub-panel active">
+                <div class="profile-header">
+                    <div class="profile-avatar-large" id="profile-avatar-display" onclick="openSubPanel('edit-profile')" title="Profili düzenle">?</div>
+                    <div>
+                        <h2 id="profile-display-name">Yükleniyor...</h2>
+                        <p id="profile-display-email"></p>
+                        <p style="margin-top:4px;font-size:13px;opacity:0.75;" id="profile-display-phone"></p>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-card"><div class="stat-num" id="stat-orders">0</div><div class="stat-label">Sipariş</div></div>
+                    <div class="stat-card"><div class="stat-num">4.9</div><div class="stat-label">Puan</div></div>
+                    <div class="stat-card"><div class="stat-num">120</div><div class="stat-label">MisKoin</div></div>
+                </div>
+                <div class="profile-menu-list">
+                    <div class="profile-menu-item" onclick="openSubPanel('edit-profile')">
+                        <i class="fa-solid fa-user icon"></i><span>Profili Düzenle</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item" onclick="openSubPanel('addresses')">
+                        <i class="fa-solid fa-location-dot icon"></i><span>Kayıtlı Adreslerim</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item" onclick="openSubPanel('payment')">
+                        <i class="fa-solid fa-credit-card icon"></i><span>Banka / Kart Bilgileri</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item" onclick="openSubPanel('orders')">
+                        <i class="fa-solid fa-clock-rotate-left icon"></i><span>Geçmiş Siparişlerim</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item" onclick="openSubPanel('notifications')">
+                        <i class="fa-solid fa-bell icon"></i><span>Bildirim Ayarları</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item" onclick="openSubPanel('support')">
+                        <i class="fa-solid fa-headset icon"></i><span>Yardım & Destek</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item logout-item" onclick="doLogout()">
+                        <i class="fa-solid fa-right-from-bracket"></i><span>Çıkış Yap</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFİL DÜZENLE -->
+            <div id="profile-edit-profile" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Profili Düzenle</h3>
+                <div class="form-row">
+                    <div class="form-group"><label>Ad</label><input type="text" id="edit-firstname" value=""></div>
+                    <div class="form-group"><label>Soyad</label><input type="text" id="edit-lastname" value=""></div>
+                </div>
+                <div class="form-group"><label>E-posta</label><input type="email" id="edit-email" value=""></div>
+                <div class="form-group"><label>Telefon</label><input type="tel" id="edit-phone" value=""></div>
+                <div class="form-group"><label>Doğum Tarihi</label><input type="date" id="edit-birthdate" value=""></div>
+                <div class="form-group"><label>Yeni Şifre (opsiyonel)</label><input type="password" id="edit-password" placeholder="Değiştirmek için girin"></div>
+                <button class="save-btn" onclick="saveProfile()"><i class="fa-solid fa-check"></i> Değişiklikleri Kaydet</button>
+            </div>
+
+            <!-- ADRESLER -->
+            <div id="profile-addresses" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Kayıtlı Adreslerim</h3>
+                <div id="address-cards-list"></div>
+                <button class="add-new-btn" onclick="openSubPanel('add-address')"><i class="fa-solid fa-plus"></i> Yeni Adres Ekle</button>
+            </div>
+
+            <!-- ADRES EKLE -->
+            <div id="profile-add-address" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('addresses')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Yeni Adres Ekle</h3>
+                <div class="form-group"><label>Adres Başlığı</label><input type="text" id="addr-title" placeholder="Ev, İş, Diğer..."></div>
+                <div class="form-group"><label>İl</label>
+                    <select id="addr-city"><option>Ankara</option><option>İstanbul</option><option>İzmir</option><option>Bursa</option><option>Antalya</option></select>
+                </div>
+                <div class="form-group"><label>İlçe</label><input type="text" id="addr-district" placeholder="İlçe"></div>
+                <div class="form-group"><label>Mahalle / Sokak</label><input type="text" id="addr-street" placeholder="Mahalle, cadde, sokak"></div>
+                <div class="form-group"><label>Bina No / Daire</label><input type="text" id="addr-no" placeholder="Bina no, daire no"></div>
+                <div class="form-group"><label>Tarif (opsiyonel)</label><input type="text" id="addr-desc" placeholder="Kapıcıya bırakın vs."></div>
+                <button class="save-btn" onclick="saveAddress()"><i class="fa-solid fa-check"></i> Adresi Kaydet</button>
+            </div>
+
+            <!-- BANKA / KART -->
+            <div id="profile-payment" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Banka / Kart Bilgileri</h3>
+                <div id="payment-cards-list"></div>
+                <button class="add-new-btn" onclick="openSubPanel('add-card')"><i class="fa-solid fa-plus"></i> Yeni Kart Ekle</button>
+            </div>
+
+            <!-- KART EKLE -->
+            <div id="profile-add-card" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('payment')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Yeni Kart Ekle</h3>
+                <div class="bank-card-visual">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:13px;opacity:0.6;">MisYemek Pay</span>
+                        <i class="fa-brands fa-cc-visa" style="font-size:28px;" id="card-preview-brand"></i>
+                    </div>
+                    <div class="card-num" id="card-preview-num">**** **** **** ****</div>
+                    <div class="card-meta">
+                        <span id="card-preview-name">AD SOYAD</span>
+                        <span id="card-preview-exp">MM/YY</span>
+                    </div>
+                </div>
+                <div class="form-group"><label>Kart Üzerindeki İsim</label><input type="text" id="card-name" placeholder="Ad Soyad" oninput="document.getElementById('card-preview-name').innerText=this.value||'AD SOYAD'"></div>
+                <div class="form-group"><label>Kart Numarası</label><input type="text" id="card-num-input" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNum(this)"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Son Kullanma</label><input type="text" id="card-exp" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"></div>
+                    <div class="form-group"><label>CVV</label><input type="text" id="card-cvv" placeholder="***" maxlength="3"></div>
+                </div>
+                <div class="form-group"><label>Kart Tipi</label>
+                    <select id="card-type" onchange="updateCardBrand(this.value)">
+                        <option value="visa">Visa</option><option value="mastercard">Mastercard</option><option value="troy">Troy</option>
+                    </select>
+                </div>
+                <button class="save-btn" onclick="saveCard()"><i class="fa-solid fa-lock"></i> Kartı Güvenli Kaydet</button>
+            </div>
+
+            <!-- GEÇMİŞ SİPARİŞLER -->
+            <div id="profile-orders" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Geçmiş Siparişlerim</h3>
+                <div id="order-history-list"></div>
+            </div>
+
+            <!-- BİLDİRİM AYARLARI -->
+            <div id="profile-notifications" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Bildirim Ayarları</h3>
+                <div style="display:flex;flex-direction:column;gap:12px;margin-top:5px;">
+                    <div class="notif-row"><div><strong>Sipariş Güncellemeleri</strong><p>Siparişin durumu değiştiğinde bildir</p></div><label class="toggle"><input type="checkbox" checked id="notif-order"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>Kampanya & İndirimler</strong><p>Özel teklifler ve indirimler</p></div><label class="toggle"><input type="checkbox" checked id="notif-promo"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>Kurye Konumu</strong><p>Kurye yaklaştığında bildir</p></div><label class="toggle"><input type="checkbox" checked id="notif-courier"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>Yeni Restoranlar</strong><p>Yakınında yeni restoran açıldığında</p></div><label class="toggle"><input type="checkbox" id="notif-new"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>E-posta Bildirimleri</strong><p>Haftalık özet ve fırsatlar</p></div><label class="toggle"><input type="checkbox" id="notif-email"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>SMS Bildirimleri</strong><p>Sipariş onayı SMS ile</p></div><label class="toggle"><input type="checkbox" checked id="notif-sms"><span class="slider"></span></label></div>
+                </div>
+                <button class="save-btn" style="margin-top:20px;" onclick="showToast('Bildirim ayarları kaydedildi ✓')"><i class="fa-solid fa-check"></i> Kaydet</button>
+            </div>
+
+            <!-- YARDIM & DESTEK -->
+            <div id="profile-support" class="sub-panel">
+                <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
+                <h3>Yardım & Destek</h3>
+                <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+                    <div class="support-item" onclick="toggleFaq(this)">
+                        <div class="support-item-head"><span>Siparişimi nasıl iptal edebilirim?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">Sipariş onaylanmadan önce sepet ekranından iptal edebilirsiniz. Onaylandıktan sonra destek hattımızı arayın.</div>
+                    </div>
+                    <div class="support-item" onclick="toggleFaq(this)">
+                        <div class="support-item-head"><span>Ödeme sorunum var, ne yapmalıyım?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">Ödeme sorunları için 7/24 destek hattımız: <strong>0850 123 45 67</strong> veya uygulama içi sohbet.</div>
+                    </div>
+                    <div class="support-item" onclick="toggleFaq(this)">
+                        <div class="support-item-head"><span>Siparişim geç geliyor, ne yapabilirim?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">Harita ekranından kurye konumunu takip edebilirsiniz. Aşırı gecikmelerde destek hattını arayın.</div>
+                    </div>
+                    <div class="support-item" onclick="toggleFaq(this)">
+                        <div class="support-item-head"><span>Yanlış ürün geldi, ne yapmalıyım?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">Fotoğraf çekip destek hattına iletin. 24 saat içinde iade veya yeniden gönderim sağlanır.</div>
+                    </div>
+                </div>
+                <div style="background:var(--bg-color);border-radius:16px;padding:20px;text-align:center;">
+                    <p style="font-size:14px;color:var(--text-light);margin-bottom:15px;">Sorunun hâlâ çözülmedi mi?</p>
+                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                        <button class="save-btn" style="width:auto;padding:12px 20px;font-size:14px;" onclick="showToast('Destek hattı: 0850 123 45 67')"><i class="fa-solid fa-phone"></i> Bizi Ara</button>
+                        <button class="save-btn" style="width:auto;padding:12px 20px;font-size:14px;background:#25d366;" onclick="showToast('WhatsApp desteği başlatılıyor...')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="success-toast" id="success-toast"></div>
 
     <div class="modal-overlay" id="tracking-modal">
         <div class="modal-content" style="max-width: 600px;">
@@ -278,14 +603,37 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     
-    <script>
+    <script type="module">
+        // ==================== FIREBASE ====================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCnkFtEAlHmFecB4SCbqJZcmZ56GSC6cnk",
+            authDomain: "yemek-d7622.firebaseapp.com",
+            projectId: "yemek-d7622",
+            storageBucket: "yemek-d7622.firebasestorage.app",
+            messagingSenderId: "210743067656",
+            appId: "1:210743067656:web:f190db881c05107750fdbd",
+            measurementId: "G-08RGPQQK3F"
+        };
+
+        const app  = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db   = getFirestore(app);
+
+        // Global fonksiyonları window'a bağla (HTML onclick için)
+        window._fb = { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, doc, setDoc, getDoc, updateDoc };
+
         let userLat = 39.9207; 
         let userLng = 32.8541;
         let cart = [];
         let activeRestaurant = null;
-        let activeCategory = 'All'; // Filtreleme için durum değişkeni
+        let activeCategory = 'All';
         let mapInitialized = false;
         let map, routeControl, kuryeMarker, animasyonInterval;
+        let totalOrderCount = 0;
 
         // 14 FARKLI RESTORAN VE MENÜSÜ EKLENDİ
         const resTemplates = [
@@ -320,14 +668,45 @@
                 menu: [ { id: 602, name: "Karışık Kova", price: 210, desc: "Kanat ve but", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=150" } ] },
 
             { name: "Kahve Durağı", type: "Kahve", sponsor: false, img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80",
-                menu: [ { id: 701, name: "Iced Latte", price: 85, desc: "Buz gibi", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" } ] },
+                menu: [ { id: 701, name: "Iced Latte", price: 85, desc: "Buz gibi soğuk", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" },
+                        { id: 703, name: "Cappuccino", price: 75, desc: "Köpüklü espresso", img: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=150" } ] },
             { name: "Roastery Co.", type: "Kahve", sponsor: true, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=500&q=80",
-                menu: [ { id: 702, name: "Filtre Kahve", price: 65, desc: "%100 Arabica", img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=150" } ] }
+                menu: [ { id: 702, name: "Filtre Kahve", price: 65, desc: "%100 Arabica", img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=150" },
+                        { id: 704, name: "Cold Brew", price: 95, desc: "12 saat demleme", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" } ] },
+
+            { name: "Balık Evi", type: "Deniz Ürünleri", sponsor: false, img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80",
+                menu: [ { id: 801, name: "Levrek Izgara", price: 320, desc: "Taze levrek, limon", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=150" },
+                        { id: 802, name: "Karides Güveç", price: 280, desc: "Domates soslu", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
+            { name: "Deniz Sofrası", type: "Deniz Ürünleri", sponsor: true, img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80",
+                menu: [ { id: 803, name: "Balık Ekmek", price: 120, desc: "Taze balık, soğan", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=150" },
+                        { id: 804, name: "Midye Dolma", price: 90, desc: "Pirinçli, baharatlı", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
+
+            { name: "Vegan Mutfak", type: "Vegan", sponsor: false, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80",
+                menu: [ { id: 901, name: "Avokado Toast", price: 130, desc: "Tam buğday, avokado", img: "https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=150" },
+                        { id: 902, name: "Yeşil Bowl", price: 150, desc: "Kinoa, sebze", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=150" } ] },
+            { name: "Green Garden", type: "Vegan", sponsor: true, img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&q=80",
+                menu: [ { id: 903, name: "Falafel Dürüm", price: 110, desc: "Nohut köftesi, tahin", img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=150" },
+                        { id: 904, name: "Smoothie Bowl", price: 120, desc: "Meyve, granola", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=150" } ] },
+
+            { name: "Çorba Evi", type: "Çorba", sponsor: false, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80",
+                menu: [ { id: 1001, name: "Mercimek Çorbası", price: 65, desc: "Geleneksel tarif", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" },
+                        { id: 1002, name: "Ezogelin Çorbası", price: 70, desc: "Baharatlı, doyurucu", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
+            { name: "Sıcak Kaşık", type: "Çorba", sponsor: true, img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=500&q=80",
+                menu: [ { id: 1003, name: "İşkembe Çorbası", price: 80, desc: "Sarımsaklı, sirkeli", img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=150" },
+                        { id: 1004, name: "Domates Çorbası", price: 60, desc: "Kremalı, taze", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
+
+            { name: "Pasta & Börek", type: "Börek", sponsor: false, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80",
+                menu: [ { id: 1101, name: "Su Böreği", price: 95, desc: "Peynirli, ev yapımı", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" },
+                        { id: 1102, name: "Sigara Böreği", price: 75, desc: "Çıtır, peynirli", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" } ] },
+            { name: "Fırın Köşesi", type: "Börek", sponsor: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80",
+                menu: [ { id: 1103, name: "Ispanaklı Börek", price: 85, desc: "Taze ıspanak", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" },
+                        { id: 1104, name: "Kıymalı Pide", price: 110, desc: "Özel kıyma harcı", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" } ] }
         ];
 
         let dynamicRestaurants = [];
 
         window.onload = () => {
+            // Konum al
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -376,7 +755,8 @@
                 // Yeni bir kategori seçilirse
                 activeCategory = category;
                 document.querySelectorAll('.cat-box').forEach(el => el.classList.remove('active'));
-                document.getElementById('cat-' + category).classList.add('active');
+                const catEl = document.getElementById('cat-' + category);
+                if(catEl) catEl.classList.add('active');
                 document.getElementById('section-title').innerText = `Yakındaki ${category} Restoranları`;
             }
             renderRestaurants();
@@ -503,10 +883,380 @@
         }
 
         function openCart() { closeModals(); document.getElementById('cart-modal').style.display = 'flex'; }
-        function openAddressSelection() { closeModals(); document.getElementById('address-modal').style.display = 'flex'; }
+        function openAddressSelection() {
+            if (!currentUID) { showLoginRequired(); return; }
+            renderDeliveryAddresses();
+            closeModals();
+            document.getElementById('address-modal').style.display = 'flex';
+        }
+
+        function renderDeliveryAddresses() {
+            const list = document.getElementById('delivery-address-list');
+            let html = `
+                <div class="address-item selected" onclick="selectAddressOption(this)">
+                    <div>
+                        <strong>📍 Mevcut Konum (GPS)</strong>
+                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;">Haritada tespit edilen anlık konumunuz</p>
+                    </div>
+                    <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:22px;"></i>
+                </div>`;
+            savedAddresses.forEach((a, i) => {
+                html += `
+                <div class="address-item" onclick="selectAddressOption(this)">
+                    <div>
+                        <strong>${a.title}</strong>
+                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;">${a.city}, ${a.district} — ${a.street} ${a.no}</p>
+                    </div>
+                    <i class="fa-regular fa-circle" style="color:var(--border);font-size:22px;"></i>
+                </div>`;
+            });
+            list.innerHTML = html;
+        }
+        function openProfile() {
+            if (!currentUID) { showLoginRequired(); return; }
+            document.getElementById('stat-orders').innerText = totalOrderCount;
+            openSubPanel('main');
+            closeModals();
+            document.getElementById('profile-modal').style.display = 'flex';
+        }
+
+        // ==================== AUTH ====================
+        let userProfile = {};
+        let savedAddresses = [];
+        let savedCards = [];
+        let orderHistory = [];
+        let currentUID = null;
+        let sessionLoaded = false;
+
+        function showLoginRequired() {
+            closeModals();
+            const ls = document.getElementById('login-screen');
+            ls.style.display = 'flex';
+            ls.style.alignItems = 'center';
+            ls.style.justifyContent = 'center';
+        }
+
+        function switchLoginTab(tab) {
+            document.querySelectorAll('.login-tab').forEach((t,i) =>
+                t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1))
+            );
+            document.getElementById('tab-login').classList.toggle('active', tab==='login');
+            document.getElementById('tab-register').classList.toggle('active', tab==='register');
+            document.getElementById('login-error').style.display = 'none';
+            document.getElementById('register-error').style.display = 'none';
+        }
+
+        async function doLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const pass  = document.getElementById('login-password').value;
+            const errEl = document.getElementById('login-error');
+            const btn   = document.querySelector('#tab-login .save-btn');
+            errEl.style.display = 'none';
+            if (!email || !pass) { errEl.innerText='E-posta ve şifre zorunludur.'; errEl.style.display='block'; return; }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Giriş yapılıyor...';
+            try {
+                const cred = await window._fb.signInWithEmailAndPassword(window._fb.auth, email, pass);
+                await loadUserSession(cred.user.uid);
+                document.getElementById('login-screen').style.display = 'none';
+            } catch(e) {
+                const msgs = {
+                    'auth/user-not-found':'Bu e-posta ile kayıtlı hesap bulunamadı.',
+                    'auth/wrong-password':'Şifre hatalı.',
+                    'auth/invalid-credential':'E-posta veya şifre hatalı.',
+                    'auth/too-many-requests':'Çok fazla deneme. Lütfen bekleyin.'
+                };
+                errEl.innerText = msgs[e.code] || 'Giriş başarısız. Lütfen tekrar deneyin.';
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Giriş Yap';
+            }
+        }
+
+        async function doRegister() {
+            const fn           = document.getElementById('reg-firstname').value.trim();
+            const ln           = document.getElementById('reg-lastname').value.trim();
+            const email        = document.getElementById('reg-email').value.trim();
+            const phone        = document.getElementById('reg-phone').value.trim();
+            const pass         = document.getElementById('reg-password').value;
+            const addrTitle    = document.getElementById('reg-addr-title').value.trim();
+            const addrCity     = document.getElementById('reg-addr-city').value;
+            const addrDistrict = document.getElementById('reg-addr-district').value.trim();
+            const addrStreet   = document.getElementById('reg-addr-street').value.trim();
+            const addrNo       = document.getElementById('reg-addr-no').value.trim();
+            const errEl = document.getElementById('register-error');
+            const btn   = document.querySelector('#tab-register .save-btn');
+            errEl.style.display = 'none';
+            if (!fn||!ln||!email||!pass) { errEl.innerText='Ad, soyad, e-posta ve şifre zorunludur.'; errEl.style.display='block'; return; }
+            if (pass.length < 8) { errEl.innerText='Şifre en az 8 karakter olmalıdır.'; errEl.style.display='block'; return; }
+            if (!addrTitle||!addrDistrict||!addrStreet) { errEl.innerText='Lütfen teslimat adresinizi eksiksiz girin.'; errEl.style.display='block'; return; }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Hesap oluşturuluyor...';
+            try {
+                const { auth, db, createUserWithEmailAndPassword, doc, setDoc } = window._fb;
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                const uid  = cred.user.uid;
+                const initAddr = { title:addrTitle, city:addrCity, district:addrDistrict, street:addrStreet, no:addrNo, desc:'' };
+                await setDoc(doc(db, 'users', uid), {
+                    firstname:fn, lastname:ln, email, phone, birthdate:'',
+                    addresses:[initAddr], cards:[], orders:[], orderCount:0
+                });
+                await loadUserSession(uid);
+                document.getElementById('login-screen').style.display = 'none';
+            } catch(e) {
+                const msgs = {
+                    'auth/email-already-in-use':'Bu e-posta zaten kayıtlı.',
+                    'auth/invalid-email':'Geçersiz e-posta adresi.',
+                    'auth/weak-password':'Şifre çok zayıf.'
+                };
+                errEl.innerText = msgs[e.code] || 'Kayıt başarısız. Lütfen tekrar deneyin.';
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Hesap Oluştur';
+            }
+        }
+
+        async function loadUserSession(uid) {
+            if (sessionLoaded && currentUID === uid) return;
+            currentUID = uid;
+            try {
+                const { db, doc, getDoc } = window._fb;
+                const snap = await getDoc(doc(db, 'users', uid));
+                if (snap.exists()) {
+                    const u = snap.data();
+                    userProfile     = { firstname:u.firstname||'', lastname:u.lastname||'', email:u.email||'', phone:u.phone||'', birthdate:u.birthdate||'' };
+                    savedAddresses  = u.addresses  || [];
+                    savedCards      = u.cards      || [];
+                    orderHistory    = u.orders     || [];
+                    totalOrderCount = u.orderCount || 0;
+                }
+            } catch(e) { console.warn('Firestore okuma:', e.message); }
+            sessionLoaded = true;
+            applyProfileToUI();
+        }
+
+        function applyProfileToUI() {
+            if (!userProfile.firstname) return;
+            const fullName = (userProfile.firstname + ' ' + userProfile.lastname).trim();
+            const initials = ((userProfile.firstname[0]||'') + (userProfile.lastname[0]||'')).toUpperCase() || '?';
+            document.getElementById('profile-display-name').innerText  = fullName;
+            document.getElementById('profile-display-email').innerText = userProfile.email;
+            document.getElementById('profile-display-phone').innerHTML = userProfile.phone ? '<i class="fa-solid fa-phone"></i> ' + userProfile.phone : '';
+            document.getElementById('profile-avatar-display').innerText = initials;
+            document.getElementById('header-avatar').innerText = initials;
+            document.getElementById('edit-firstname').value  = userProfile.firstname;
+            document.getElementById('edit-lastname').value   = userProfile.lastname;
+            document.getElementById('edit-email').value      = userProfile.email;
+            document.getElementById('edit-phone').value      = userProfile.phone;
+            document.getElementById('edit-birthdate').value  = userProfile.birthdate;
+            // Header buton görünürlüğü
+            document.getElementById('hesabim-btn').style.display = 'flex';
+            document.getElementById('login-header-btn').style.display = 'none';
+        }
+
+        async function saveCurrentUser() {
+            if (!currentUID || !window._fb) return;
+            try {
+                const { db, doc, updateDoc } = window._fb;
+                await updateDoc(doc(db, 'users', currentUID), {
+                    ...userProfile,
+                    addresses: savedAddresses,
+                    cards: savedCards,
+                    orders: orderHistory,
+                    orderCount: totalOrderCount
+                });
+            } catch(e) { console.warn('Kayıt hatası:', e.message); }
+        }
+
+        async function doLogout() {
+            await saveCurrentUser();
+            await window._fb.signOut(window._fb.auth);
+            currentUID = null; sessionLoaded = false;
+            userProfile = {}; savedAddresses = []; savedCards = []; orderHistory = []; totalOrderCount = 0;
+            closeModals();
+            cart = []; updateCartUI();
+            document.getElementById('header-avatar').innerText = '?';
+            document.getElementById('hesabim-btn').style.display = 'none';
+            document.getElementById('login-header-btn').style.display = 'flex';
+        }
+
+        // Sayfa yüklenince oturum kontrolü
+        window.addEventListener('load', () => {
+            const waitFb = setInterval(() => {
+                if (!window._fb) return;
+                clearInterval(waitFb);
+                import("https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js").then(m => {
+                    m.onAuthStateChanged(window._fb.auth, async (user) => {
+                        if (user && !sessionLoaded) {
+                            await loadUserSession(user.uid);
+                            // Eğer login ekranı açıksa kapat
+                            document.getElementById('login-screen').style.display = 'none';
+                        }
+                    });
+                });
+            }, 50);
+        });
+
+        // SUB PANEL SİSTEMİ
+
+        // HTML onclick'lerden erişim için window'a bağla
+        window.doLogin = doLogin;
+        window.doRegister = doRegister;
+        window.doLogout = doLogout;
+        window.switchLoginTab = switchLoginTab;
+
+        function openSubPanel(name) {
+            document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('profile-' + name).classList.add('active');
+            if (name === 'addresses') renderAddresses();
+            if (name === 'payment') renderCards();
+            if (name === 'orders') renderOrderHistory();
+        }
+
+        function saveProfile() {
+            const fn = document.getElementById('edit-firstname').value.trim();
+            const ln = document.getElementById('edit-lastname').value.trim();
+            const email = document.getElementById('edit-email').value.trim();
+            const phone = document.getElementById('edit-phone').value.trim();
+            if (!fn || !ln || !email) { alert('Ad, soyad ve e-posta zorunludur.'); return; }
+            userProfile = { firstname: fn, lastname: ln, email, phone, birthdate: document.getElementById('edit-birthdate').value };
+            applyProfileToUI();
+            showToast('Profil güncellendi ✓');
+            saveCurrentUser();
+            openSubPanel('main');
+        }
+
+        function renderAddresses() {
+            const list = document.getElementById('address-cards-list');
+            if (savedAddresses.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">Henüz kayıtlı adres yok.</p>';
+                return;
+            }
+            list.innerHTML = savedAddresses.map((a, i) => `
+                <div class="saved-card">
+                    <div class="saved-card-info">
+                        <strong>${a.title}</strong>
+                        <span>${a.city}, ${a.district} - ${a.street} ${a.no}</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-del-btn" onclick="deleteAddress(${i})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>`).join('');
+        }
+
+        function saveAddress() {
+            const title = document.getElementById('addr-title').value.trim();
+            const city = document.getElementById('addr-city').value;
+            const district = document.getElementById('addr-district').value.trim();
+            const street = document.getElementById('addr-street').value.trim();
+            const no = document.getElementById('addr-no').value.trim();
+            const desc = document.getElementById('addr-desc').value.trim();
+            if (!title || !district || !street) { alert('Başlık, ilçe ve sokak zorunludur.'); return; }
+            savedAddresses.push({ title, city, district, street, no, desc });
+            ['addr-title','addr-district','addr-street','addr-no','addr-desc'].forEach(id => document.getElementById(id).value = '');
+            showToast('Adres kaydedildi ✓');
+            saveCurrentUser();
+            openSubPanel('addresses');
+        }
+
+        function deleteAddress(i) { savedAddresses.splice(i, 1); renderAddresses(); }
+
+        function renderCards() {
+            const list = document.getElementById('payment-cards-list');
+            if (savedCards.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">Henüz kayıtlı kart yok.</p>';
+                return;
+            }
+            const icons = { visa: 'fa-cc-visa', mastercard: 'fa-cc-mastercard', troy: 'fa-credit-card' };
+            list.innerHTML = savedCards.map((c, i) => `
+                <div class="saved-card">
+                    <div class="saved-card-info">
+                        <strong><i class="fa-brands ${icons[c.type] || 'fa-credit-card'}"></i> **** **** **** ${c.last4}</strong>
+                        <span>${c.name} &nbsp;|&nbsp; Son: ${c.exp}</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-del-btn" onclick="deleteCard(${i})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>`).join('');
+        }
+
+        function formatCardNum(input) {
+            let v = input.value.replace(/\D/g, '').substring(0, 16);
+            input.value = v.replace(/(.{4})/g, '$1 ').trim();
+            document.getElementById('card-preview-num').innerText = (input.value || '**** **** **** ****').padEnd(19, '*').replace(/\d(?=.{5})/g, '*') || '**** **** **** ****';
+            const display = input.value || '**** **** **** ****';
+            document.getElementById('card-preview-num').innerText = display.length < 19 ? display + ' ****'.substring(0, 19 - display.length) : display;
+        }
+
+        function formatExpiry(input) {
+            let v = input.value.replace(/\D/g, '').substring(0, 4);
+            if (v.length >= 3) v = v.substring(0,2) + '/' + v.substring(2);
+            input.value = v;
+            document.getElementById('card-preview-exp').innerText = input.value || 'MM/YY';
+        }
+
+        function updateCardBrand(type) {
+            const icons = { visa: 'fa-cc-visa', mastercard: 'fa-cc-mastercard', troy: 'fa-credit-card' };
+            const el = document.getElementById('card-preview-brand');
+            el.className = 'fa-brands ' + (icons[type] || 'fa-credit-card');
+            if (type === 'troy') el.className = 'fa-solid fa-credit-card';
+        }
+
+        function saveCard() {
+            const name = document.getElementById('card-name').value.trim();
+            const num = document.getElementById('card-num-input').value.replace(/\s/g, '');
+            const exp = document.getElementById('card-exp').value.trim();
+            const cvv = document.getElementById('card-cvv').value.trim();
+            const type = document.getElementById('card-type').value;
+            if (!name || num.length < 16 || exp.length < 5 || cvv.length < 3) { alert('Lütfen tüm kart bilgilerini eksiksiz girin.'); return; }
+            savedCards.push({ name, last4: num.slice(-4), exp, type });
+            ['card-name','card-num-input','card-exp','card-cvv'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('card-preview-num').innerText = '**** **** **** ****';
+            document.getElementById('card-preview-name').innerText = 'AD SOYAD';
+            document.getElementById('card-preview-exp').innerText = 'MM/YY';
+            showToast('Kart güvenli şekilde kaydedildi ✓');
+            saveCurrentUser();
+            openSubPanel('payment');
+        }
+
+        function deleteCard(i) { savedCards.splice(i, 1); renderCards(); }
+
+        function renderOrderHistory() {
+            const list = document.getElementById('order-history-list');
+            if (orderHistory.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">Henüz tamamlanan sipariş yok.</p>';
+                return;
+            }
+            list.innerHTML = orderHistory.map(o => `
+                <div class="saved-card" style="flex-direction:column;align-items:flex-start;gap:6px;">
+                    <div style="display:flex;justify-content:space-between;width:100%;">
+                        <strong>${o.restaurant}</strong>
+                        <span style="color:var(--success);font-weight:700;">${o.total} TL</span>
+                    </div>
+                    <span style="font-size:13px;color:var(--text-light);">${o.items} &nbsp;|&nbsp; ${o.date}</span>
+                </div>`).join('');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('success-toast');
+            t.innerText = msg; t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 2500);
+        }
+
+        function toggleFaq(el) {
+            el.classList.toggle('open');
+        }
         function selectAddressOption(element) {
-            document.querySelectorAll('.address-item').forEach(el => { el.classList.remove('selected'); el.querySelector('i')?.remove(); });
-            element.classList.add('selected'); element.innerHTML += '<i class="fa-solid fa-circle-check" style="color: var(--primary); font-size: 24px;"></i>';
+            document.querySelectorAll('.address-item').forEach(el => {
+                el.classList.remove('selected');
+                const icon = el.querySelector('i');
+                if (icon) { icon.className = 'fa-regular fa-circle'; icon.style.color = 'var(--border)'; }
+            });
+            element.classList.add('selected');
+            const icon = element.querySelector('i');
+            if (icon) { icon.className = 'fa-solid fa-circle-check'; icon.style.color = 'var(--primary)'; }
         }
         function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
         function openTrackingModal() { closeModals(); document.getElementById('tracking-modal').style.display = 'flex'; }
@@ -524,7 +1274,7 @@
 
         function initMapAndRoute() {
             map = L.map('map-container').setView([userLat, userLng], 14);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(map);
             const userIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/25/25694.png', iconSize: [35, 35], iconAnchor: [17, 35] });
             const bikeIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png', iconSize: [45, 45], iconAnchor: [22, 45] });
             L.marker([userLat, userLng], {icon: userIcon}).addTo(map).bindPopup("Teslimat Adresiniz").openPopup();
@@ -562,10 +1312,25 @@
                     document.getElementById('eta-box').style.display = 'none';
                     kuryeMarker.bindPopup("Sipariş ulaştı!").openPopup();
                     document.getElementById('track-order-btn').style.display = 'none'; 
+                    totalOrderCount++;
+                    const orderTotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+                    const orderItems = cart.map(i => i.name).join(', ');
+                    orderHistory.unshift({ restaurant: activeRestaurant.name, total: orderTotal, items: orderItems, date: new Date().toLocaleDateString('tr-TR') });
                     cart = []; updateCartUI();
+                    saveCurrentUser();
                 }
             }, 80); 
         }
+
+        // Tüm global fonksiyonları window'a bağla (type="module" scope sorunu için)
+        Object.assign(window, {
+            filterCategory, openMenu, addToCart, changeQty, openCart, openAddressSelection,
+            renderDeliveryAddresses, selectAddressOption, openProfile, openSubPanel,
+            saveProfile, renderAddresses, saveAddress, deleteAddress,
+            renderCards, saveCard, deleteCard, formatCardNum, formatExpiry, updateCardBrand,
+            renderOrderHistory, showToast, toggleFaq, closeModals, openTrackingModal,
+            startOrderSimulation, showLoginRequired
+        });
     </script>
 </body>
 </html>
