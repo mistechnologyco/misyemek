@@ -272,13 +272,27 @@
         }
 
         @media (max-width: 768px) {
-            header { padding: 12px 15px; gap: 10px; flex-wrap: wrap; }
-            .logo { font-size: 24px; flex: 1; }
-            .header-actions { flex-shrink: 0; }
+            header { padding: 12px 15px; gap: 8px; flex-wrap: wrap; }
+            .logo { font-size: 22px; flex: 1; letter-spacing: -1.5px; }
+            .header-actions { display: flex; gap: 8px; align-items: center; }
             .search-bar { width: 100%; order: 3; padding: 10px 15px; margin-top: 5px; }
-            .cart-btn { padding: 10px 16px; font-size: 14px; }
-            .profile-btn { padding: 8px 12px; }
+            
+            .cart-btn { 
+                width: 42px; height: 42px; padding: 0; border-radius: 12px; 
+                justify-content: center; position: relative; 
+            }
+            .cart-btn span:not(.cart-badge) { display: none; }
+            .cart-btn i { font-size: 18px; margin: 0; }
+            .cart-badge { 
+                position: absolute; top: -6px; right: -6px; 
+                min-width: 18px; height: 18px; padding: 0; 
+                display: flex; align-items: center; justify-content: center; 
+                border-radius: 50%; font-size: 10px; border: 2px solid var(--white);
+            }
+
+            .profile-btn { padding: 8px 12px; height: 42px; }
             .profile-btn span { display: none; }
+            .profile-avatar { width: 26px; height: 26px; font-size: 12px; }
             
             main { padding: 20px 15px; }
             .hero-banner { flex-direction: column; text-align: center; gap: 15px; padding: 25px 15px; }
@@ -324,8 +338,8 @@
             <div class="login-logo">MisYemek</div>
             <div class="login-sub">Lezzet kapÄ±nda, hesabÄ±n hazÄ±r.</div>
             <div class="login-tabs">
-                <div class="login-tab active" onclick="switchLoginTab('login')">GiriÅŸ Yap</div>
-                <div class="login-tab" onclick="switchLoginTab('register')">KayÄ±t Ol</div>
+                <div class="login-tab active" onclick="switchLoginTab('login')">Giriş Yap</div>
+                <div class="login-tab" onclick="switchLoginTab('register')">Kayıt Ol</div>
             </div>
 
             <!-- GÄ°RÄ°Å FORMU -->
@@ -333,7 +347,7 @@
                 <div class="login-error" id="login-error"></div>
                 <div class="form-group"><label>E-posta</label><input type="email" id="login-email" placeholder="ornek@email.com"></div>
                 <div class="form-group"><label>Åifre</label><input type="password" id="login-password" placeholder="Åifreniz"></div>
-                <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap</button>
+                <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
             </div>
 
 
@@ -367,7 +381,7 @@
         <div class="logo">MisYemek</div>
         <div class="search-bar">
             <i class="fa-solid fa-magnifying-glass" style="color: var(--text-light)"></i>
-            <input type="text" placeholder="CanÄ±n ne Ã§ekiyor? (Ã–rn: Ä°skender, Burger...)">
+            <input type="text" placeholder="Canın ne çekiyor? (Örn: İskender, Burger...)">
         </div>
         <div class="header-actions">
             <button id="track-order-btn" class="cart-btn" style="display: none; background: var(--success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);" onclick="openTrackingModal()">
@@ -379,10 +393,10 @@
             </button>
             <button class="profile-btn" onclick="openProfile()" id="hesabim-btn" style="display:none;">
                 <div class="profile-avatar" id="header-avatar">?</div>
-                HesabÄ±m
+                Hesabım
             </button>
             <button class="cart-btn" id="login-header-btn" onclick="showLoginRequired()" style="background: var(--white); color: var(--primary); border: 2px solid var(--primary); box-shadow: none;">
-                <i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap
+                <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap
             </button>
         </div>
     </header>
@@ -390,8 +404,8 @@
     <main id="customer-main">
         <div class="hero-banner">
             <div>
-                <h1>Ä°lk sipariÅŸine Ã¶zel %30 Ä°ndirim!</h1>
-                <p>MisYemek ile en sevdiÄŸin lezzetler sÄ±cak sÄ±cak kapÄ±nda.</p>
+                <h1>İlk siparişine özel %30 İndirim!</h1>
+                <p>MisYemek ile en sevdiÄŸin lezzetler sıcak sıcak kapında.</p>
             </div>
             <img src="https://cdn-icons-png.flaticon.com/512/3081/3081333.png" alt="Yemek">
         </div>
@@ -408,11 +422,11 @@
                 <div class="cat-box" id="cat-Kebap" onclick="filterCategory('Kebap')">
                     <img src="https://images.unsplash.com/photo-1645696301019-35adcc18fc21?w=200&q=80"><span>Kebap</span>
                 </div>
-                <div class="cat-box" id="cat-DÃ¶ner" onclick="filterCategory('DÃ¶ner')">
-                    <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=200&q=80"><span>DÃ¶ner</span>
+                <div class="cat-box" id="cat-Döner" onclick="filterCategory('Döner')">
+                    <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=200&q=80"><span>Döner</span>
                 </div>
-                <div class="cat-box" id="cat-TatlÄ±" onclick="filterCategory('TatlÄ±')">
-                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=200&q=80"><span>TatlÄ±</span>
+                <div class="cat-box" id="cat-Tatlı" onclick="filterCategory('Tatlı')">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=200&q=80"><span>Tatlı</span>
                 </div>
                 <div class="cat-box" id="cat-Tavuk" onclick="filterCategory('Tavuk')">
                     <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=200&q=80"><span>Tavuk</span>
@@ -420,17 +434,17 @@
                 <div class="cat-box" id="cat-Kahve" onclick="filterCategory('Kahve')">
                     <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&q=80"><span>Kahve</span>
                 </div>
-                <div class="cat-box" id="cat-Deniz ÃœrÃ¼nleri" onclick="filterCategory('Deniz ÃœrÃ¼nleri')">
+                <div class="cat-box" id="cat-Deniz Ürünleri" onclick="filterCategory('Deniz Ürünleri')">
                     <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=200&q=80"><span>Deniz</span>
                 </div>
                 <div class="cat-box" id="cat-Vegan" onclick="filterCategory('Vegan')">
                     <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80"><span>Vegan</span>
                 </div>
-                <div class="cat-box" id="cat-Ã‡orba" onclick="filterCategory('Ã‡orba')">
-                    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&q=80"><span>Ã‡orba</span>
+                <div class="cat-box" id="cat-Çorba" onclick="filterCategory('Çorba')">
+                    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&q=80"><span>Çorba</span>
                 </div>
-                <div class="cat-box" id="cat-BÃ¶rek" onclick="filterCategory('BÃ¶rek')">
-                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80"><span>BÃ¶rek</span>
+                <div class="cat-box" id="cat-Börek" onclick="filterCategory('Börek')">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80"><span>Börek</span>
                 </div>
             </div>
         </div>
@@ -797,7 +811,7 @@
                 <div class="custom-spinner" style="margin-bottom: 15px;">
                     <i class="fa-solid fa-circle-notch"></i>
                 </div>
-                <h3 id="order-status-text" class="pulse-text" style="color: var(--text-dark); font-size: 26px; font-weight: 900; margin-bottom: 8px;">SipariÅŸ HazÄ±rlanÄ±yor...</h3>
+                <h3 id="order-status-text" class="pulse-text" style="color: var(--text-dark); font-size: 26px; font-weight: 900; margin-bottom: 8px;">SipariÅŸ Hazırlanıyor...</h3>
                 <p id="time-text" style="color: var(--text-light); font-size: 15px; font-weight: 500;">Lezzetiniz Ã¶zenle hazÄ±rlanÄ±yor, kuryemiz bekliyor.</p>
             </div>
 
@@ -805,11 +819,11 @@
                 <div class="step-progress" id="order-progress-bar"></div>
                 <div class="step completed" id="step-1">
                     <div class="step-dot"><i class="fa-solid fa-check"></i></div>
-                    <span class="step-label">AlÄ±ndÄ±</span>
+                    <span class="step-label">Alındı</span>
                 </div>
                 <div class="step active" id="step-2">
                     <div class="step-dot"><i class="fa-solid fa-utensils"></i></div>
-                    <span class="step-label">HazÄ±rlanÄ±yor</span>
+                    <span class="step-label">Hazırlanıyor</span>
                 </div>
                 <div class="step" id="step-3">
                     <div class="step-dot"><i class="fa-solid fa-motorcycle"></i></div>
@@ -884,14 +898,14 @@
             { name: "Antep SofrasÄ±", type: "Kebap", sponsor: false, img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500&q=80",
                 menu: [ { id: 302, name: "Urfa Porsiyon", price: 210, desc: "AcÄ±sÄ±z kebap", img: "https://images.unsplash.com/photo-1654877395066-5867ec6b80d0?w=150" } ] },
             
-            { name: "Sokak DÃ¶nercisi", type: "DÃ¶ner", sponsor: false, img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=500&q=80",
-                menu: [ { id: 401, name: "Et DÃ¶ner DÃ¼rÃ¼m", price: 160, desc: "Ã–zel lavaÅŸ arasÄ±", img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=150" } ] },
-            { name: "Tarihi DÃ¶nerci", type: "DÃ¶ner", sponsor: true, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
-                menu: [ { id: 402, name: "Tavuk DÃ¶ner", price: 110, desc: "Bol soslu", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=150" } ] },
+            { name: "Sokak Dönercisi", type: "Döner", sponsor: false, img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=500&q=80",
+                menu: [ { id: 401, name: "Et Döner DÃ¼rÃ¼m", price: 160, desc: "Ã–zel lavaÅŸ arasÄ±", img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=150" } ] },
+            { name: "Tarihi Dönerci", type: "Döner", sponsor: true, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
+                menu: [ { id: 402, name: "Tavuk Döner", price: 110, desc: "Bol soslu", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=150" } ] },
             
-            { name: "TatlÄ±cÄ± Bey", type: "TatlÄ±", sponsor: true, img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&q=80",
+            { name: "TatlıcÄ± Bey", type: "Tatlı", sponsor: true, img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&q=80",
                 menu: [ { id: 501, name: "SoÄŸuk Baklava", price: 250, desc: "FÄ±stÄ±klÄ±, sÃ¼tlÃ¼", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=150" } ] },
-            { name: "Ã‡ikolata AtÃ¶lyesi", type: "TatlÄ±", sponsor: false, img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500&q=80",
+            { name: "Ã‡ikolata AtÃ¶lyesi", type: "Tatlı", sponsor: false, img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500&q=80",
                 menu: [ { id: 502, name: "San Sebastian", price: 120, desc: "Ã‡ikolata soslu", img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=150" } ] },
 
             { name: "PiliÃ§ DÃ¼nyasÄ±", type: "Tavuk", sponsor: false, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
@@ -906,10 +920,10 @@
                 menu: [ { id: 702, name: "Filtre Kahve", price: 65, desc: "%100 Arabica", img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=150" },
                         { id: 704, name: "Cold Brew", price: 95, desc: "12 saat demleme", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" } ] },
 
-            { name: "BalÄ±k Evi", type: "Deniz ÃœrÃ¼nleri", sponsor: false, img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80",
+            { name: "BalÄ±k Evi", type: "Deniz Ürünleri", sponsor: false, img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80",
                 menu: [ { id: 801, name: "Levrek Izgara", price: 320, desc: "Taze levrek, limon", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=150" },
                         { id: 802, name: "Karides GÃ¼veÃ§", price: 280, desc: "Domates soslu", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
-            { name: "Deniz SofrasÄ±", type: "Deniz ÃœrÃ¼nleri", sponsor: true, img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80",
+            { name: "Deniz SofrasÄ±", type: "Deniz Ürünleri", sponsor: true, img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80",
                 menu: [ { id: 803, name: "BalÄ±k Ekmek", price: 120, desc: "Taze balÄ±k, soÄŸan", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=150" },
                         { id: 804, name: "Midye Dolma", price: 90, desc: "PirinÃ§li, baharatlÄ±", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
 
@@ -920,18 +934,18 @@
                 menu: [ { id: 903, name: "Falafel DÃ¼rÃ¼m", price: 110, desc: "Nohut kÃ¶ftesi, tahin", img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=150" },
                         { id: 904, name: "Smoothie Bowl", price: 120, desc: "Meyve, granola", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=150" } ] },
 
-            { name: "Ã‡orba Evi", type: "Ã‡orba", sponsor: false, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80",
-                menu: [ { id: 1001, name: "Mercimek Ã‡orbasÄ±", price: 65, desc: "Geleneksel tarif", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" },
-                        { id: 1002, name: "Ezogelin Ã‡orbasÄ±", price: 70, desc: "BaharatlÄ±, doyurucu", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
-            { name: "SÄ±cak KaÅŸÄ±k", type: "Ã‡orba", sponsor: true, img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=500&q=80",
-                menu: [ { id: 1003, name: "Ä°ÅŸkembe Ã‡orbasÄ±", price: 80, desc: "SarÄ±msaklÄ±, sirkeli", img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=150" },
-                        { id: 1004, name: "Domates Ã‡orbasÄ±", price: 60, desc: "KremalÄ±, taze", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
+            { name: "Çorba Evi", type: "Çorba", sponsor: false, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80",
+                menu: [ { id: 1001, name: "Mercimek ÇorbasÄ±", price: 65, desc: "Geleneksel tarif", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" },
+                        { id: 1002, name: "Ezogelin ÇorbasÄ±", price: 70, desc: "BaharatlÄ±, doyurucu", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
+            { name: "SÄ±cak KaÅŸÄ±k", type: "Çorba", sponsor: true, img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=500&q=80",
+                menu: [ { id: 1003, name: "Ä°ÅŸkembe ÇorbasÄ±", price: 80, desc: "SarÄ±msaklÄ±, sirkeli", img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=150" },
+                        { id: 1004, name: "Domates ÇorbasÄ±", price: 60, desc: "KremalÄ±, taze", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
 
-            { name: "Pasta & BÃ¶rek", type: "BÃ¶rek", sponsor: false, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80",
+            { name: "Pasta & Börek", type: "Börek", sponsor: false, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80",
                 menu: [ { id: 1101, name: "Su BÃ¶reÄŸi", price: 95, desc: "Peynirli, ev yapÄ±mÄ±", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" },
                         { id: 1102, name: "Sigara BÃ¶reÄŸi", price: 75, desc: "Ã‡Ä±tÄ±r, peynirli", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" } ] },
-            { name: "FÄ±rÄ±n KÃ¶ÅŸesi", type: "BÃ¶rek", sponsor: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80",
-                menu: [ { id: 1103, name: "IspanaklÄ± BÃ¶rek", price: 85, desc: "Taze Ä±spanak", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" },
+            { name: "FÄ±rÄ±n KÃ¶ÅŸesi", type: "Börek", sponsor: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80",
+                menu: [ { id: 1103, name: "IspanaklÄ± Börek", price: 85, desc: "Taze Ä±spanak", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" },
                         { id: 1104, name: "KÄ±ymalÄ± Pide", price: 110, desc: "Ã–zel kÄ±yma harcÄ±", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" } ] }
         ];
 
@@ -1257,7 +1271,7 @@
                 errEl.style.display = 'block';
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap';
+                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Giriş Yap';
             }
         }
 
@@ -1474,7 +1488,7 @@
                 document.getElementById('customer-main').style.display = 'block';
                 if(document.getElementById('restaurant-main')) document.getElementById('restaurant-main').style.display = 'none';
 
-                document.getElementById('hesabim-btn').innerHTML = `<div class="profile-avatar" id="header-avatar">${initials}</div> HesabÄ±m`;
+                document.getElementById('hesabim-btn').innerHTML = `<div class="profile-avatar" id="header-avatar">${initials}</div> Hesabım`;
                 document.querySelectorAll('.customer-only').forEach(el => el.style.display = 'flex');
                 document.querySelectorAll('.restaurant-only').forEach(el => el.style.display = 'none');
                 
@@ -2009,6 +2023,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
