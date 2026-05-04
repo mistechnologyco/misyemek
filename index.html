@@ -338,7 +338,7 @@
             <div class="login-logo">MisYemek</div>
             <div class="login-sub">Lezzet kapÃ„Â±nda, hesabÃ„Â±n hazÃ„Â±r.</div>
             <div class="login-tabs">
-                <div class="login-tab active" onclick="switchLoginTab('login')">GiriÅŸ Yap</div>
+                <div class="login-tab active" onclick="switchLoginTab('login')"> <span>Giriş Yap</span></div>
                 <div class="login-tab" onclick="switchLoginTab('register')">KayÄ±t Ol</div>
             </div>
 
@@ -347,7 +347,7 @@
                 <div class="login-error" id="login-error"></div>
                 <div class="form-group"><label>E-posta</label><input type="email" id="login-email" placeholder="ornek@email.com"></div>
                 <div class="form-group"><label>Ã…Âifre</label><input type="password" id="login-password" placeholder="Ã…Âifreniz"></div>
-                <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap</button>
+                <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> <span>Giriş Yap</span></button>
             </div>
 
 
@@ -385,18 +385,17 @@
         </div>
         <div class="header-actions">
             <button id="track-order-btn" class="cart-btn" style="display: none; background: var(--success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);" onclick="openTrackingModal()">
-                <i class="fa-solid fa-motorcycle"></i> Harita
+                <i class="fa-solid fa-motorcycle"></i> <span>Harita</span>
             </button>
             <button class="cart-btn" onclick="openCart()">
-                <i class="fa-solid fa-basket-shopping"></i> Sepet
+                <i class="fa-solid fa-basket-shopping"></i> <span>Sepet</span>
                 <span class="cart-badge" id="cart-count">0</span>
             </button>
             <button class="profile-btn" onclick="openProfile()" id="hesabim-btn" style="display:none;">
-                <div class="profile-avatar" id="header-avatar">?</div>
-                HesabÄ±m
+                <div class="profile-avatar" id="header-avatar">?</div> <span>Hesabım</span>
             </button>
             <button class="cart-btn" id="login-header-btn" onclick="showLoginRequired()" style="background: var(--white); color: var(--primary); border: 2px solid var(--primary); box-shadow: none;">
-                <i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap
+                <i class="fa-solid fa-right-to-bracket"></i> <span>Giriş Yap</span>
             </button>
         </div>
     </header>
@@ -550,7 +549,7 @@
                     <label>Kampanya Tipi</label>
                     <select id="campaign-type" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px;">
                         <option value="discount_percentage">TÃƒÂ¼m MenÃƒÂ¼de YÃƒÂ¼zde Ã„Â°ndirim (%)</option>
-                        <option value="discount_amount">Sepette Net Ã„Â°ndirim (Ã¢â€šÂº)</option>
+                        <option value="discount_amount"> <span>Sepet</span>te Net Ã„Â°ndirim (Ã¢â€šÂº)</option>
                         <option value="free_delivery">ÃƒÅ“cretsiz Teslimat</option>
                     </select>
                 </div>
@@ -592,7 +591,7 @@
     <div class="modal-overlay" id="cart-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModals()">&times;</span>
-            <h2 style="margin-bottom: 20px; font-size: 24px;">Sepetim</h2>
+            <h2 style="margin-bottom: 20px; font-size: 24px;"> <span>Sepet</span>im</h2>
             <div id="cart-items-container"></div>
             <div class="cart-total" style="display: none;" id="cart-total-section">
                 <span>Ãƒâ€“denecek Tutar:</span>
@@ -782,7 +781,7 @@
                     </div>
                     <div class="support-item" onclick="toggleFaq(this)">
                         <div class="support-item-head"><span>SipariÃ…Å¸im geÃƒÂ§ geliyor, ne yapabilirim?</span><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-body">Harita ekranÃ„Â±ndan kurye konumunu takip edebilirsiniz. AÃ…Å¸Ã„Â±rÃ„Â± gecikmelerde destek hattÃ„Â±nÃ„Â± arayÃ„Â±n.</div>
+                        <div class="faq-body"> <span>Harita</span> ekranÃ„Â±ndan kurye konumunu takip edebilirsiniz. AÃ…Å¸Ã„Â±rÃ„Â± gecikmelerde destek hattÃ„Â±nÃ„Â± arayÃ„Â±n.</div>
                     </div>
                     <div class="support-item" onclick="toggleFaq(this)">
                         <div class="support-item-head"><span>YanlÃ„Â±Ã…Å¸ ÃƒÂ¼rÃƒÂ¼n geldi, ne yapmalÃ„Â±yÃ„Â±m?</span><i class="fa-solid fa-chevron-down"></i></div>
@@ -1144,7 +1143,7 @@
             const totalSection = document.getElementById('cart-total-section');
             const checkoutBtn = document.getElementById('checkout-btn');
             if (cart.length === 0) {
-                cartContainer.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px 0;">Sepetiniz şu an boş.</p>';
+                cartContainer.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px 0;"> <span>Sepet</span>iniz şu an boş.</p>';
                 totalSection.style.display = 'none';
                 checkoutBtn.style.display = 'none';
                 return;
@@ -1186,7 +1185,7 @@
                 <div class="address-item selected" onclick="selectAddressOption(this)">
                     <div>
                         <strong>ÄŸÅ¸â€œÂ Mevcut Konum (GPS)</strong>
-                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;">Haritada tespit edilen anlÃ„Â±k konumunuz</p>
+                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;"> <span>Harita</span>da tespit edilen anlÃ„Â±k konumunuz</p>
                     </div>
                     <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:22px;"></i>
                 </div>`;
@@ -1273,7 +1272,7 @@
                 errEl.style.display = 'block';
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap';
+                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>Giriş Yap</span>';
             }
         }
 
@@ -1490,7 +1489,7 @@
                 document.getElementById('customer-main').style.display = 'block';
                 if(document.getElementById('restaurant-main')) document.getElementById('restaurant-main').style.display = 'none';
 
-                document.getElementById('hesabim-btn').innerHTML = `<div class="profile-avatar" id="header-avatar">${initials}</div> HesabÄ±m`;
+                document.getElementById('hesabim-btn').innerHTML = `<div class="profile-avatar" id="header-avatar">${initials}</div> <span>Hesabım</span>`;
                 document.querySelectorAll('.customer-only').forEach(el => el.style.display = 'flex');
                 document.querySelectorAll('.restaurant-only').forEach(el => el.style.display = 'none');
                 
@@ -2025,6 +2024,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
