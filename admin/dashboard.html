@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel | MisYemek Yönetim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+        import { getFirestore, collection, query, onSnapshot, where, orderBy, limit, doc, addDoc, serverTimestamp, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCnkFtEAlHmFecB4SCbqJZcmZ56GSC6cnk",
+            authDomain: "yemek-d7622.firebaseapp.com",
+            projectId: "yemek-d7622",
+            storageBucket: "yemek-d7622.firebasestorage.app",
+            messagingSenderId: "210743067656",
+            appId: "1:210743067656:web:f190db881c05107750fdbd",
+            measurementId: "G-08RGPQQK3F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Global export for main.js
+        window._fb = { db, auth, collection, query, onSnapshot, where, orderBy, limit, doc, addDoc, serverTimestamp, updateDoc };
+    </script>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">MisYemek</div>
+            </div>
+            
+            <nav class="nav-list">
+                <div class="nav-item">
+                    <a href="#" class="nav-link active" data-tab="overview">
+                        <i class="fa-solid fa-grid-2"></i>
+                        <span>Genel Bakış</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-tab="restaurants">
+                        <i class="fa-solid fa-store"></i>
+                        <span>Restoranlar</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-tab="users">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Kullanıcılar</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-tab="orders">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span>Siparişler</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-tab="overview">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>İstatistikler</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="index.html" class="nav-link" style="color: #ef4444;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Çıkış Yap</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1>Genel Bakış</h1>
+                    <p>Hoş geldin Taham, sistem sorunsuz çalışıyor.</p>
+                </div>
+                
+                <div class="user-nav">
+                    <div class="notif-btn">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notif-badge">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="avatar">T</div>
+                        <div class="user-info">
+                            <span class="name">Taham Admin</span>
+                            <span class="role">Süper Yönetici</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Tab Content: Overview -->
+            <div id="panel-overview" class="admin-panel-tab">
+                <!-- Stats Grid -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="label">Toplam Satış</span>
+                            <span class="value" id="stat-total-sales">₺0</span>
+                        </div>
+                        <div class="stat-icon primary">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="label">Aktif Siparişler</span>
+                            <span class="value" id="stat-active-orders">0</span>
+                        </div>
+                        <div class="stat-icon success">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="label">Yeni Kullanıcılar</span>
+                            <span class="value" id="stat-total-users">0</span>
+                        </div>
+                        <div class="stat-icon warning">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="label">İşletmeler</span>
+                            <span class="value" id="stat-total-restaurants">0</span>
+                        </div>
+                        <div class="stat-icon info">
+                            <i class="fa-solid fa-store"></i>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="dashboard-content-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                    <!-- Recent Orders Table -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>Son Siparişler</h2>
+                            <button class="action-btn" title="Tümünü Gör"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Sipariş No</th>
+                                    <th>Müşteri</th>
+                                    <th>Restoran</th>
+                                    <th>Tutar</th>
+                                    <th>Durum</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-orders-list">
+                                <!-- Veriler Real-time Gelecek -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Popular Restaurants -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>Popüler Restoranlar</h2>
+                        </div>
+                        <div style="padding: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=50&h=50&fit=crop" style="border-radius: 10px;">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 700; font-size: 0.9rem;">Pizza Palace</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);">1,240 Satış</div>
+                                </div>
+                                <div style="font-weight: 800; color: var(--primary);">₺45k</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=50&h=50&fit=crop" style="border-radius: 10px;">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 700; font-size: 0.9rem;">Burger House</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);">980 Satış</div>
+                                </div>
+                                <div style="font-weight: 800; color: var(--primary);">₺38k</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <img src="https://images.unsplash.com/photo-1645696301019-35adcc18fc21?w=50&h=50&fit=crop" style="border-radius: 10px;">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 700; font-size: 0.9rem;">Mis Kebap</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);">850 Satış</div>
+                                </div>
+                                <div style="font-weight: 800; color: var(--primary);">₺32k</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Restaurants -->
+            <div id="panel-restaurants" class="admin-panel-tab" style="display:none">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2>Tüm İşletmeler</h2>
+                        <button class="login-btn" style="margin-top:0; padding: 0.5rem 1rem;" onclick="showAddResModal()">+ Yeni Restoran</button>
+                    </div>
+                    <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
+                        <i class="fa-solid fa-store" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.2;"></i>
+                        <p>Restoran yönetim ekranı hazırlanıyor. <br> İstatistikler ana sayfada mevcuttur.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Users -->
+            <div id="panel-users" class="admin-panel-tab" style="display:none">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2>Sistemdeki Kullanıcılar</h2>
+                    </div>
+                    <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
+                        <i class="fa-solid fa-users" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.2;"></i>
+                        <p>Kullanıcı listesi admin yetkisiyle yüklenecektir.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Orders -->
+            <div id="panel-orders" class="admin-panel-tab" style="display:none">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2>Tüm Siparişler</h2>
+                    </div>
+                    <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
+                        <i class="fa-solid fa-receipt" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.2;"></i>
+                        <p>Gelişmiş sipariş filtreleme ekranı hazırlanıyor.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Restoran Ekleme Modalı -->
+    <div id="add-res-modal" class="login-page" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+        <div class="login-card" style="max-width: 500px; width: 90%;">
+            <div class="login-header">
+                <h2 style="color:var(--primary); font-size: 1.5rem; font-weight: 800;">Yeni İşletme Kaydı</h2>
+                <p>Sisteme yeni bir restoran tanımlayın</p>
+            </div>
+            <form id="add-res-form">
+                <div class="form-group">
+                    <label class="form-label">Restoran Adı</label>
+                    <input type="text" id="admin-res-name" class="form-input" required placeholder="Örn: Mis Kebap">
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom: 1.5rem;">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Yetkili Ad Soyad</label>
+                        <input type="text" id="admin-res-owner" class="form-input" required placeholder="Ad Soyad">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Kategori</label>
+                        <select id="admin-res-cat" class="form-input">
+                            <option>Burger</option><option>Pizza</option><option>Kebap</option><option>Döner</option>
+                            <option>Tatlı</option><option>Tavuk</option><option>Kahve</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">İşletme E-posta</label>
+                    <input type="email" id="admin-res-email" class="form-input" required placeholder="iletisim@restoran.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Geçici Şifre</label>
+                    <input type="text" id="admin-res-pass" class="form-input" value="Mis123456" required>
+                </div>
+                <div style="display:flex; gap:1rem; margin-top: 2rem;">
+                    <button type="submit" class="login-btn" style="margin-top:0">Restoranı Kaydet</button>
+                    <button type="button" class="login-btn" style="background:#64748b; margin-top:0" onclick="hideAddResModal()">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

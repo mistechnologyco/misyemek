@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MisYemek | Lezzet Kapında</title>
+    <title>MisYemek | Lezzet KapÄ±nda</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -194,7 +194,7 @@
 
         .empty-state { grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-light); font-size: 18px; }
 
-        /* MODALS (Değişmedi) */
+        /* MODALS (DeÄŸiÅŸmedi) */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: white; padding: 35px; border-radius: 24px; width: 90%; max-width: 600px; position: relative; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; top: 20px; right: 25px; font-size: 28px; cursor: pointer; color: #a0aec0; transition: 0.2s; z-index: 1001; }
@@ -231,12 +231,39 @@
         .address-item { padding: 20px; border: 2px solid var(--border); border-radius: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; background: var(--white); }
         .address-item:hover, .address-item.selected { border-color: var(--primary); background: #fff0f4; }
         
-        #map-container { width: 100%; height: 380px; border-radius: 16px; margin-top: 20px; border: 1px solid var(--border); }
+        #map-container { width: 100%; height: 380px; border-radius: 16px; margin-top: 20px; border: 1px solid var(--border); overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.05); }
         .leaflet-routing-container { display: none !important; }
-        .eta-box { background: #fff8eb; border: 1px solid #ffe8c3; padding: 15px; border-radius: 12px; margin-top: 15px; display: flex; align-items: center; gap: 15px; }
+        .eta-box { background: #fff8eb; border: 1px solid #ffe8c3; padding: 15px; border-radius: 12px; margin-top: 15px; display: flex; align-items: center; gap: 15px; animation: slideUp 0.5s ease-out; }
         .eta-box i { font-size: 24px; color: var(--warning); }
         .eta-details p { margin: 0; font-size: 14px; color: var(--text-light); }
         .eta-details h4 { margin: 0; font-size: 18px; color: var(--text-dark); }
+
+        /* PREMIUM ANIMATIONS & STYLES */
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes ripple { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
+
+        .pulse-text { animation: pulse 2s infinite ease-in-out; }
+        .smooth-modal { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .custom-spinner { display: inline-block; animation: rotate 1.5s linear infinite; color: var(--primary); font-size: 28px; }
+        .floating-icon { animation: float 3s infinite ease-in-out; }
+
+        /* STEPPER */
+        .order-stepper { display: flex; justify-content: space-between; margin: 25px 0; position: relative; padding: 0 10px; }
+        .order-stepper::before { content: ''; position: absolute; top: 15px; left: 10%; right: 10%; height: 3px; background: #eee; z-index: 1; }
+        .step-progress { position: absolute; top: 15px; left: 10%; width: 0%; height: 3px; background: var(--primary); z-index: 2; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .step { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+        .step-dot { width: 32px; height: 32px; background: white; border: 3px solid #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #ccc; transition: 0.3s; }
+        .step.active .step-dot { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 15px rgba(234, 0, 75, 0.2); }
+        .step.completed .step-dot { background: var(--primary); border-color: var(--primary); color: white; }
+        .step-label { font-size: 12px; font-weight: 700; color: #999; transition: 0.3s; }
+        .step.active .step-label { color: var(--primary); }
+
+        /* RIPPLE EFFECT FOR MAP */
+        .ripple-marker { background: var(--primary); border-radius: 50%; width: 12px; height: 12px; position: relative; }
+        .ripple-marker::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 3px solid var(--primary); border-radius: 50%; animation: ripple 2s infinite; }
 
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 15px; padding: 15px; }
@@ -249,46 +276,48 @@
 </head>
 <body>
 
-    <!-- LOGIN EKRANI (başlangıçta gizli) -->
+    <!-- LOGIN EKRANI (baÅŸlangÄ±Ã§ta gizli) -->
     <div id="login-screen" style="display:none;">
         <div class="login-box">
             <div class="login-logo">MisYemek</div>
-            <div class="login-sub">Lezzet kapında, hesabın hazır.</div>
+            <div class="login-sub">Lezzet kapÄ±nda, hesabÄ±n hazÄ±r.</div>
             <div class="login-tabs">
-                <div class="login-tab active" onclick="switchLoginTab('login')">Giriş Yap</div>
-                <div class="login-tab" onclick="switchLoginTab('register')">Kayıt Ol</div>
+                <div class="login-tab active" onclick="switchLoginTab('login')">GiriÅŸ Yap</div>
+                <div class="login-tab" onclick="switchLoginTab('register')">KayÄ±t Ol</div>
             </div>
 
-            <!-- GİRİŞ FORMU -->
+            <!-- GÄ°RÄ°Å FORMU -->
             <div class="login-form active" id="tab-login">
                 <div class="login-error" id="login-error"></div>
                 <div class="form-group"><label>E-posta</label><input type="email" id="login-email" placeholder="ornek@email.com"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="login-password" placeholder="Şifreniz"></div>
-                <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap</button>
+                <div class="form-group"><label>Åifre</label><input type="password" id="login-password" placeholder="Åifreniz"></div>
+                <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap</button>
             </div>
+
 
             <!-- KAYIT FORMU -->
             <div class="login-form" id="tab-register">
                 <div class="login-error" id="register-error"></div>
                 <div class="form-row">
-                    <div class="form-group"><label>Ad</label><input type="text" id="reg-firstname" placeholder="Adınız"></div>
-                    <div class="form-group"><label>Soyad</label><input type="text" id="reg-lastname" placeholder="Soyadınız"></div>
+                    <div class="form-group"><label>Ad</label><input type="text" id="reg-firstname" placeholder="AdÄ±nÄ±z"></div>
+                    <div class="form-group"><label>Soyad</label><input type="text" id="reg-lastname" placeholder="SoyadÄ±nÄ±z"></div>
                 </div>
                 <div class="form-group"><label>E-posta</label><input type="email" id="reg-email" placeholder="ornek@email.com"></div>
                 <div class="form-group"><label>Telefon</label><input type="tel" id="reg-phone" placeholder="+90 5xx xxx xx xx" maxlength="13" oninput="this.value=this.value.replace(/[^0-9+]/g,'').substring(0,13)"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="reg-password" placeholder="En az 8 karakter"></div>
+                <div class="form-group"><label>Åifre</label><input type="password" id="reg-password" placeholder="En az 8 karakter"></div>
                 <div class="login-divider">Teslimat Adresi</div>
-                <div class="form-group"><label>Adres Başlığı</label><input type="text" id="reg-addr-title" placeholder="Ev, İş..."></div>
-                <div class="form-group"><label>İl</label>
-                    <select id="reg-addr-city"><option>Ankara</option><option>İstanbul</option><option>İzmir</option><option>Bursa</option><option>Antalya</option><option>Adana</option><option>Konya</option><option>Gaziantep</option></select>
+                <div class="form-group"><label>Adres BaÅŸlÄ±ÄŸÄ±</label><input type="text" id="reg-addr-title" placeholder="Ev, Ä°ÅŸ..."></div>
+                <div class="form-group"><label>Ä°l</label>
+                    <select id="reg-addr-city"><option>Ankara</option><option>Ä°stanbul</option><option>Ä°zmir</option><option>Bursa</option><option>Antalya</option><option>Adana</option><option>Konya</option><option>Gaziantep</option></select>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>İlçe</label><input type="text" id="reg-addr-district" placeholder="İlçe"></div>
+                    <div class="form-group"><label>Ä°lÃ§e</label><input type="text" id="reg-addr-district" placeholder="Ä°lÃ§e"></div>
                     <div class="form-group"><label>Bina / Daire</label><input type="text" id="reg-addr-no" placeholder="No" maxlength="10" oninput="this.value=this.value.replace(/[^0-9\/\-]/g,'')"></div>
                 </div>
                 <div class="form-group"><label>Mahalle / Sokak</label><input type="text" id="reg-addr-street" placeholder="Mahalle, cadde, sokak"></div>
-                <button class="save-btn" onclick="doRegister()"><i class="fa-solid fa-user-plus"></i> Hesap Oluştur</button>
+                <button class="save-btn" onclick="doRegister()"><i class="fa-solid fa-user-plus"></i> Hesap OluÅŸtur</button>
             </div>
+
         </div>
     </div>
 
@@ -296,7 +325,7 @@
         <div class="logo">MisYemek</div>
         <div class="search-bar">
             <i class="fa-solid fa-magnifying-glass" style="color: var(--text-light)"></i>
-            <input type="text" placeholder="Canın ne çekiyor? (Örn: İskender, Burger...)">
+            <input type="text" placeholder="CanÄ±n ne Ã§ekiyor? (Ã–rn: Ä°skender, Burger...)">
         </div>
         <div class="header-actions">
             <button id="track-order-btn" class="cart-btn" style="display: none; background: var(--success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);" onclick="openTrackingModal()">
@@ -308,19 +337,19 @@
             </button>
             <button class="profile-btn" onclick="openProfile()" id="hesabim-btn" style="display:none;">
                 <div class="profile-avatar" id="header-avatar">?</div>
-                Hesabım
+                HesabÄ±m
             </button>
             <button class="cart-btn" id="login-header-btn" onclick="showLoginRequired()" style="background: var(--white); color: var(--primary); border: 2px solid var(--primary); box-shadow: none;">
-                <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap
+                <i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap
             </button>
         </div>
     </header>
 
-    <main>
+    <main id="customer-main">
         <div class="hero-banner">
             <div>
-                <h1>İlk siparişine özel %30 İndirim!</h1>
-                <p>MisYemek ile en sevdiğin lezzetler sıcak sıcak kapında.</p>
+                <h1>Ä°lk sipariÅŸine Ã¶zel %30 Ä°ndirim!</h1>
+                <p>MisYemek ile en sevdiÄŸin lezzetler sÄ±cak sÄ±cak kapÄ±nda.</p>
             </div>
             <img src="https://cdn-icons-png.flaticon.com/512/3081/3081333.png" alt="Yemek">
         </div>
@@ -337,11 +366,11 @@
                 <div class="cat-box" id="cat-Kebap" onclick="filterCategory('Kebap')">
                     <img src="https://images.unsplash.com/photo-1645696301019-35adcc18fc21?w=200&q=80"><span>Kebap</span>
                 </div>
-                <div class="cat-box" id="cat-Döner" onclick="filterCategory('Döner')">
-                    <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=200&q=80"><span>Döner</span>
+                <div class="cat-box" id="cat-DÃ¶ner" onclick="filterCategory('DÃ¶ner')">
+                    <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=200&q=80"><span>DÃ¶ner</span>
                 </div>
-                <div class="cat-box" id="cat-Tatlı" onclick="filterCategory('Tatlı')">
-                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=200&q=80"><span>Tatlı</span>
+                <div class="cat-box" id="cat-TatlÄ±" onclick="filterCategory('TatlÄ±')">
+                    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=200&q=80"><span>TatlÄ±</span>
                 </div>
                 <div class="cat-box" id="cat-Tavuk" onclick="filterCategory('Tavuk')">
                     <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=200&q=80"><span>Tavuk</span>
@@ -349,29 +378,74 @@
                 <div class="cat-box" id="cat-Kahve" onclick="filterCategory('Kahve')">
                     <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200&q=80"><span>Kahve</span>
                 </div>
-                <div class="cat-box" id="cat-Deniz Ürünleri" onclick="filterCategory('Deniz Ürünleri')">
+                <div class="cat-box" id="cat-Deniz ÃœrÃ¼nleri" onclick="filterCategory('Deniz ÃœrÃ¼nleri')">
                     <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=200&q=80"><span>Deniz</span>
                 </div>
                 <div class="cat-box" id="cat-Vegan" onclick="filterCategory('Vegan')">
                     <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80"><span>Vegan</span>
                 </div>
-                <div class="cat-box" id="cat-Çorba" onclick="filterCategory('Çorba')">
-                    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&q=80"><span>Çorba</span>
+                <div class="cat-box" id="cat-Ã‡orba" onclick="filterCategory('Ã‡orba')">
+                    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&q=80"><span>Ã‡orba</span>
                 </div>
-                <div class="cat-box" id="cat-Börek" onclick="filterCategory('Börek')">
-                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80"><span>Börek</span>
+                <div class="cat-box" id="cat-BÃ¶rek" onclick="filterCategory('BÃ¶rek')">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80"><span>BÃ¶rek</span>
                 </div>
             </div>
         </div>
 
         <div class="section-header">
-            <h2 id="section-title">Sana Özel Restoranlar</h2>
+            <h2 id="section-title">Sana Ã–zel Restoranlar</h2>
             <div class="status-badge" id="location-status">
-                <i class="fa-solid fa-location-crosshairs fa-spin"></i> Konum aranıyor...
+                <i class="fa-solid fa-location-crosshairs fa-spin"></i> Konum aranÄ±yor...
             </div>
         </div>
         
         <div class="restaurants-grid" id="restaurants-container"></div>
+    </main>
+
+    <!-- RESTORAN ANA EKRANI (DASHBOARD) -->
+    <main id="restaurant-main" style="display: none; max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <div style="margin-bottom: 30px;">
+            <h1 style="font-size: 28px; color: var(--text-dark);">HoÅŸ Geldiniz, <span id="dash-res-name" style="color: var(--primary);">Restoran</span></h1>
+            <p style="color: var(--text-light); margin-top: 5px;">Ä°ÅŸletmenizin bugÃ¼nkÃ¼ Ã¶zeti ve sipariÅŸ yÃ¶netimi.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+            <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); border-left: 5px solid var(--primary);">
+                <div style="color: var(--text-light); font-size: 14px; font-weight: 600; margin-bottom: 10px;">BEKLEYEN SÄ°PARÄ°Å</div>
+                <div style="font-size: 32px; font-weight: 900; color: var(--text-dark);">0</div>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); border-left: 5px solid var(--success);">
+                <div style="color: var(--text-light); font-size: 14px; font-weight: 600; margin-bottom: 10px;">BUGÃœNKÃœ KAZANÃ‡</div>
+                <div style="font-size: 32px; font-weight: 900; color: var(--text-dark);">â‚º0</div>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); border-left: 5px solid var(--warning);">
+                <div style="color: var(--text-light); font-size: 14px; font-weight: 600; margin-bottom: 10px;">PUAN</div>
+                <div style="font-size: 32px; font-weight: 900; color: var(--text-dark);">5.0 <i class="fa-solid fa-star" style="font-size: 20px; color: var(--warning);"></i></div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <div style="flex: 1 1 500px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    Yeni SipariÅŸler
+                    <span style="background: var(--primary); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px;">HenÃ¼z Yok</span>
+                </h3>
+                <div style="text-align: center; padding: 40px 0; color: var(--text-light);">
+                    <i class="fa-solid fa-clipboard-list" style="font-size: 48px; opacity: 0.2; margin-bottom: 15px;"></i>
+                    <p>Åu an iÃ§in bekleyen yeni sipariÅŸiniz bulunmuyor.</p>
+                </div>
+            </div>
+
+            <div style="flex: 1 1 300px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 20px;">HÄ±zlÄ± Ä°ÅŸlemler</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button style="width: 100%; padding: 15px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 15px;" onclick="openResMenuManager()"><i class="fa-solid fa-plus" style="color: var(--primary); width: 20px;"></i> ÃœrÃ¼n Ekle / MenÃ¼yÃ¼ DÃ¼zenle</button>
+                    <button style="width: 100%; padding: 15px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 15px;" onclick="openCampaignManager()"><i class="fa-solid fa-bullhorn" style="color: var(--primary); width: 20px;"></i> Kampanya OluÅŸtur</button>
+                    <button id="btn-toggle-store" style="width: 100%; padding: 15px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 15px;" onclick="toggleStoreStatus()"><i class="fa-solid fa-store-slash" style="color: var(--text-light); width: 20px;"></i> DÃ¼kkanÄ± Kapat</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <div class="modal-overlay" id="menu-modal">
@@ -382,16 +456,93 @@
         </div>
     </div>
 
+    <!-- RESTORAN MENÃœ YÃ–NETÄ°M MODALI -->
+    <div class="modal-overlay" id="res-manage-menu-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+            <h2 style="margin-bottom: 20px;">MenÃ¼yÃ¼ DÃ¼zenle</h2>
+            
+            <div id="res-menu-list" style="display:flex; flex-direction:column; gap:15px; max-height:300px; overflow-y:auto; margin-bottom:20px;">
+                <!-- ÃœrÃ¼nler -->
+            </div>
+            
+            <div style="background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 10px; font-size: 16px;">Yeni ÃœrÃ¼n Ekle</h3>
+                <input type="text" id="res-new-item-name" placeholder="ÃœrÃ¼n AdÄ±" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--border); border-radius:8px;">
+                <input type="text" id="res-new-item-desc" placeholder="AÃ§Ä±klama" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--border); border-radius:8px;">
+                <input type="number" id="res-new-item-price" placeholder="Fiyat (TL)" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--border); border-radius:8px;">
+                <input type="text" id="res-new-item-img" placeholder="GÃ¶rsel URL (Opsiyonel)" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--border); border-radius:8px;">
+                <button onclick="addResMenuItem()" style="width:100%; background:var(--primary); color:white; padding:10px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Ekle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESTORAN KAMPANYA MODALI -->
+    <div class="modal-overlay" id="res-campaign-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+            <h2 style="margin-bottom: 20px;">Kampanya OluÅŸtur</h2>
+            
+            <div style="background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px;">
+                <h3 style="margin-bottom: 10px; font-size: 16px;">Mevcut Kampanya</h3>
+                <p id="current-campaign-text" style="color:var(--text-light); margin-bottom: 10px;">Åu an aktif bir kampanyanÄ±z bulunmuyor.</p>
+                <button id="btn-cancel-campaign" onclick="cancelCampaign()" style="display:none; background:#ef4444; color:white; padding:8px 15px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">KampanyayÄ± Bitir</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="form-group">
+                    <label>Kampanya Tipi</label>
+                    <select id="campaign-type" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px;">
+                        <option value="discount_percentage">TÃ¼m MenÃ¼de YÃ¼zde Ä°ndirim (%)</option>
+                        <option value="discount_amount">Sepette Net Ä°ndirim (â‚º)</option>
+                        <option value="free_delivery">Ãœcretsiz Teslimat</option>
+                    </select>
+                </div>
+                <div class="form-group" id="campaign-value-group">
+                    <label>Ä°ndirim MiktarÄ±</label>
+                    <input type="number" id="campaign-value" placeholder="Ã–rn: 20" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px;">
+                </div>
+                <button onclick="saveCampaign()" style="width:100%; background:var(--primary); color:white; padding:12px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;"><i class="fa-solid fa-bullhorn"></i> KampanyayÄ± BaÅŸlat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESTORAN RAPORLAR MODALI -->
+    <div class="modal-overlay" id="res-reports-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+            <h2 style="margin-bottom: 20px;">Raporlar & KazanÃ§</h2>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <div style="background:var(--bg-color); padding:20px; border-radius:12px; text-align:center; border:1px solid var(--border);">
+                    <div style="font-size:13px; color:var(--text-light); margin-bottom:5px;">Toplam KazanÃ§</div>
+                    <div style="font-size:24px; font-weight:900; color:var(--success);" id="report-total-earned">â‚º0</div>
+                </div>
+                <div style="background:var(--bg-color); padding:20px; border-radius:12px; text-align:center; border:1px solid var(--border);">
+                    <div style="font-size:13px; color:var(--text-light); margin-bottom:5px;">Toplam SipariÅŸ</div>
+                    <div style="font-size:24px; font-weight:900; color:var(--primary);" id="report-total-orders">0</div>
+                </div>
+            </div>
+
+            <div style="background: white; border:1px solid var(--border); border-radius:12px; padding:15px;">
+                <h3 style="margin-bottom: 15px; font-size: 16px;">Son SipariÅŸler</h3>
+                <div id="report-recent-orders" style="display:flex; flex-direction:column; gap:10px;">
+                    <p style="color:var(--text-light); text-align:center; font-size:14px;">HenÃ¼z tamamlanmÄ±ÅŸ sipariÅŸ bulunmuyor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="cart-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModals()">&times;</span>
             <h2 style="margin-bottom: 20px; font-size: 24px;">Sepetim</h2>
             <div id="cart-items-container"></div>
             <div class="cart-total" style="display: none;" id="cart-total-section">
-                <span>Ödenecek Tutar:</span>
+                <span>Ã–denecek Tutar:</span>
                 <span id="cart-total-price">0 TL</span>
             </div>
-            <button class="checkout-btn" id="checkout-btn" style="display: none;" onclick="openAddressSelection()">Siparişi Onayla</button>
+            <button class="checkout-btn" id="checkout-btn" style="display: none;" onclick="openAddressSelection()">SipariÅŸi Onayla</button>
         </div>
     </div>
 
@@ -399,9 +550,9 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeModals()">&times;</span>
             <h2 style="margin-bottom: 10px;">Teslimat Adresi</h2>
-            <p style="color: var(--text-light); font-size: 14px;">Lütfen siparişin teslim edileceği adresi seçin.</p>
+            <p style="color: var(--text-light); font-size: 14px;">LÃ¼tfen sipariÅŸin teslim edileceÄŸi adresi seÃ§in.</p>
             <div class="address-list" id="delivery-address-list"></div>
-            <button class="checkout-btn" onclick="startOrderSimulation()">Bu Adrese Söyle</button>
+            <button class="checkout-btn" onclick="startOrderSimulation()">Bu Adrese SÃ¶yle</button>
         </div>
     </div>
 
@@ -412,62 +563,76 @@
             <!-- ANA PANEL -->
             <div id="profile-main" class="sub-panel active">
                 <div class="profile-header">
-                    <div class="profile-avatar-large" id="profile-avatar-display" onclick="openSubPanel('edit-profile')" title="Profili düzenle">?</div>
+                    <div class="profile-avatar-large" id="profile-avatar-display" onclick="openSubPanel('edit-profile')" title="Profili dÃ¼zenle">?</div>
                     <div>
-                        <h2 id="profile-display-name">Yükleniyor...</h2>
+                        <h2 id="profile-display-name">YÃ¼kleniyor...</h2>
                         <p id="profile-display-email"></p>
                         <p style="margin-top:4px;font-size:13px;opacity:0.75;" id="profile-display-phone"></p>
                     </div>
                 </div>
                 <div class="profile-stats">
-                    <div class="stat-card"><div class="stat-num" id="stat-orders">0</div><div class="stat-label">Sipariş</div></div>
+                    <div class="stat-card"><div class="stat-num" id="stat-orders">0</div><div class="stat-label">SipariÅŸ</div></div>
                     <div class="stat-card"><div class="stat-num">4.9</div><div class="stat-label">Puan</div></div>
                     <div class="stat-card"><div class="stat-num">120</div><div class="stat-label">MisKoin</div></div>
                 </div>
                 <div class="profile-menu-list">
                     <div class="profile-menu-item" onclick="openSubPanel('edit-profile')">
-                        <i class="fa-solid fa-user icon"></i><span>Profili Düzenle</span><i class="fa-solid fa-chevron-right arrow"></i>
+                        <i class="fa-solid fa-user icon"></i><span>Profili DÃ¼zenle</span><i class="fa-solid fa-chevron-right arrow"></i>
                     </div>
-                    <div class="profile-menu-item" onclick="openSubPanel('addresses')">
-                        <i class="fa-solid fa-location-dot icon"></i><span>Kayıtlı Adreslerim</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    
+                    <!-- CUSTOMER ONLY -->
+                    <div class="profile-menu-item customer-only" onclick="openSubPanel('addresses')">
+                        <i class="fa-solid fa-location-dot icon"></i><span>KayÄ±tlÄ± Adreslerim</span><i class="fa-solid fa-chevron-right arrow"></i>
                     </div>
-                    <div class="profile-menu-item" onclick="openSubPanel('payment')">
+                    <div class="profile-menu-item customer-only" onclick="openSubPanel('payment')">
                         <i class="fa-solid fa-credit-card icon"></i><span>Banka / Kart Bilgileri</span><i class="fa-solid fa-chevron-right arrow"></i>
                     </div>
-                    <div class="profile-menu-item" onclick="openSubPanel('orders')">
-                        <i class="fa-solid fa-clock-rotate-left icon"></i><span>Geçmiş Siparişlerim</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    <div class="profile-menu-item customer-only" onclick="openSubPanel('orders')">
+                        <i class="fa-solid fa-clock-rotate-left icon"></i><span>GeÃ§miÅŸ SipariÅŸlerim</span><i class="fa-solid fa-chevron-right arrow"></i>
                     </div>
+
+                    <!-- RESTAURANT ONLY -->
+                    <div class="profile-menu-item restaurant-only" style="display:none;" onclick="closeModals()">
+                        <i class="fa-solid fa-list-check icon"></i><span>Gelen SipariÅŸler</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item restaurant-only" style="display:none;" onclick="openResMenuManager()">
+                        <i class="fa-solid fa-utensils icon"></i><span>MenÃ¼ YÃ¶netimi</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="profile-menu-item restaurant-only" style="display:none;" onclick="openResReports()">
+                        <i class="fa-solid fa-chart-line icon"></i><span>Raporlar & KazanÃ§</span><i class="fa-solid fa-chevron-right arrow"></i>
+                    </div>
+
                     <div class="profile-menu-item" onclick="openSubPanel('notifications')">
-                        <i class="fa-solid fa-bell icon"></i><span>Bildirim Ayarları</span><i class="fa-solid fa-chevron-right arrow"></i>
+                        <i class="fa-solid fa-bell icon"></i><span>Bildirim AyarlarÄ±</span><i class="fa-solid fa-chevron-right arrow"></i>
                     </div>
                     <div class="profile-menu-item" onclick="openSubPanel('support')">
-                        <i class="fa-solid fa-headset icon"></i><span>Yardım & Destek</span><i class="fa-solid fa-chevron-right arrow"></i>
+                        <i class="fa-solid fa-headset icon"></i><span>YardÄ±m & Destek</span><i class="fa-solid fa-chevron-right arrow"></i>
                     </div>
                     <div class="profile-menu-item logout-item" onclick="doLogout()">
-                        <i class="fa-solid fa-right-from-bracket"></i><span>Çıkış Yap</span><i class="fa-solid fa-chevron-right arrow"></i>
+                        <i class="fa-solid fa-right-from-bracket"></i><span>Ã‡Ä±kÄ±ÅŸ Yap</span><i class="fa-solid fa-chevron-right arrow"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- PROFİL DÜZENLE -->
+            <!-- PROFÄ°L DÃœZENLE -->
             <div id="profile-edit-profile" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
-                <h3>Profili Düzenle</h3>
+                <h3>Profili DÃ¼zenle</h3>
                 <div class="form-row">
                     <div class="form-group"><label>Ad</label><input type="text" id="edit-firstname" value=""></div>
                     <div class="form-group"><label>Soyad</label><input type="text" id="edit-lastname" value=""></div>
                 </div>
                 <div class="form-group"><label>E-posta</label><input type="email" id="edit-email" value=""></div>
                 <div class="form-group"><label>Telefon</label><input type="tel" id="edit-phone" value=""></div>
-                <div class="form-group"><label>Doğum Tarihi</label><input type="date" id="edit-birthdate" value=""></div>
-                <div class="form-group"><label>Yeni Şifre (opsiyonel)</label><input type="password" id="edit-password" placeholder="Değiştirmek için girin"></div>
-                <button class="save-btn" onclick="saveProfile()"><i class="fa-solid fa-check"></i> Değişiklikleri Kaydet</button>
+                <div class="form-group"><label>DoÄŸum Tarihi</label><input type="date" id="edit-birthdate" value=""></div>
+                <div class="form-group"><label>Yeni Åifre (opsiyonel)</label><input type="password" id="edit-password" placeholder="DeÄŸiÅŸtirmek iÃ§in girin"></div>
+                <button class="save-btn" onclick="saveProfile()"><i class="fa-solid fa-check"></i> DeÄŸiÅŸiklikleri Kaydet</button>
             </div>
 
             <!-- ADRESLER -->
             <div id="profile-addresses" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
-                <h3>Kayıtlı Adreslerim</h3>
+                <h3>KayÄ±tlÄ± Adreslerim</h3>
                 <div id="address-cards-list"></div>
                 <button class="add-new-btn" onclick="openSubPanel('add-address')"><i class="fa-solid fa-plus"></i> Yeni Adres Ekle</button>
             </div>
@@ -476,14 +641,14 @@
             <div id="profile-add-address" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('addresses')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
                 <h3>Yeni Adres Ekle</h3>
-                <div class="form-group"><label>Adres Başlığı</label><input type="text" id="addr-title" placeholder="Ev, İş, Diğer..."></div>
-                <div class="form-group"><label>İl</label>
-                    <select id="addr-city"><option>Ankara</option><option>İstanbul</option><option>İzmir</option><option>Bursa</option><option>Antalya</option></select>
+                <div class="form-group"><label>Adres BaÅŸlÄ±ÄŸÄ±</label><input type="text" id="addr-title" placeholder="Ev, Ä°ÅŸ, DiÄŸer..."></div>
+                <div class="form-group"><label>Ä°l</label>
+                    <select id="addr-city"><option>Ankara</option><option>Ä°stanbul</option><option>Ä°zmir</option><option>Bursa</option><option>Antalya</option></select>
                 </div>
-                <div class="form-group"><label>İlçe</label><input type="text" id="addr-district" placeholder="İlçe"></div>
+                <div class="form-group"><label>Ä°lÃ§e</label><input type="text" id="addr-district" placeholder="Ä°lÃ§e"></div>
                 <div class="form-group"><label>Mahalle / Sokak</label><input type="text" id="addr-street" placeholder="Mahalle, cadde, sokak"></div>
                 <div class="form-group"><label>Bina No / Daire</label><input type="text" id="addr-no" placeholder="Bina no, daire no"></div>
-                <div class="form-group"><label>Tarif (opsiyonel)</label><input type="text" id="addr-desc" placeholder="Kapıcıya bırakın vs."></div>
+                <div class="form-group"><label>Tarif (opsiyonel)</label><input type="text" id="addr-desc" placeholder="KapÄ±cÄ±ya bÄ±rakÄ±n vs."></div>
                 <button class="save-btn" onclick="saveAddress()"><i class="fa-solid fa-check"></i> Adresi Kaydet</button>
             </div>
 
@@ -510,8 +675,8 @@
                         <span id="card-preview-exp">MM/YY</span>
                     </div>
                 </div>
-                <div class="form-group"><label>Kart Üzerindeki İsim</label><input type="text" id="card-name" placeholder="Ad Soyad" oninput="document.getElementById('card-preview-name').innerText=this.value||'AD SOYAD'"></div>
-                <div class="form-group"><label>Kart Numarası</label><input type="text" id="card-num-input" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNum(this)"></div>
+                <div class="form-group"><label>Kart Ãœzerindeki Ä°sim</label><input type="text" id="card-name" placeholder="Ad Soyad" oninput="document.getElementById('card-preview-name').innerText=this.value||'AD SOYAD'"></div>
+                <div class="form-group"><label>Kart NumarasÄ±</label><input type="text" id="card-num-input" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNum(this)"></div>
                 <div class="form-row">
                     <div class="form-group"><label>Son Kullanma</label><input type="text" id="card-exp" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"></div>
                     <div class="form-group"><label>CVV</label><input type="text" id="card-cvv" placeholder="***" maxlength="3"></div>
@@ -521,58 +686,58 @@
                         <option value="visa">Visa</option><option value="mastercard">Mastercard</option><option value="troy">Troy</option>
                     </select>
                 </div>
-                <button class="save-btn" onclick="saveCard()"><i class="fa-solid fa-lock"></i> Kartı Güvenli Kaydet</button>
+                <button class="save-btn" onclick="saveCard()"><i class="fa-solid fa-lock"></i> KartÄ± GÃ¼venli Kaydet</button>
             </div>
 
-            <!-- GEÇMİŞ SİPARİŞLER -->
+            <!-- GEÃ‡MÄ°Å SÄ°PARÄ°ÅLER -->
             <div id="profile-orders" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
-                <h3>Geçmiş Siparişlerim</h3>
+                <h3>GeÃ§miÅŸ SipariÅŸlerim</h3>
                 <div id="order-history-list"></div>
             </div>
 
-            <!-- BİLDİRİM AYARLARI -->
+            <!-- BÄ°LDÄ°RÄ°M AYARLARI -->
             <div id="profile-notifications" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
-                <h3>Bildirim Ayarları</h3>
+                <h3>Bildirim AyarlarÄ±</h3>
                 <div style="display:flex;flex-direction:column;gap:12px;margin-top:5px;">
-                    <div class="notif-row"><div><strong>Sipariş Güncellemeleri</strong><p>Siparişin durumu değiştiğinde bildir</p></div><label class="toggle"><input type="checkbox" checked id="notif-order"><span class="slider"></span></label></div>
-                    <div class="notif-row"><div><strong>Kampanya & İndirimler</strong><p>Özel teklifler ve indirimler</p></div><label class="toggle"><input type="checkbox" checked id="notif-promo"><span class="slider"></span></label></div>
-                    <div class="notif-row"><div><strong>Kurye Konumu</strong><p>Kurye yaklaştığında bildir</p></div><label class="toggle"><input type="checkbox" checked id="notif-courier"><span class="slider"></span></label></div>
-                    <div class="notif-row"><div><strong>Yeni Restoranlar</strong><p>Yakınında yeni restoran açıldığında</p></div><label class="toggle"><input type="checkbox" id="notif-new"><span class="slider"></span></label></div>
-                    <div class="notif-row"><div><strong>E-posta Bildirimleri</strong><p>Haftalık özet ve fırsatlar</p></div><label class="toggle"><input type="checkbox" id="notif-email"><span class="slider"></span></label></div>
-                    <div class="notif-row"><div><strong>SMS Bildirimleri</strong><p>Sipariş onayı SMS ile</p></div><label class="toggle"><input type="checkbox" checked id="notif-sms"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>SipariÅŸ GÃ¼ncellemeleri</strong><p>SipariÅŸin durumu deÄŸiÅŸtiÄŸinde bildir</p></div><label class="toggle"><input type="checkbox" checked id="notif-order"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>Kampanya & Ä°ndirimler</strong><p>Ã–zel teklifler ve indirimler</p></div><label class="toggle"><input type="checkbox" checked id="notif-promo"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>Kurye Konumu</strong><p>Kurye yaklaÅŸtÄ±ÄŸÄ±nda bildir</p></div><label class="toggle"><input type="checkbox" checked id="notif-courier"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>Yeni Restoranlar</strong><p>YakÄ±nÄ±nda yeni restoran aÃ§Ä±ldÄ±ÄŸÄ±nda</p></div><label class="toggle"><input type="checkbox" id="notif-new"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>E-posta Bildirimleri</strong><p>HaftalÄ±k Ã¶zet ve fÄ±rsatlar</p></div><label class="toggle"><input type="checkbox" id="notif-email"><span class="slider"></span></label></div>
+                    <div class="notif-row"><div><strong>SMS Bildirimleri</strong><p>SipariÅŸ onayÄ± SMS ile</p></div><label class="toggle"><input type="checkbox" checked id="notif-sms"><span class="slider"></span></label></div>
                 </div>
-                <button class="save-btn" style="margin-top:20px;" onclick="showToast('Bildirim ayarları kaydedildi ✓')"><i class="fa-solid fa-check"></i> Kaydet</button>
+                <button class="save-btn" style="margin-top:20px;" onclick="showToast('Bildirim ayarlarÄ± kaydedildi âœ“')"><i class="fa-solid fa-check"></i> Kaydet</button>
             </div>
 
             <!-- YARDIM & DESTEK -->
             <div id="profile-support" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri</div>
-                <h3>Yardım & Destek</h3>
+                <h3>YardÄ±m & Destek</h3>
                 <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
                     <div class="support-item" onclick="toggleFaq(this)">
-                        <div class="support-item-head"><span>Siparişimi nasıl iptal edebilirim?</span><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-body">Sipariş onaylanmadan önce sepet ekranından iptal edebilirsiniz. Onaylandıktan sonra destek hattımızı arayın.</div>
+                        <div class="support-item-head"><span>SipariÅŸimi nasÄ±l iptal edebilirim?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">SipariÅŸ onaylanmadan Ã¶nce sepet ekranÄ±ndan iptal edebilirsiniz. OnaylandÄ±ktan sonra destek hattÄ±mÄ±zÄ± arayÄ±n.</div>
                     </div>
                     <div class="support-item" onclick="toggleFaq(this)">
-                        <div class="support-item-head"><span>Ödeme sorunum var, ne yapmalıyım?</span><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-body">Ödeme sorunları için 7/24 destek hattımız: <strong>0850 123 45 67</strong> veya uygulama içi sohbet.</div>
+                        <div class="support-item-head"><span>Ã–deme sorunum var, ne yapmalÄ±yÄ±m?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">Ã–deme sorunlarÄ± iÃ§in 7/24 destek hattÄ±mÄ±z: <strong>0850 123 45 67</strong> veya uygulama iÃ§i sohbet.</div>
                     </div>
                     <div class="support-item" onclick="toggleFaq(this)">
-                        <div class="support-item-head"><span>Siparişim geç geliyor, ne yapabilirim?</span><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-body">Harita ekranından kurye konumunu takip edebilirsiniz. Aşırı gecikmelerde destek hattını arayın.</div>
+                        <div class="support-item-head"><span>SipariÅŸim geÃ§ geliyor, ne yapabilirim?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">Harita ekranÄ±ndan kurye konumunu takip edebilirsiniz. AÅŸÄ±rÄ± gecikmelerde destek hattÄ±nÄ± arayÄ±n.</div>
                     </div>
                     <div class="support-item" onclick="toggleFaq(this)">
-                        <div class="support-item-head"><span>Yanlış ürün geldi, ne yapmalıyım?</span><i class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-body">Fotoğraf çekip destek hattına iletin. 24 saat içinde iade veya yeniden gönderim sağlanır.</div>
+                        <div class="support-item-head"><span>YanlÄ±ÅŸ Ã¼rÃ¼n geldi, ne yapmalÄ±yÄ±m?</span><i class="fa-solid fa-chevron-down"></i></div>
+                        <div class="faq-body">FotoÄŸraf Ã§ekip destek hattÄ±na iletin. 24 saat iÃ§inde iade veya yeniden gÃ¶nderim saÄŸlanÄ±r.</div>
                     </div>
                 </div>
                 <div style="background:var(--bg-color);border-radius:16px;padding:20px;text-align:center;">
-                    <p style="font-size:14px;color:var(--text-light);margin-bottom:15px;">Sorunun hâlâ çözülmedi mi?</p>
+                    <p style="font-size:14px;color:var(--text-light);margin-bottom:15px;">Sorunun hÃ¢lÃ¢ Ã§Ã¶zÃ¼lmedi mi?</p>
                     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                        <button class="save-btn" style="width:auto;padding:12px 20px;font-size:14px;" onclick="showToast('Destek hattı: 0850 123 45 67')"><i class="fa-solid fa-phone"></i> Bizi Ara</button>
-                        <button class="save-btn" style="width:auto;padding:12px 20px;font-size:14px;background:#25d366;" onclick="showToast('WhatsApp desteği başlatılıyor...')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                        <button class="save-btn" style="width:auto;padding:12px 20px;font-size:14px;" onclick="showToast('Destek hattÄ±: 0850 123 45 67')"><i class="fa-solid fa-phone"></i> Bizi Ara</button>
+                        <button class="save-btn" style="width:auto;padding:12px 20px;font-size:14px;background:#25d366;" onclick="showToast('WhatsApp desteÄŸi baÅŸlatÄ±lÄ±yor...')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
                     </div>
                 </div>
             </div>
@@ -583,20 +748,45 @@
     <div class="success-toast" id="success-toast"></div>
 
     <div class="modal-overlay" id="tracking-modal">
-        <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-content smooth-modal" style="max-width: 620px; padding: 40px 30px;">
             <span class="close-btn" onclick="closeModals()">&times;</span>
-            <div style="text-align: center;">
-                <h3 id="order-status-text" style="color: var(--primary); font-size: 24px; margin-bottom: 5px;">Sipariş Hazırlanıyor... <i class="fa-solid fa-spinner fa-spin"></i></h3>
-                <p id="time-text" style="color: var(--text-light); font-size: 15px;">Restoran siparişi onayladı, rota çiziliyor...</p>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div class="custom-spinner" style="margin-bottom: 15px;">
+                    <i class="fa-solid fa-circle-notch"></i>
+                </div>
+                <h3 id="order-status-text" class="pulse-text" style="color: var(--text-dark); font-size: 26px; font-weight: 900; margin-bottom: 8px;">SipariÅŸ HazÄ±rlanÄ±yor...</h3>
+                <p id="time-text" style="color: var(--text-light); font-size: 15px; font-weight: 500;">Lezzetiniz Ã¶zenle hazÄ±rlanÄ±yor, kuryemiz bekliyor.</p>
             </div>
-            <div class="eta-box" id="eta-box" style="display: none;">
-                <i class="fa-regular fa-clock"></i>
-                <div class="eta-details">
-                    <p>Tahmini Teslimat Süresi</p>
-                    <h4 id="dynamic-eta">Hesaplanıyor...</h4>
+
+            <div class="order-stepper">
+                <div class="step-progress" id="order-progress-bar"></div>
+                <div class="step completed" id="step-1">
+                    <div class="step-dot"><i class="fa-solid fa-check"></i></div>
+                    <span class="step-label">AlÄ±ndÄ±</span>
+                </div>
+                <div class="step active" id="step-2">
+                    <div class="step-dot"><i class="fa-solid fa-utensils"></i></div>
+                    <span class="step-label">HazÄ±rlanÄ±yor</span>
+                </div>
+                <div class="step" id="step-3">
+                    <div class="step-dot"><i class="fa-solid fa-motorcycle"></i></div>
+                    <span class="step-label">Yolda</span>
+                </div>
+                <div class="step" id="step-4">
+                    <div class="step-dot"><i class="fa-solid fa-house-chimney"></i></div>
+                    <span class="step-label">Teslimat</span>
                 </div>
             </div>
-            <div id="map-container"></div>
+
+            <div class="eta-box" id="eta-box" style="display: none; background: linear-gradient(to right, #fff8eb, #fff); border: 1.5px solid #ffe8c3; box-shadow: 0 4px 15px rgba(255, 158, 11, 0.05);">
+                <i class="fa-regular fa-clock"></i>
+                <div class="eta-details">
+                    <p style="text-transform: uppercase; letter-spacing: 1px; font-weight: 800; font-size: 11px;">Tahmini Teslimat</p>
+                    <h4 id="dynamic-eta" style="font-size: 20px; font-weight: 900;">15 Dakika</h4>
+                </div>
+            </div>
+            <div id="map-container" style="height: 350px; margin-top: 25px; border: 2px solid #f8f9fa;"></div>
         </div>
     </div>
 
@@ -623,7 +813,7 @@
         const auth = getAuth(app);
         const db   = getFirestore(app);
 
-        // Global fonksiyonları window'a bağla (HTML onclick için)
+        // Global fonksiyonlarÄ± window'a baÄŸla (HTML onclick iÃ§in)
         window._fb = { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, doc, setDoc, getDoc, updateDoc };
 
         let userLat = 39.9207; 
@@ -635,72 +825,72 @@
         let map, routeControl, kuryeMarker, animasyonInterval;
         let totalOrderCount = 0;
 
-        // 14 FARKLI RESTORAN VE MENÜSÜ EKLENDİ
+        // 14 FARKLI RESTORAN VE MENÃœSÃœ EKLENDÄ°
         const resTemplates = [
             { name: "Burger Station", type: "Burger", sponsor: true, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=500&q=80",
-                menu: [ { id: 101, name: "Texas Burger", price: 210, desc: "Füme et, cheddar", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150" } ] },
+                menu: [ { id: 101, name: "Texas Burger", price: 210, desc: "FÃ¼me et, cheddar", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150" } ] },
             { name: "Smash Burger Co.", type: "Burger", sponsor: false, img: "https://images.unsplash.com/photo-1586816001966-79b736744398?w=500&q=80",
-                menu: [ { id: 102, name: "Double Smash", price: 240, desc: "Çift köfte, özel sos", img: "https://images.unsplash.com/photo-1594212691516-e82fa43ba62a?w=150" } ] },
+                menu: [ { id: 102, name: "Double Smash", price: 240, desc: "Ã‡ift kÃ¶fte, Ã¶zel sos", img: "https://images.unsplash.com/photo-1594212691516-e82fa43ba62a?w=150" } ] },
             
             { name: "Napoli Pizza", type: "Pizza", sponsor: false, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&q=80",
-                menu: [ { id: 201, name: "Margarita Pizza", price: 190, desc: "Mozzarella, fesleğen", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=150" } ] },
+                menu: [ { id: 201, name: "Margarita Pizza", price: 190, desc: "Mozzarella, fesleÄŸen", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=150" } ] },
             { name: "Pizza Roma", type: "Pizza", sponsor: true, img: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=500&q=80",
                 menu: [ { id: 202, name: "Pepperoni", price: 230, desc: "Bol pepperoni", img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=150" } ] },
             
             { name: "Usta Kebap", type: "Kebap", sponsor: true, img: "https://images.unsplash.com/photo-1645696301019-35adcc18fc21?w=500&q=80",
-                menu: [ { id: 301, name: "Adana Kebap", price: 220, desc: "Zırh kıyması", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=150" } ] },
-            { name: "Antep Sofrası", type: "Kebap", sponsor: false, img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500&q=80",
-                menu: [ { id: 302, name: "Urfa Porsiyon", price: 210, desc: "Acısız kebap", img: "https://images.unsplash.com/photo-1654877395066-5867ec6b80d0?w=150" } ] },
+                menu: [ { id: 301, name: "Adana Kebap", price: 220, desc: "ZÄ±rh kÄ±ymasÄ±", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=150" } ] },
+            { name: "Antep SofrasÄ±", type: "Kebap", sponsor: false, img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=500&q=80",
+                menu: [ { id: 302, name: "Urfa Porsiyon", price: 210, desc: "AcÄ±sÄ±z kebap", img: "https://images.unsplash.com/photo-1654877395066-5867ec6b80d0?w=150" } ] },
             
-            { name: "Sokak Dönercisi", type: "Döner", sponsor: false, img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=500&q=80",
-                menu: [ { id: 401, name: "Et Döner Dürüm", price: 160, desc: "Özel lavaş arası", img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=150" } ] },
-            { name: "Tarihi Dönerci", type: "Döner", sponsor: true, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
-                menu: [ { id: 402, name: "Tavuk Döner", price: 110, desc: "Bol soslu", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=150" } ] },
+            { name: "Sokak DÃ¶nercisi", type: "DÃ¶ner", sponsor: false, img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=500&q=80",
+                menu: [ { id: 401, name: "Et DÃ¶ner DÃ¼rÃ¼m", price: 160, desc: "Ã–zel lavaÅŸ arasÄ±", img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=150" } ] },
+            { name: "Tarihi DÃ¶nerci", type: "DÃ¶ner", sponsor: true, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
+                menu: [ { id: 402, name: "Tavuk DÃ¶ner", price: 110, desc: "Bol soslu", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=150" } ] },
             
-            { name: "Tatlıcı Bey", type: "Tatlı", sponsor: true, img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&q=80",
-                menu: [ { id: 501, name: "Soğuk Baklava", price: 250, desc: "Fıstıklı, sütlü", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=150" } ] },
-            { name: "Çikolata Atölyesi", type: "Tatlı", sponsor: false, img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500&q=80",
-                menu: [ { id: 502, name: "San Sebastian", price: 120, desc: "Çikolata soslu", img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=150" } ] },
+            { name: "TatlÄ±cÄ± Bey", type: "TatlÄ±", sponsor: true, img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&q=80",
+                menu: [ { id: 501, name: "SoÄŸuk Baklava", price: 250, desc: "FÄ±stÄ±klÄ±, sÃ¼tlÃ¼", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=150" } ] },
+            { name: "Ã‡ikolata AtÃ¶lyesi", type: "TatlÄ±", sponsor: false, img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500&q=80",
+                menu: [ { id: 502, name: "San Sebastian", price: 120, desc: "Ã‡ikolata soslu", img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=150" } ] },
 
-            { name: "Piliç Dünyası", type: "Tavuk", sponsor: false, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
+            { name: "PiliÃ§ DÃ¼nyasÄ±", type: "Tavuk", sponsor: false, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
                 menu: [ { id: 601, name: "Kekikli Tavuk", price: 180, desc: "Makarna ve salata ile", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=150" } ] },
-            { name: "Çıtır Kova", type: "Tavuk", sponsor: true, img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500&q=80",
-                menu: [ { id: 602, name: "Karışık Kova", price: 210, desc: "Kanat ve but", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=150" } ] },
+            { name: "Ã‡Ä±tÄ±r Kova", type: "Tavuk", sponsor: true, img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500&q=80",
+                menu: [ { id: 602, name: "KarÄ±ÅŸÄ±k Kova", price: 210, desc: "Kanat ve but", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=150" } ] },
 
-            { name: "Kahve Durağı", type: "Kahve", sponsor: false, img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80",
-                menu: [ { id: 701, name: "Iced Latte", price: 85, desc: "Buz gibi soğuk", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" },
-                        { id: 703, name: "Cappuccino", price: 75, desc: "Köpüklü espresso", img: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=150" } ] },
+            { name: "Kahve DuraÄŸÄ±", type: "Kahve", sponsor: false, img: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80",
+                menu: [ { id: 701, name: "Iced Latte", price: 85, desc: "Buz gibi soÄŸuk", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" },
+                        { id: 703, name: "Cappuccino", price: 75, desc: "KÃ¶pÃ¼klÃ¼ espresso", img: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=150" } ] },
             { name: "Roastery Co.", type: "Kahve", sponsor: true, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=500&q=80",
                 menu: [ { id: 702, name: "Filtre Kahve", price: 65, desc: "%100 Arabica", img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=150" },
                         { id: 704, name: "Cold Brew", price: 95, desc: "12 saat demleme", img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=150" } ] },
 
-            { name: "Balık Evi", type: "Deniz Ürünleri", sponsor: false, img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80",
+            { name: "BalÄ±k Evi", type: "Deniz ÃœrÃ¼nleri", sponsor: false, img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&q=80",
                 menu: [ { id: 801, name: "Levrek Izgara", price: 320, desc: "Taze levrek, limon", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=150" },
-                        { id: 802, name: "Karides Güveç", price: 280, desc: "Domates soslu", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
-            { name: "Deniz Sofrası", type: "Deniz Ürünleri", sponsor: true, img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80",
-                menu: [ { id: 803, name: "Balık Ekmek", price: 120, desc: "Taze balık, soğan", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=150" },
-                        { id: 804, name: "Midye Dolma", price: 90, desc: "Pirinçli, baharatlı", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
+                        { id: 802, name: "Karides GÃ¼veÃ§", price: 280, desc: "Domates soslu", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
+            { name: "Deniz SofrasÄ±", type: "Deniz ÃœrÃ¼nleri", sponsor: true, img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=500&q=80",
+                menu: [ { id: 803, name: "BalÄ±k Ekmek", price: 120, desc: "Taze balÄ±k, soÄŸan", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=150" },
+                        { id: 804, name: "Midye Dolma", price: 90, desc: "PirinÃ§li, baharatlÄ±", img: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150" } ] },
 
             { name: "Vegan Mutfak", type: "Vegan", sponsor: false, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80",
-                menu: [ { id: 901, name: "Avokado Toast", price: 130, desc: "Tam buğday, avokado", img: "https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=150" },
-                        { id: 902, name: "Yeşil Bowl", price: 150, desc: "Kinoa, sebze", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=150" } ] },
+                menu: [ { id: 901, name: "Avokado Toast", price: 130, desc: "Tam buÄŸday, avokado", img: "https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=150" },
+                        { id: 902, name: "YeÅŸil Bowl", price: 150, desc: "Kinoa, sebze", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=150" } ] },
             { name: "Green Garden", type: "Vegan", sponsor: true, img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&q=80",
-                menu: [ { id: 903, name: "Falafel Dürüm", price: 110, desc: "Nohut köftesi, tahin", img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=150" },
+                menu: [ { id: 903, name: "Falafel DÃ¼rÃ¼m", price: 110, desc: "Nohut kÃ¶ftesi, tahin", img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=150" },
                         { id: 904, name: "Smoothie Bowl", price: 120, desc: "Meyve, granola", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=150" } ] },
 
-            { name: "Çorba Evi", type: "Çorba", sponsor: false, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80",
-                menu: [ { id: 1001, name: "Mercimek Çorbası", price: 65, desc: "Geleneksel tarif", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" },
-                        { id: 1002, name: "Ezogelin Çorbası", price: 70, desc: "Baharatlı, doyurucu", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
-            { name: "Sıcak Kaşık", type: "Çorba", sponsor: true, img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=500&q=80",
-                menu: [ { id: 1003, name: "İşkembe Çorbası", price: 80, desc: "Sarımsaklı, sirkeli", img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=150" },
-                        { id: 1004, name: "Domates Çorbası", price: 60, desc: "Kremalı, taze", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
+            { name: "Ã‡orba Evi", type: "Ã‡orba", sponsor: false, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80",
+                menu: [ { id: 1001, name: "Mercimek Ã‡orbasÄ±", price: 65, desc: "Geleneksel tarif", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" },
+                        { id: 1002, name: "Ezogelin Ã‡orbasÄ±", price: 70, desc: "BaharatlÄ±, doyurucu", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
+            { name: "SÄ±cak KaÅŸÄ±k", type: "Ã‡orba", sponsor: true, img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=500&q=80",
+                menu: [ { id: 1003, name: "Ä°ÅŸkembe Ã‡orbasÄ±", price: 80, desc: "SarÄ±msaklÄ±, sirkeli", img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=150" },
+                        { id: 1004, name: "Domates Ã‡orbasÄ±", price: 60, desc: "KremalÄ±, taze", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150" } ] },
 
-            { name: "Pasta & Börek", type: "Börek", sponsor: false, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80",
-                menu: [ { id: 1101, name: "Su Böreği", price: 95, desc: "Peynirli, ev yapımı", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" },
-                        { id: 1102, name: "Sigara Böreği", price: 75, desc: "Çıtır, peynirli", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" } ] },
-            { name: "Fırın Köşesi", type: "Börek", sponsor: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80",
-                menu: [ { id: 1103, name: "Ispanaklı Börek", price: 85, desc: "Taze ıspanak", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" },
-                        { id: 1104, name: "Kıymalı Pide", price: 110, desc: "Özel kıyma harcı", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" } ] }
+            { name: "Pasta & BÃ¶rek", type: "BÃ¶rek", sponsor: false, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80",
+                menu: [ { id: 1101, name: "Su BÃ¶reÄŸi", price: 95, desc: "Peynirli, ev yapÄ±mÄ±", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" },
+                        { id: 1102, name: "Sigara BÃ¶reÄŸi", price: 75, desc: "Ã‡Ä±tÄ±r, peynirli", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" } ] },
+            { name: "FÄ±rÄ±n KÃ¶ÅŸesi", type: "BÃ¶rek", sponsor: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80",
+                menu: [ { id: 1103, name: "IspanaklÄ± BÃ¶rek", price: 85, desc: "Taze Ä±spanak", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" },
+                        { id: 1104, name: "KÄ±ymalÄ± Pide", price: 110, desc: "Ã–zel kÄ±yma harcÄ±", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" } ] }
         ];
 
         let dynamicRestaurants = [];
@@ -716,7 +906,7 @@
                         generateNearbyRestaurants();
                     },
                     (error) => {
-                        document.getElementById('location-status').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Varsayılan Konum Kullanılıyor';
+                        document.getElementById('location-status').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> VarsayÄ±lan Konum KullanÄ±lÄ±yor';
                         generateNearbyRestaurants();
                     }
                 );
@@ -744,20 +934,20 @@
             renderRestaurants();
         }
 
-        // KATEGORİ FİLTRELEME FONKSİYONU
+        // KATEGORÄ° FÄ°LTRELEME FONKSÄ°YONU
         function filterCategory(category) {
-            // Eğer seçili olan kategoriye tekrar tıklanırsa filtreyi kaldır
+            // EÄŸer seÃ§ili olan kategoriye tekrar tÄ±klanÄ±rsa filtreyi kaldÄ±r
             if (activeCategory === category) {
                 activeCategory = 'All';
                 document.querySelectorAll('.cat-box').forEach(el => el.classList.remove('active'));
-                document.getElementById('section-title').innerText = "Sana Özel Restoranlar";
+                document.getElementById('section-title').innerText = "Sana Ã–zel Restoranlar";
             } else {
-                // Yeni bir kategori seçilirse
+                // Yeni bir kategori seÃ§ilirse
                 activeCategory = category;
                 document.querySelectorAll('.cat-box').forEach(el => el.classList.remove('active'));
                 const catEl = document.getElementById('cat-' + category);
                 if(catEl) catEl.classList.add('active');
-                document.getElementById('section-title').innerText = `Yakındaki ${category} Restoranları`;
+                document.getElementById('section-title').innerText = `YakÄ±ndaki ${category} RestoranlarÄ±`;
             }
             renderRestaurants();
         }
@@ -772,13 +962,13 @@
             const container = document.getElementById('restaurants-container');
             container.innerHTML = '';
             
-            // Aktif kategori 'All' değilse listeyi filtrele
+            // Aktif kategori 'All' deÄŸilse listeyi filtrele
             let listToRender = activeCategory === 'All' 
                 ? dynamicRestaurants 
                 : dynamicRestaurants.filter(res => res.type === activeCategory);
 
             if(listToRender.length === 0) {
-                container.innerHTML = `<div class="empty-state">Bu kategoride yakınlarda restoran bulunamadı. <i class="fa-regular fa-face-frown"></i></div>`;
+                container.innerHTML = `<div class="empty-state">Bu kategoride yakÄ±nlarda restoran bulunamadÄ±. <i class="fa-regular fa-face-frown"></i></div>`;
                 return;
             }
 
@@ -796,7 +986,7 @@
                             <p>${res.type}</p>
                             <div class="res-meta">
                                 <span class="rating"><i class="fa-solid fa-star"></i> ${res.rating} (500+)</span>
-                                <span class="delivery-fee"><i class="fa-solid fa-motorcycle"></i> Ücretsiz Teslimat</span>
+                                <span class="delivery-fee"><i class="fa-solid fa-motorcycle"></i> Ãœcretsiz Teslimat</span>
                             </div>
                         </div>
                     </div>
@@ -810,7 +1000,7 @@
                 <img src="${activeRestaurant.img}" alt="Res">
                 <div>
                     <h2>${activeRestaurant.name}</h2>
-                    <p>${activeRestaurant.type} • <i class="fa-solid fa-star" style="color:var(--warning)"></i> ${activeRestaurant.rating}</p>
+                    <p>${activeRestaurant.type} â€¢ <i class="fa-solid fa-star" style="color:var(--warning)"></i> ${activeRestaurant.rating}</p>
                 </div>
             `;
             const menuContainer = document.getElementById('menu-items-container');
@@ -854,7 +1044,7 @@
             const totalSection = document.getElementById('cart-total-section');
             const checkoutBtn = document.getElementById('checkout-btn');
             if (cart.length === 0) {
-                cartContainer.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px 0;">Sepetiniz şu an boş.</p>';
+                cartContainer.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px 0;">Sepetiniz ÅŸu an boÅŸ.</p>';
                 totalSection.style.display = 'none';
                 checkoutBtn.style.display = 'none';
                 return;
@@ -895,8 +1085,8 @@
             let html = `
                 <div class="address-item selected" onclick="selectAddressOption(this)">
                     <div>
-                        <strong>📍 Mevcut Konum (GPS)</strong>
-                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;">Haritada tespit edilen anlık konumunuz</p>
+                        <strong>ğŸ“ Mevcut Konum (GPS)</strong>
+                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;">Haritada tespit edilen anlÄ±k konumunuz</p>
                     </div>
                     <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:22px;"></i>
                 </div>`;
@@ -905,7 +1095,7 @@
                 <div class="address-item" onclick="selectAddressOption(this)">
                     <div>
                         <strong>${a.title}</strong>
-                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;">${a.city}, ${a.district} — ${a.street} ${a.no}</p>
+                        <p style="font-size:13px;color:var(--text-light);margin-top:4px;">${a.city}, ${a.district} â€” ${a.street} ${a.no}</p>
                     </div>
                     <i class="fa-regular fa-circle" style="color:var(--border);font-size:22px;"></i>
                 </div>`;
@@ -952,25 +1142,80 @@
             const errEl = document.getElementById('login-error');
             const btn   = document.querySelector('#tab-login .save-btn');
             errEl.style.display = 'none';
-            if (!email || !pass) { errEl.innerText='E-posta ve şifre zorunludur.'; errEl.style.display='block'; return; }
+            if (!email || !pass) { errEl.innerText='E-posta ve ÅŸifre zorunludur.'; errEl.style.display='block'; return; }
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Giriş yapılıyor...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> GiriÅŸ yapÄ±lÄ±yor...';
             try {
                 const cred = await window._fb.signInWithEmailAndPassword(window._fb.auth, email, pass);
-                await loadUserSession(cred.user.uid);
+                const uid  = cred.user.uid;
+                
+                // Role KontrolÃ¼
+                const { db, doc, getDoc } = window._fb;
+                const snap = await getDoc(doc(db, 'users', uid));
+                if (snap.exists() && snap.data().role === 'restaurant') {
+                    await window._fb.auth.signOut();
+                    errEl.innerText = 'Bu hesap bir iÅŸletme hesabÄ±dÄ±r. LÃ¼tfen iÅŸletme panelinden giriÅŸ yapÄ±n.';
+                    errEl.style.display = 'block';
+                    return;
+                }
+
+                localStorage.setItem('misyemek_role', 'user');
+                await loadUserSession(uid);
                 document.getElementById('login-screen').style.display = 'none';
             } catch(e) {
                 const msgs = {
-                    'auth/user-not-found':'Bu e-posta ile kayıtlı hesap bulunamadı.',
-                    'auth/wrong-password':'Şifre hatalı.',
-                    'auth/invalid-credential':'E-posta veya şifre hatalı.',
-                    'auth/too-many-requests':'Çok fazla deneme. Lütfen bekleyin.'
+                    'auth/user-not-found':'Bu e-posta ile kayÄ±tlÄ± hesap bulunamadÄ±.',
+                    'auth/wrong-password':'Åifre hatalÄ±.',
+                    'auth/invalid-credential':'E-posta veya ÅŸifre hatalÄ±.',
+                    'auth/too-many-requests':'Ã‡ok fazla deneme. LÃ¼tfen bekleyin.'
                 };
-                errEl.innerText = msgs[e.code] || 'Giriş başarısız. Lütfen tekrar deneyin.';
+                errEl.innerText = msgs[e.code] || 'GiriÅŸ baÅŸarÄ±sÄ±z. LÃ¼tfen tekrar deneyin.';
                 errEl.style.display = 'block';
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Giriş Yap';
+                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> GiriÅŸ Yap';
+            }
+        }
+
+        async function doResLogin() {
+            const email = document.getElementById('res-login-email').value.trim();
+            const pass  = document.getElementById('res-login-password').value;
+            const errEl = document.getElementById('res-login-error');
+            const btn   = document.querySelector('#tab-res-login .save-btn');
+            errEl.style.display = 'none';
+            if (!email || !pass) { errEl.innerText='E-posta ve ÅŸifre zorunludur.'; errEl.style.display='block'; return; }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ä°ÅŸletme doÄŸrulanÄ±yor...';
+            try {
+                const cred = await window._fb.signInWithEmailAndPassword(window._fb.auth, email, pass);
+                const uid  = cred.user.uid;
+                
+                // Role KontrolÃ¼
+                const { db, doc, getDoc } = window._fb;
+                const snap = await getDoc(doc(db, 'users', uid));
+                if (snap.exists() && snap.data().role !== 'restaurant') {
+                    await window._fb.auth.signOut();
+                    errEl.innerText = 'Bu hesap bir iÅŸletme hesabÄ± deÄŸildir.';
+                    errEl.style.display = 'block';
+                    return;
+                }
+
+                window._forceRestaurantUI = true;
+                localStorage.setItem('misyemek_role', 'restaurant');
+                await loadUserSession(uid, true);
+                document.getElementById('login-screen').style.display = 'none';
+            } catch(e) {
+                const msgs = {
+                    'auth/invalid-credential':'E-posta veya ÅŸifre hatalÄ±.',
+                    'auth/invalid-login-credentials':'E-posta veya ÅŸifre hatalÄ±.',
+                    'auth/user-not-found':'Hesap bulunamadÄ±.',
+                    'auth/wrong-password':'Åifre hatalÄ±.'
+                };
+                errEl.innerText = msgs[e.code] || ('GiriÅŸ baÅŸarÄ±sÄ±z: ' + e.message);
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-store"></i> Ä°ÅŸletme Paneline Gir';
             }
         }
 
@@ -988,70 +1233,182 @@
             const errEl = document.getElementById('register-error');
             const btn   = document.querySelector('#tab-register .save-btn');
             errEl.style.display = 'none';
-            if (!fn||!ln||!email||!pass) { errEl.innerText='Ad, soyad, e-posta ve şifre zorunludur.'; errEl.style.display='block'; return; }
-            if (pass.length < 8) { errEl.innerText='Şifre en az 8 karakter olmalıdır.'; errEl.style.display='block'; return; }
-            if (!addrTitle||!addrDistrict||!addrStreet) { errEl.innerText='Lütfen teslimat adresinizi eksiksiz girin.'; errEl.style.display='block'; return; }
+            if (!fn||!ln||!email||!pass) { errEl.innerText='Ad, soyad, e-posta ve ÅŸifre zorunludur.'; errEl.style.display='block'; return; }
+            if (pass.length < 8) { errEl.innerText='Åifre en az 8 karakter olmalÄ±dÄ±r.'; errEl.style.display='block'; return; }
+            if (!addrTitle||!addrDistrict||!addrStreet) { errEl.innerText='LÃ¼tfen teslimat adresinizi eksiksiz girin.'; errEl.style.display='block'; return; }
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Hesap oluşturuluyor...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Hesap oluÅŸturuluyor...';
             try {
                 const { auth, db, createUserWithEmailAndPassword, doc, setDoc } = window._fb;
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
                 const uid  = cred.user.uid;
+                localStorage.setItem('misyemek_role', 'user');
                 const initAddr = { title:addrTitle, city:addrCity, district:addrDistrict, street:addrStreet, no:addrNo, desc:'' };
                 await setDoc(doc(db, 'users', uid), {
+                    role: 'user',
                     firstname:fn, lastname:ln, email, phone, birthdate:'',
                     addresses:[initAddr], cards:[], orders:[], orderCount:0
                 });
-                await loadUserSession(uid);
+                userProfile = { firstname: fn, lastname: ln, email, phone, birthdate: '', role: 'user' };
+                savedAddresses = [initAddr];
+                sessionLoaded = true;
+                applyProfileToUI();
                 document.getElementById('login-screen').style.display = 'none';
             } catch(e) {
                 const msgs = {
-                    'auth/email-already-in-use':'Bu e-posta zaten kayıtlı.',
-                    'auth/invalid-email':'Geçersiz e-posta adresi.',
-                    'auth/weak-password':'Şifre çok zayıf.'
+                    'auth/email-already-in-use':'Bu e-posta zaten kayÄ±tlÄ±.',
+                    'auth/invalid-email':'GeÃ§ersiz e-posta adresi.',
+                    'auth/weak-password':'Åifre Ã§ok zayÄ±f.'
                 };
-                errEl.innerText = msgs[e.code] || 'Kayıt başarısız. Lütfen tekrar deneyin.';
+                errEl.innerText = msgs[e.code] || ('KayÄ±t baÅŸarÄ±sÄ±z: ' + e.message);
                 errEl.style.display = 'block';
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Hesap Oluştur';
+                btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Hesap OluÅŸtur';
             }
         }
 
-        async function loadUserSession(uid) {
-            if (sessionLoaded && currentUID === uid) return;
+        async function doRestaurantRegister() {
+            const name     = document.getElementById('reg-res-name').value.trim();
+            const owner    = document.getElementById('reg-res-owner').value.trim();
+            const email    = document.getElementById('reg-res-email').value.trim();
+            const phone    = document.getElementById('reg-res-phone').value.trim();
+            const category = document.getElementById('reg-res-category').value;
+            const pass     = document.getElementById('reg-res-password').value;
+            const errEl = document.getElementById('restaurant-error');
+            const btn   = document.querySelector('#tab-restaurant .save-btn');
+            errEl.style.display = 'none';
+            if (!name||!owner||!email||!pass) { errEl.innerText='Restoran adÄ±, yetkili, e-posta ve ÅŸifre zorunludur.'; errEl.style.display='block'; return; }
+            if (pass.length < 8) { errEl.innerText='Åifre en az 8 karakter olmalÄ±dÄ±r.'; errEl.style.display='block'; return; }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> KayÄ±t alÄ±nÄ±yor...';
+            try {
+                const { auth, db, createUserWithEmailAndPassword, doc, setDoc } = window._fb;
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                const uid  = cred.user.uid;
+                localStorage.setItem('misyemek_role', 'restaurant');
+                await setDoc(doc(db, 'users', uid), {
+                    role: 'restaurant',
+                    firstname: name, lastname: '(Restoran)',
+                    name, owner, email, phone, category,
+                    addresses: [], cards: [], orders: [], orderCount: 0,
+                    createdAt: new Date().toISOString(), status: 'pending'
+                });
+                userProfile = { firstname: name, lastname: '(Restoran)', email, phone, role: 'restaurant' };
+                sessionLoaded = true;
+                applyProfileToUI();
+                alert('Restoran kaydÄ±nÄ±z baÅŸarÄ±yla alÄ±ndÄ±!');
+                document.getElementById('login-screen').style.display = 'none';
+            } catch(e) {
+                const msgs = {
+                    'auth/email-already-in-use':'Bu e-posta zaten kayÄ±tlÄ±.',
+                    'auth/invalid-email':'GeÃ§ersiz e-posta adresi.',
+                    'auth/weak-password':'Åifre Ã§ok zayÄ±f.'
+                };
+                errEl.innerText = msgs[e.code] || ('KayÄ±t baÅŸarÄ±sÄ±z: ' + e.message);
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-store"></i> Restoran Olarak Kaydol';
+            }
+        }
+
+        async function loadUserSession(uid, forceReload = false) {
+            if (!forceReload && sessionLoaded && currentUID === uid) return;
             currentUID = uid;
             try {
                 const { db, doc, getDoc } = window._fb;
                 const snap = await getDoc(doc(db, 'users', uid));
                 if (snap.exists()) {
                     const u = snap.data();
-                    userProfile     = { firstname:u.firstname||'', lastname:u.lastname||'', email:u.email||'', phone:u.phone||'', birthdate:u.birthdate||'' };
+                    // Firestore'daki rol her zaman Ã¼stÃ¼ndÃ¼r
+                    const role = u.role || localStorage.getItem('misyemek_role') || 'user';
+                    userProfile     = { firstname:u.firstname||'KullanÄ±cÄ±', lastname:u.lastname||'', email:u.email||window._fb.auth.currentUser?.email||'', phone:u.phone||'', birthdate:u.birthdate||'', role:role, isClosed:u.isClosed||false, menu:u.menu||[], campaign:u.campaign||null };
                     savedAddresses  = u.addresses  || [];
                     savedCards      = u.cards      || [];
                     orderHistory    = u.orders     || [];
                     totalOrderCount = u.orderCount || 0;
+                    localStorage.setItem('misyemek_role', role); // Senkronize et
+                } else {
+                    userProfile = { firstname: 'KullanÄ±cÄ±', lastname: '', email: window._fb.auth.currentUser?.email || '', role: 'user' };
                 }
-            } catch(e) { console.warn('Firestore okuma:', e.message); }
+            } catch(e) { 
+                console.warn('Firestore okuma:', e.message); 
+                userProfile = { firstname: 'KullanÄ±cÄ±', lastname: '', email: window._fb.auth.currentUser?.email || '', role: 'user' };
+            }
+            
+            if (window._forceRestaurantUI) {
+                userProfile.role = 'restaurant';
+            }
+            
             sessionLoaded = true;
             applyProfileToUI();
         }
 
         function applyProfileToUI() {
-            if (!userProfile.firstname) return;
-            const fullName = (userProfile.firstname + ' ' + userProfile.lastname).trim();
-            const initials = ((userProfile.firstname[0]||'') + (userProfile.lastname[0]||'')).toUpperCase() || '?';
+            if (!userProfile.role && !userProfile.firstname && !userProfile.email) return;
+            const fullName = ((userProfile.firstname || '') + ' ' + (userProfile.lastname || '')).trim() || 'KullanÄ±cÄ±';
+            const fInitial = (userProfile.firstname || '')[0] || '';
+            const lInitial = (userProfile.lastname || '')[0] || '';
+            const initials = (fInitial + lInitial).toUpperCase() || '?';
+            
             document.getElementById('profile-display-name').innerText  = fullName;
             document.getElementById('profile-display-email').innerText = userProfile.email;
             document.getElementById('profile-display-phone').innerHTML = userProfile.phone ? '<i class="fa-solid fa-phone"></i> ' + userProfile.phone : '';
             document.getElementById('profile-avatar-display').innerText = initials;
-            document.getElementById('header-avatar').innerText = initials;
-            document.getElementById('edit-firstname').value  = userProfile.firstname;
-            document.getElementById('edit-lastname').value   = userProfile.lastname;
-            document.getElementById('edit-email').value      = userProfile.email;
-            document.getElementById('edit-phone').value      = userProfile.phone;
-            document.getElementById('edit-birthdate').value  = userProfile.birthdate;
-            // Header buton görünürlüğü
+            
+            if (userProfile.role === 'restaurant') {
+                document.getElementById('customer-main').style.display = 'none';
+                if(document.getElementById('restaurant-main')) document.getElementById('restaurant-main').style.display = 'block';
+                if(document.getElementById('dash-res-name')) document.getElementById('dash-res-name').innerText = userProfile.firstname;
+
+                document.getElementById('hesabim-btn').innerHTML = `<div class="profile-avatar" id="header-avatar" style="background:var(--warning); color:var(--text-dark);">${initials}</div> Restoran Profili`;
+                document.querySelectorAll('.customer-only').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.restaurant-only').forEach(el => el.style.display = 'flex');
+                
+                const stats = document.querySelectorAll('.profile-stats .stat-card');
+                if (stats.length === 3) {
+                    stats[0].querySelector('.stat-label').innerText = 'Bekleyen SipariÅŸ';
+                    stats[1].querySelector('.stat-label').innerText = 'DeÄŸerlendirme';
+                    stats[2].querySelector('.stat-label').innerText = 'AylÄ±k KazanÃ§';
+                    stats[2].querySelector('.stat-num').innerText = 'â‚º0';
+                }
+
+                const btnStore = document.getElementById('btn-toggle-store');
+                if(btnStore) {
+                    if (userProfile.isClosed) {
+                        btnStore.innerHTML = `<i class="fa-solid fa-store" style="color: white; width: 20px;"></i> DÃ¼kkanÄ± AÃ§`;
+                        btnStore.style.background = 'var(--success)';
+                        btnStore.style.color = 'white';
+                    } else {
+                        btnStore.innerHTML = `<i class="fa-solid fa-store-slash" style="color: var(--text-dark); width: 20px;"></i> DÃ¼kkanÄ± Kapat`;
+                        btnStore.style.background = 'var(--bg-color)';
+                        btnStore.style.color = 'var(--text-dark)';
+                    }
+                }
+            } else {
+                document.getElementById('customer-main').style.display = 'block';
+                if(document.getElementById('restaurant-main')) document.getElementById('restaurant-main').style.display = 'none';
+
+                document.getElementById('hesabim-btn').innerHTML = `<div class="profile-avatar" id="header-avatar">${initials}</div> HesabÄ±m`;
+                document.querySelectorAll('.customer-only').forEach(el => el.style.display = 'flex');
+                document.querySelectorAll('.restaurant-only').forEach(el => el.style.display = 'none');
+                
+                const stats = document.querySelectorAll('.profile-stats .stat-card');
+                if (stats.length === 3) {
+                    stats[0].querySelector('.stat-label').innerText = 'SipariÅŸ';
+                    stats[1].querySelector('.stat-label').innerText = 'Puan';
+                    stats[2].querySelector('.stat-label').innerText = 'MisKoin';
+                    stats[2].querySelector('.stat-num').innerText = '120';
+                }
+            }
+
+            document.getElementById('edit-firstname').value  = userProfile.firstname || '';
+            document.getElementById('edit-lastname').value   = userProfile.lastname || '';
+            document.getElementById('edit-email').value      = userProfile.email || '';
+            document.getElementById('edit-phone').value      = userProfile.phone || '';
+            document.getElementById('edit-birthdate').value  = userProfile.birthdate || '';
+            
             document.getElementById('hesabim-btn').style.display = 'flex';
             document.getElementById('login-header-btn').style.display = 'none';
         }
@@ -1059,15 +1416,18 @@
         async function saveCurrentUser() {
             if (!currentUID || !window._fb) return;
             try {
-                const { db, doc, updateDoc } = window._fb;
-                await updateDoc(doc(db, 'users', currentUID), {
+                const { db, doc, setDoc } = window._fb;
+                await setDoc(doc(db, 'users', currentUID), {
                     ...userProfile,
                     addresses: savedAddresses,
                     cards: savedCards,
                     orders: orderHistory,
-                    orderCount: totalOrderCount
-                });
-            } catch(e) { console.warn('Kayıt hatası:', e.message); }
+                    orderCount: totalOrderCount,
+                    menu: userProfile.menu || [],
+                    isClosed: userProfile.isClosed || false,
+                    campaign: userProfile.campaign || null
+                }, { merge: true });
+            } catch(e) { console.warn('KayÄ±t hatasÄ±:', e.message); }
         }
 
         async function doLogout() {
@@ -1080,9 +1440,12 @@
             document.getElementById('header-avatar').innerText = '?';
             document.getElementById('hesabim-btn').style.display = 'none';
             document.getElementById('login-header-btn').style.display = 'flex';
+            
+            document.getElementById('customer-main').style.display = 'block';
+            if(document.getElementById('restaurant-main')) document.getElementById('restaurant-main').style.display = 'none';
         }
 
-        // Sayfa yüklenince oturum kontrolü
+        // Sayfa yÃ¼klenince oturum kontrolÃ¼
         window.addEventListener('load', () => {
             const waitFb = setInterval(() => {
                 if (!window._fb) return;
@@ -1091,7 +1454,7 @@
                     m.onAuthStateChanged(window._fb.auth, async (user) => {
                         if (user && !sessionLoaded) {
                             await loadUserSession(user.uid);
-                            // Eğer login ekranı açıksa kapat
+                            // EÄŸer login ekranÄ± aÃ§Ä±ksa kapat
                             document.getElementById('login-screen').style.display = 'none';
                         }
                     });
@@ -1099,11 +1462,13 @@
             }, 50);
         });
 
-        // SUB PANEL SİSTEMİ
+        // SUB PANEL SÄ°STEMÄ°
 
-        // HTML onclick'lerden erişim için window'a bağla
+        // HTML onclick'lerden eriÅŸim iÃ§in window'a baÄŸla
         window.doLogin = doLogin;
+        window.doResLogin = doResLogin;
         window.doRegister = doRegister;
+        window.doRestaurantRegister = doRestaurantRegister;
         window.doLogout = doLogout;
         window.switchLoginTab = switchLoginTab;
 
@@ -1121,9 +1486,9 @@
             const email = document.getElementById('edit-email').value.trim();
             const phone = document.getElementById('edit-phone').value.trim();
             if (!fn || !ln || !email) { alert('Ad, soyad ve e-posta zorunludur.'); return; }
-            userProfile = { firstname: fn, lastname: ln, email, phone, birthdate: document.getElementById('edit-birthdate').value };
+            userProfile = { ...userProfile, firstname: fn, lastname: ln, email, phone, birthdate: document.getElementById('edit-birthdate').value };
             applyProfileToUI();
-            showToast('Profil güncellendi ✓');
+            showToast('Profil gÃ¼ncellendi âœ“');
             saveCurrentUser();
             openSubPanel('main');
         }
@@ -1131,7 +1496,7 @@
         function renderAddresses() {
             const list = document.getElementById('address-cards-list');
             if (savedAddresses.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">Henüz kayıtlı adres yok.</p>';
+                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">HenÃ¼z kayÄ±tlÄ± adres yok.</p>';
                 return;
             }
             list.innerHTML = savedAddresses.map((a, i) => `
@@ -1153,10 +1518,10 @@
             const street = document.getElementById('addr-street').value.trim();
             const no = document.getElementById('addr-no').value.trim();
             const desc = document.getElementById('addr-desc').value.trim();
-            if (!title || !district || !street) { alert('Başlık, ilçe ve sokak zorunludur.'); return; }
+            if (!title || !district || !street) { alert('BaÅŸlÄ±k, ilÃ§e ve sokak zorunludur.'); return; }
             savedAddresses.push({ title, city, district, street, no, desc });
             ['addr-title','addr-district','addr-street','addr-no','addr-desc'].forEach(id => document.getElementById(id).value = '');
-            showToast('Adres kaydedildi ✓');
+            showToast('Adres kaydedildi âœ“');
             saveCurrentUser();
             openSubPanel('addresses');
         }
@@ -1166,7 +1531,7 @@
         function renderCards() {
             const list = document.getElementById('payment-cards-list');
             if (savedCards.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">Henüz kayıtlı kart yok.</p>';
+                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">HenÃ¼z kayÄ±tlÄ± kart yok.</p>';
                 return;
             }
             const icons = { visa: 'fa-cc-visa', mastercard: 'fa-cc-mastercard', troy: 'fa-credit-card' };
@@ -1210,13 +1575,13 @@
             const exp = document.getElementById('card-exp').value.trim();
             const cvv = document.getElementById('card-cvv').value.trim();
             const type = document.getElementById('card-type').value;
-            if (!name || num.length < 16 || exp.length < 5 || cvv.length < 3) { alert('Lütfen tüm kart bilgilerini eksiksiz girin.'); return; }
+            if (!name || num.length < 16 || exp.length < 5 || cvv.length < 3) { alert('LÃ¼tfen tÃ¼m kart bilgilerini eksiksiz girin.'); return; }
             savedCards.push({ name, last4: num.slice(-4), exp, type });
             ['card-name','card-num-input','card-exp','card-cvv'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('card-preview-num').innerText = '**** **** **** ****';
             document.getElementById('card-preview-name').innerText = 'AD SOYAD';
             document.getElementById('card-preview-exp').innerText = 'MM/YY';
-            showToast('Kart güvenli şekilde kaydedildi ✓');
+            showToast('Kart gÃ¼venli ÅŸekilde kaydedildi âœ“');
             saveCurrentUser();
             openSubPanel('payment');
         }
@@ -1226,17 +1591,35 @@
         function renderOrderHistory() {
             const list = document.getElementById('order-history-list');
             if (orderHistory.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">Henüz tamamlanan sipariş yok.</p>';
+                list.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px 0;">HenÃ¼z tamamlanan sipariÅŸ yok.</p>';
                 return;
             }
-            list.innerHTML = orderHistory.map(o => `
+            list.innerHTML = orderHistory.map((o, index) => `
                 <div class="saved-card" style="flex-direction:column;align-items:flex-start;gap:6px;">
                     <div style="display:flex;justify-content:space-between;width:100%;">
                         <strong>${o.restaurant}</strong>
                         <span style="color:var(--success);font-weight:700;">${o.total} TL</span>
                     </div>
                     <span style="font-size:13px;color:var(--text-light);">${o.items} &nbsp;|&nbsp; ${o.date}</span>
+                    <div style="margin-top: 8px; display: flex; gap: 5px; align-items: center; width: 100%;">
+                        ${o.rating ? 
+                            Array.from({length: 5}, (_, i) => `<i class="fa-solid fa-star" style="color: ${i < o.rating ? 'var(--warning)' : 'var(--border)'}; font-size: 14px;"></i>`).join('') 
+                            : `<span style="font-size:13px; color:var(--text-light); margin-right:5px;">Puanla:</span>
+                               <button class="qty-btn" style="font-size:14px; width:auto; padding: 0 4px;" onclick="rateOrder(${index}, 1)">1 <i class="fa-solid fa-star" style="color:var(--warning);"></i></button>
+                               <button class="qty-btn" style="font-size:14px; width:auto; padding: 0 4px;" onclick="rateOrder(${index}, 2)">2 <i class="fa-solid fa-star" style="color:var(--warning);"></i></button>
+                               <button class="qty-btn" style="font-size:14px; width:auto; padding: 0 4px;" onclick="rateOrder(${index}, 3)">3 <i class="fa-solid fa-star" style="color:var(--warning);"></i></button>
+                               <button class="qty-btn" style="font-size:14px; width:auto; padding: 0 4px;" onclick="rateOrder(${index}, 4)">4 <i class="fa-solid fa-star" style="color:var(--warning);"></i></button>
+                               <button class="qty-btn" style="font-size:14px; width:auto; padding: 0 4px;" onclick="rateOrder(${index}, 5)">5 <i class="fa-solid fa-star" style="color:var(--warning);"></i></button>`
+                        }
+                    </div>
                 </div>`).join('');
+        }
+
+        function rateOrder(index, rating) {
+            orderHistory[index].rating = rating;
+            saveCurrentUser();
+            renderOrderHistory();
+            showToast('DeÄŸerlendirme kaydedildi âœ“');
         }
 
         function showToast(msg) {
@@ -1259,77 +1642,285 @@
             if (icon) { icon.className = 'fa-solid fa-circle-check'; icon.style.color = 'var(--primary)'; }
         }
         function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
+        // --- RESTAURANT FUNCTIONS ---
+        function toggleStoreStatus() {
+            userProfile.isClosed = !userProfile.isClosed;
+            saveCurrentUser();
+            applyProfileToUI();
+            showToast(userProfile.isClosed ? 'DÃ¼kkan geÃ§ici olarak kapatÄ±ldÄ±.' : 'DÃ¼kkan sipariÅŸlere aÃ§Ä±ldÄ±.');
+        }
+
+        function openResMenuManager() {
+            closeModals();
+            if (!userProfile.menu) userProfile.menu = [];
+            renderResMenu();
+            document.getElementById('res-manage-menu-modal').style.display = 'flex';
+        }
+
+        function renderResMenu() {
+            const list = document.getElementById('res-menu-list');
+            if (!userProfile.menu || userProfile.menu.length === 0) {
+                list.innerHTML = '<p style="text-align:center; color:var(--text-light); padding:20px;">MenÃ¼nÃ¼zde henÃ¼z Ã¼rÃ¼n yok.</p>';
+                return;
+            }
+            list.innerHTML = userProfile.menu.map((item, index) => `
+                <div style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border); border-radius:12px; padding:15px; background:white;">
+                    <div style="display:flex; gap:15px; align-items:center;">
+                        ${item.img ? `<img src="${item.img}" style="width:50px; height:50px; border-radius:8px; object-fit:cover;">` : `<div style="width:50px; height:50px; background:var(--bg-color); border-radius:8px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-utensils" style="color:var(--text-light)"></i></div>`}
+                        <div>
+                            <div style="font-weight:bold;">${item.name}</div>
+                            <div style="font-size:13px; color:var(--text-light);">${item.desc}</div>
+                            <div style="font-weight:900; color:var(--primary); margin-top:5px;">â‚º${item.price}</div>
+                        </div>
+                    </div>
+                    <button onclick="deleteResMenuItem(${index})" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:18px; padding:10px;"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function addResMenuItem() {
+            const name = document.getElementById('res-new-item-name').value.trim();
+            const desc = document.getElementById('res-new-item-desc').value.trim();
+            const price = parseFloat(document.getElementById('res-new-item-price').value);
+            const img = document.getElementById('res-new-item-img').value.trim();
+
+            if (!name || isNaN(price)) {
+                alert('ÃœrÃ¼n adÄ± ve geÃ§erli bir fiyat girmelisiniz.');
+                return;
+            }
+
+            if (!userProfile.menu) userProfile.menu = [];
+            userProfile.menu.push({ id: Date.now(), name, desc, price, img });
+            
+            saveCurrentUser();
+            renderResMenu();
+            
+            document.getElementById('res-new-item-name').value = '';
+            document.getElementById('res-new-item-desc').value = '';
+            document.getElementById('res-new-item-price').value = '';
+            document.getElementById('res-new-item-img').value = '';
+            
+            showToast('ÃœrÃ¼n eklendi!');
+        }
+
+        function deleteResMenuItem(index) {
+            if(confirm('Bu Ã¼rÃ¼nÃ¼ silmek istediÄŸinize emin misiniz?')) {
+                userProfile.menu.splice(index, 1);
+                saveCurrentUser();
+                renderResMenu();
+                showToast('ÃœrÃ¼n silindi.');
+            }
+        }
+
+        function openCampaignManager() {
+            closeModals();
+            const ct = document.getElementById('current-campaign-text');
+            const btn = document.getElementById('btn-cancel-campaign');
+            if (userProfile.campaign && userProfile.campaign.active) {
+                let txt = '';
+                if (userProfile.campaign.type === 'discount_percentage') txt = `TÃ¼m MenÃ¼de %${userProfile.campaign.value} Ä°ndirim`;
+                else if (userProfile.campaign.type === 'discount_amount') txt = `Sepette â‚º${userProfile.campaign.value} Ä°ndirim`;
+                else txt = 'Ãœcretsiz Teslimat';
+                ct.innerText = `Aktif Kampanya: ${txt}`;
+                ct.style.color = 'var(--success)';
+                ct.style.fontWeight = 'bold';
+                btn.style.display = 'inline-block';
+            } else {
+                ct.innerText = 'Åu an aktif bir kampanyanÄ±z bulunmuyor.';
+                ct.style.color = 'var(--text-light)';
+                ct.style.fontWeight = 'normal';
+                btn.style.display = 'none';
+            }
+            document.getElementById('res-campaign-modal').style.display = 'flex';
+        }
+
+        function saveCampaign() {
+            const type = document.getElementById('campaign-type').value;
+            const value = document.getElementById('campaign-value').value;
+            if (type !== 'free_delivery' && (!value || isNaN(value) || value <= 0)) {
+                alert('GeÃ§erli bir indirim miktarÄ± giriniz.');
+                return;
+            }
+            userProfile.campaign = { active: true, type, value: parseFloat(value) || 0 };
+            saveCurrentUser();
+            showToast('Kampanya baÅŸarÄ±yla baÅŸlatÄ±ldÄ±!');
+            openCampaignManager();
+        }
+
+        function cancelCampaign() {
+            if(confirm('Mevcut kampanyayÄ± bitirmek istediÄŸinize emin misiniz?')) {
+                userProfile.campaign = { active: false };
+                saveCurrentUser();
+                showToast('Kampanya sona erdi.');
+                openCampaignManager();
+            }
+        }
+
+        function openResReports() {
+            closeModals();
+            // Basit raporlama (GerÃ§ekte orderHistory Ã¼zerinden hesaplanmalÄ±)
+            let totalErn = 0;
+            let totalOrd = userProfile.orderCount || 0;
+            if (userProfile.orders && userProfile.orders.length > 0) {
+                totalErn = userProfile.orders.reduce((sum, o) => sum + (o.total || 0), 0);
+                totalOrd = userProfile.orders.length;
+            }
+            document.getElementById('report-total-earned').innerText = `â‚º${totalErn}`;
+            document.getElementById('report-total-orders').innerText = totalOrd;
+            document.getElementById('res-reports-modal').style.display = 'flex';
+        }
+
         function openTrackingModal() { closeModals(); document.getElementById('tracking-modal').style.display = 'flex'; }
 
-        function startOrderSimulation() {
-            if(!activeRestaurant) return; 
+        async function startOrderSimulation() {
+            if(!activeRestaurant || cart.length === 0) return; 
+            if(!currentUID) { showLoginRequired(); return; }
+            
+            if (window._trackingMap) {
+                try { window._trackingMap.remove(); } catch(e) {}
+                window._trackingMap = null;
+            }
+            if (window._animId) {
+                cancelAnimationFrame(window._animId);
+                window._animId = null;
+            }
+            
             closeModals();
             document.getElementById('tracking-modal').style.display = 'flex';
-            document.getElementById('track-order-btn').style.display = 'flex'; 
+            document.getElementById('track-order-btn').style.display = 'flex';
             document.getElementById('eta-box').style.display = 'none';
-            document.getElementById('order-status-text').innerHTML = 'Sipariş Hazırlanıyor... <i class="fa-solid fa-spinner fa-spin"></i>';
-            document.getElementById('time-text').innerText = 'Restoran siparişi onayladı, kurye atanıyor...';
-            setTimeout(() => { if (!mapInitialized) { initMapAndRoute(); mapInitialized = true; } else { startCourierJourney(); } }, 500);
-        }
+            
+            setTrackingStatus('Hazırlanıyor', 'Lezzetiniz özenle hazırlanıyor...');
+            setStepper(1); 
 
-        function initMapAndRoute() {
-            map = L.map('map-container').setView([userLat, userLng], 14);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+            const container = document.getElementById('map-container');
+            container.innerHTML = '';
+            window._trackingMap = L.map(container, { zoomControl: false }).setView([userLat, userLng], 15);
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; CARTO'
+            }).addTo(window._trackingMap);
+
             const userIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/25/25694.png', iconSize: [35, 35], iconAnchor: [17, 35] });
-            const bikeIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png', iconSize: [45, 45], iconAnchor: [22, 45] });
-            L.marker([userLat, userLng], {icon: userIcon}).addTo(map).bindPopup("Teslimat Adresiniz").openPopup();
-            kuryeMarker = L.marker([activeRestaurant.lat, activeRestaurant.lng], {icon: bikeIcon}).addTo(map);
+            const bikeIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png', iconSize: [45, 45], iconAnchor: [22, 22] });
+            const restIcon = L.divIcon({ html: '<div class="ripple-marker"></div>', className: '', iconSize: [12, 12], iconAnchor: [6, 6] });
 
-            routeControl = L.Routing.control({
-                waypoints: [ L.latLng(activeRestaurant.lat, activeRestaurant.lng), L.latLng(userLat, userLng) ],
-                createMarker: function() { return null; }, addWaypoints: false, routeWhileDragging: false, fitSelectedRoutes: true, show: false,
-                lineOptions: { styles: [{color: '#ea004b', opacity: 0.8, weight: 6}] }
-            }).addTo(map);
+            L.marker([userLat, userLng], { icon: userIcon }).addTo(window._trackingMap).bindPopup("Siz");
+            L.marker([activeRestaurant.lat, activeRestaurant.lng], { icon: restIcon }).addTo(window._trackingMap).bindPopup("Restoran");
+            window._courierMarker = L.marker([activeRestaurant.lat, activeRestaurant.lng], { icon: bikeIcon, zIndexOffset: 1000 }).addTo(window._trackingMap);
 
-            routeControl.on('routesfound', function(e) {
-                var pathCoords = e.routes[0].coordinates;
-                var totalTimeSeconds = e.routes[0].summary.totalTime;
-                var estimatedMinutes = Math.round(totalTimeSeconds / 60) + 15;
-                document.getElementById('eta-box').style.display = 'flex';
-                document.getElementById('dynamic-eta').innerText = estimatedMinutes + " Dakika";
-                startCourierAnimation(pathCoords);
+            window._currentPath = null;
+            const routingControl = L.Routing.control({
+                waypoints: [L.latLng(activeRestaurant.lat, activeRestaurant.lng), L.latLng(userLat, userLng)],
+                createMarker: () => null, addWaypoints: false, show: false,
+                lineOptions: { styles: [{ color: '#ea004b', opacity: 0.6, weight: 6 }] }
+            }).addTo(window._trackingMap);
+
+            routingControl.on('routesfound', (e) => {
+                window._currentPath = e.routes[0].coordinates;
+                window._trackingMap.fitBounds(L.latLngBounds(window._currentPath), { padding: [50, 50], animate: true });
             });
+
+            setTimeout(() => {
+                setStepper(2);
+                setTrackingStatus('Hazırlanıyor', 'Şefimiz siparişinizi hazırlıyor...');
+            }, 1000);
+
+            setTimeout(() => {
+                setStepper(3);
+                setTrackingStatus('Kurye Yolda!', 'Kuryemiz hızla adresinize yaklaşıyor.');
+                document.getElementById('eta-box').style.display = 'flex';
+                document.getElementById('dynamic-eta').innerText = "8 Dakika";
+
+                const path = window._currentPath || [
+                    { lat: activeRestaurant.lat, lng: activeRestaurant.lng },
+                    { lat: userLat, lng: userLng }
+                ];
+                animateCourierMovement(path, 7500); 
+            }, 2500);
+
+            const { db, collection, addDoc } = window._fb;
+            addDoc(collection(db, "orders"), {
+                restaurant: activeRestaurant.name,
+                total: cart.reduce((s,i) => s + i.price * i.qty, 0),
+                status: 'simulation',
+                timestamp: new Date()
+            }).catch(() => {});
+            
+            setTimeout(() => { if(window._trackingMap) window._trackingMap.invalidateSize(); }, 500);
         }
 
-        function startCourierAnimation(pathCoords) {
-            document.getElementById('order-status-text').innerHTML = "Kurye Yolda! <i class='fa-solid fa-motorcycle'></i>";
-            document.getElementById('time-text').innerHTML = `Siparişin <strong>${activeRestaurant.name}</strong> adlı restorandan geliyor!`;
-            let i = 0; if(animasyonInterval) clearInterval(animasyonInterval);
-            animasyonInterval = setInterval(() => {
-                if (i < pathCoords.length) {
-                    kuryeMarker.setLatLng([pathCoords[i].lat, pathCoords[i].lng]);
-                    if(i % 5 === 0) map.panTo([pathCoords[i].lat, pathCoords[i].lng]);
-                    i++;
+        function animateCourierMovement(path, duration) {
+            let start = null;
+            if (window._animId) cancelAnimationFrame(window._animId);
+
+            function frame(timestamp) {
+                if (!start) start = timestamp;
+                const progress = (timestamp - start) / duration;
+
+                if (progress < 1) {
+                    const exactIndex = progress * (path.length - 1);
+                    const idx = Math.floor(exactIndex);
+                    const nextIdx = Math.min(idx + 1, path.length - 1);
+                    const ratio = exactIndex - idx;
+                    const lat = path[idx].lat + (path[nextIdx].lat - path[idx].lat) * ratio;
+                    const lng = path[idx].lng + (path[nextIdx].lng - path[idx].lng) * ratio;
+
+                    if (window._courierMarker) window._courierMarker.setLatLng([lat, lng]);
+                    if (Math.floor(exactIndex) % 80 === 0) {
+                        window._trackingMap.panTo([lat, lng], { animate: true, duration: 1.2 });
+                    }
+                    window._animId = requestAnimationFrame(frame);
                 } else {
-                    clearInterval(animasyonInterval);
-                    document.getElementById('order-status-text').innerHTML = "Sipariş Teslim Edildi! <i class='fa-solid fa-check-circle' style='color:var(--success);'></i>";
-                    document.getElementById('time-text').innerHTML = "Afiyet olsun! MisYemek'i tercih ettiğiniz için teşekkürler.";
-                    document.getElementById('eta-box').style.display = 'none';
-                    kuryeMarker.bindPopup("Sipariş ulaştı!").openPopup();
-                    document.getElementById('track-order-btn').style.display = 'none'; 
-                    totalOrderCount++;
-                    const orderTotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
-                    const orderItems = cart.map(i => i.name).join(', ');
-                    orderHistory.unshift({ restaurant: activeRestaurant.name, total: orderTotal, items: orderItems, date: new Date().toLocaleDateString('tr-TR') });
-                    cart = []; updateCartUI();
-                    saveCurrentUser();
+                    window._courierMarker.setLatLng([path[path.length-1].lat, path[path.length-1].lng]);
+                    finishOrderSimulation();
                 }
-            }, 80); 
+            }
+            window._animId = requestAnimationFrame(frame);
         }
 
-        // Tüm global fonksiyonları window'a bağla (type="module" scope sorunu için)
+        function finishOrderSimulation() {
+            if (window._animId) { cancelAnimationFrame(window._animId); window._animId = null; }
+            setStepper(4);
+            setTrackingStatus('Teslim Edildi!', 'Afiyet olsun! Siparişiniz ulaştı.');
+            document.getElementById('eta-box').style.display = 'none';
+            orderHistory.unshift({
+                restaurant: activeRestaurant.name,
+                total: cart.reduce((s,i) => s + i.price * i.qty, 0),
+                items: cart.map(i => i.name).join(', '),
+                date: new Date().toLocaleDateString('tr-TR')
+            });
+            cart = [];
+            updateCartUI();
+            saveCurrentUser();
+            setTimeout(() => { document.getElementById('track-order-btn').style.display = 'none'; }, 5000);
+        }
+
+        function setTrackingStatus(title, subtitle) {
+            const t = document.getElementById('order-status-text');
+            const s = document.getElementById('time-text');
+            if (t) t.innerHTML = title + (title.includes('Yolda') ? " <i class='fa-solid fa-motorcycle pulse-text'></i>" : "");
+            if (s) s.innerText = subtitle;
+        }
+
+        function setStepper(step) {
+            const bar = document.getElementById('order-progress-bar');
+            if (!bar) return;
+            bar.style.width = (step === 1 ? '10%' : step === 2 ? '35%' : step === 3 ? '70%' : '100%');
+            for (let i = 1; i <= 4; i++) {
+                const el = document.getElementById('step-' + i);
+                if (el) el.className = 'step' + (i < step ? ' completed' : i === step ? ' active' : '');
+            }
+        }
+
         Object.assign(window, {
             filterCategory, openMenu, addToCart, changeQty, openCart, openAddressSelection,
             renderDeliveryAddresses, selectAddressOption, openProfile, openSubPanel,
             saveProfile, renderAddresses, saveAddress, deleteAddress,
             renderCards, saveCard, deleteCard, formatCardNum, formatExpiry, updateCardBrand,
             renderOrderHistory, showToast, toggleFaq, closeModals, openTrackingModal,
-            startOrderSimulation, showLoginRequired
+            startOrderSimulation, showLoginRequired, rateOrder
         });
     </script>
 </body>

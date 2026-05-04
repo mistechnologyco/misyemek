@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş | MisYemek Yönetim Paneli</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">MisYemek</div>
+                <div class="login-subtitle">Yönetim Paneline Hoş Geldiniz</div>
+            </div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">E-posta Adresi</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" class="form-input" value="admin@misyemek.com" required id="email">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Şifre</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" class="form-input" value="admin123" required id="password">
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.875rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-muted);">
+                        <input type="checkbox" checked style="accent-color: var(--primary);"> Beni Hatırla
+                    </label>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Şifremi Unuttum</a>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    Giriş Yap <i class="fa-solid fa-arrow-right" style="margin-left: 0.5rem;"></i>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                &copy; 2024 MisYemek Admin Panel. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCnkFtEAlHmFecB4SCbqJZcmZ56GSC6cnk",
+            authDomain: "yemek-d7622.firebaseapp.com",
+            projectId: "yemek-d7622",
+            storageBucket: "yemek-d7622.firebasestorage.app",
+            messagingSenderId: "210743067656",
+            appId: "1:210743067656:web:f190db881c05107750fdbd",
+            measurementId: "G-08RGPQQK3F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.handleLogin = async (event) => {
+            event.preventDefault();
+            const btn = event.target.querySelector('button');
+            const emailInput = document.getElementById('email').value;
+            const passwordInput = document.getElementById('password').value;
+            
+            const email = emailInput.trim().toLowerCase();
+            const password = passwordInput.trim();
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Giriş Yapılıyor...';
+            btn.disabled = true;
+
+            // --- SERGİ ÖZEL: DEMO GİRİŞ BYPASS (Hata Payı Sıfır) ---
+            if (email === 'admin@misyemek.com' && password === 'admin123') {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+                
+                if (userDoc.exists() && (userDoc.data().role === 'restaurant' || userDoc.data().role === 'admin')) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Yetkisiz Giriş! Sadece işletme hesapları bu paneli kullanabilir.');
+                    await auth.signOut();
+                    btn.innerHTML = 'Giriş Yap <i class="fa-solid fa-arrow-right"></i>';
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Auth Hatası:", error.code);
+                let msg = 'Giriş Başarısız!';
+                if(error.code === 'auth/invalid-credential') msg = 'Hatalı e-posta veya şifre!';
+                else if(error.code === 'auth/user-not-found') msg = 'Böyle bir kullanıcı bulunamadı!';
+                
+                alert(msg);
+                btn.innerHTML = 'Giriş Yap <i class="fa-solid fa-arrow-right"></i>';
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
