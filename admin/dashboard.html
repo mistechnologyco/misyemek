@@ -33,6 +33,7 @@
 </head>
 <body>
     <div class="dashboard-wrapper">
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -84,9 +85,14 @@
         <main class="main-content">
             <!-- Top Bar -->
             <header class="top-bar">
-                <div class="page-title">
-                    <h1>Genel Bakış</h1>
-                    <p>Hoş geldin Taham, sistem sorunsuz çalışıyor.</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="mobile-menu-toggle" class="action-btn" style="display: none; width: 45px; height: 45px; font-size: 1.2rem;">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1>Genel Bakış</h1>
+                        <p>Hoş geldin Taham, sistem sorunsuz çalışıyor.</p>
+                    </div>
                 </div>
                 
                 <div class="user-nav">
@@ -216,9 +222,23 @@
                         <h2>Tüm İşletmeler</h2>
                         <button class="login-btn" style="margin-top:0; padding: 0.5rem 1rem;" onclick="showAddResModal()">+ Yeni Restoran</button>
                     </div>
-                    <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
-                        <i class="fa-solid fa-store" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.2;"></i>
-                        <p>Restoran yönetim ekranı hazırlanıyor. <br> İstatistikler ana sayfada mevcuttur.</p>
+                    <div class="card-body" style="padding: 1rem;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>İşletme Adı</th>
+                                    <th>Sahibi</th>
+                                    <th>Kategori</th>
+                                    <th>E-posta</th>
+                                    <th>Durum</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-restaurants-list">
+                                <!-- Firestore'dan Gelecek -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

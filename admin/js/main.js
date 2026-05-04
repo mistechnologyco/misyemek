@@ -13,12 +13,36 @@ document.addEventListener('DOMContentLoaded', () => {
         onSnapshot(collection(db, "users"), (snapshot) => {
             let userCount = 0;
             let resCount = 0;
+            const resList = document.getElementById('admin-restaurants-list');
+            if (resList) resList.innerHTML = '';
+
             snapshot.forEach(doc => {
-                if (doc.data().role === 'restaurant') resCount++;
-                else userCount++;
+                const data = doc.data();
+                if (data.role === 'restaurant') {
+                    resCount++;
+                    if (resList) {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td><div class="avatar" style="width:35px; height:35px; font-size:12px;">${data.name.substring(0,1)}</div></td>
+                            <td style="font-weight:700;">${data.name}</td>
+                            <td>${data.owner || '-'}</td>
+                            <td><span class="status-badge" style="background:var(--bg-light); color:var(--text-dark);">${data.category}</span></td>
+                            <td>${data.email}</td>
+                            <td><span class="status-badge success">Aktif</span></td>
+                            <td><button class="action-btn" title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                        `;
+                        resList.appendChild(tr);
+                    }
+                } else {
+                    userCount++;
+                }
             });
             if(document.getElementById('stat-total-users')) document.getElementById('stat-total-users').innerText = userCount;
             if(document.getElementById('stat-total-restaurants')) document.getElementById('stat-total-restaurants').innerText = resCount;
+        }, (error) => {
+            if(error.code === 'permission-denied') {
+                console.warn("Permission denied for users collection. Check Firestore Rules.");
+            }
         });
 
         // 2. SİPARİŞLER VE SATIŞLAR (Hata yakalayıcı eklendi)
@@ -156,3 +180,29 @@ document.getElementById('add-res-form')?.addEventListener('submit', async (e) =>
         btn.innerHTML = originalText;
     }
 });
+
+    // Mobile Sidebar Toggle
+    const menuBtn = document.getElementById('mobile-menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (menuBtn && sidebar && overlay) {
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    }
