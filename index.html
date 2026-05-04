@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -1623,19 +1623,18 @@
         <div class="login-box">
             <div class="login-logo">MisYemek</div>
             <div class="login-sub">Lezzet kapında, hesabın hazır.</div>
-                        <div class="login-tabs">
-                <div class="login-tab active" onclick="switchLoginTab('login')">Müşteri Girişi</div>
+            <div class="login-tabs">
+                <div class="login-tab active" onclick="switchLoginTab('login')"> <span>Giriş Yap</span></div>
                 <div class="login-tab" onclick="switchLoginTab('register')">Kayıt Ol</div>
-                <div class="login-tab" onclick="switchLoginTab('res-login')">İşletme Girişi</div>
             </div>
 
-            <!-- GİRİŞ FORMU -->
+            <!-- GİRİÃ…Â FORMU -->
             <div class="login-form active" id="tab-login">
                 <div class="login-error" id="login-error"></div>
                 <div class="form-group"><label>E-posta</label><input type="email" id="login-email"
                         placeholder="ornek@email.com"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="login-password"
-                        placeholder="Şifreniz"></div>
+                <div class="form-group"><label>Ã…Âifre</label><input type="password" id="login-password"
+                        placeholder="Ã…Âifreniz"></div>
                 <button class="save-btn" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> <span>Giriş
                         Yap</span></button>
             </div>
@@ -1655,7 +1654,7 @@
                 <div class="form-group"><label>Telefon</label><input type="tel" id="reg-phone"
                         placeholder="+90 5xx xxx xx xx" maxlength="13"
                         oninput="this.value=this.value.replace(/[^0-9+]/g,'').substring(0,13)"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="reg-password"
+                <div class="form-group"><label>Ã…Âifre</label><input type="password" id="reg-password"
                         placeholder="En az 8 karakter"></div>
                 <div class="login-divider">Teslimat Adresi</div>
                 <div class="form-group"><label>Adres Başlığı</label><input type="text" id="reg-addr-title"
@@ -1685,19 +1684,6 @@
                     Oluştur</button>
             </div>
 
-        
-            <!-- İŞLETME GİRİŞ FORMU -->
-            <div class="login-form" id="tab-res-login">
-                <div class="login-error" id="res-login-error"></div>
-                <div class="form-group"><label>İşletme E-posta</label><input type="email" id="res-login-email"
-                        placeholder="admin@restoran.com"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="res-login-password"
-                        placeholder="Şifreniz"></div>
-                <button class="save-btn" onclick="doResLogin()"><i class="fa-solid fa-store"></i> İşletme Paneline Gir</button>
-                <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-light);">
-                    İşletme hesabı için bizimle iletişime geçin.
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1730,7 +1716,7 @@
     <main id="customer-main">
         <div class="hero-banner">
             <div>
-                <h1>İlk SİPARİŞ özel %30 İndirim!</h1>
+                <h1>İlk siparişine özel %30 İndirim!</h1>
                 <p>MisYemek ile en sevdiğin lezzetler sıcak sıcak kapında.</p>
             </div>
             <img src="https://cdn-icons-png.flaticon.com/512/3081/3081333.png" alt="Yemek">
@@ -1808,14 +1794,14 @@
             <div
                 style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); border-left: 5px solid var(--primary);">
                 <div style="color: var(--text-light); font-size: 14px; font-weight: 600; margin-bottom: 10px;">BEKLEYEN
-                    SİPARİŞ</div>
+                    SİPARİÃ…Â</div>
                 <div style="font-size: 32px; font-weight: 900; color: var(--text-dark);">0</div>
             </div>
             <div
                 style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); border-left: 5px solid var(--success);">
                 <div style="color: var(--text-light); font-size: 14px; font-weight: 600; margin-bottom: 10px;">
-                    BUGÜNKÜ KAZANÇ</div>
-                <div style="font-size: 32px; font-weight: 900; color: var(--text-dark);">₺0</div>
+                    BUGÃƒÅ“NKÃƒÅ“ KAZANÃƒâ€¡</div>
+                <div style="font-size: 32px; font-weight: 900; color: var(--text-dark);">Ã¢â€šÂº0</div>
             </div>
             <div
                 style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); border-left: 5px solid var(--warning);">
@@ -1830,7 +1816,7 @@
             <div
                 style="flex: 1 1 500px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border);">
                 <h3 style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-                    Yeni SİPARİŞ
+                    Yeni Siparişler
                     <span
                         style="background: var(--primary); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px;">Henüz
                         Yok</span>
@@ -1838,7 +1824,7 @@
                 <div style="text-align: center; padding: 40px 0; color: var(--text-light);">
                     <i class="fa-solid fa-clipboard-list"
                         style="font-size: 48px; opacity: 0.2; margin-bottom: 15px;"></i>
-                    <p>Şu an için bekleyen yeni SİPARİŞ bulunmuyor.</p>
+                    <p>Ã…Âu an için bekleyen yeni siparişiniz bulunmuyor.</p>
                 </div>
             </div>
 
@@ -1849,7 +1835,7 @@
                     <button
                         style="width: 100%; padding: 15px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 15px;"
                         onclick="openResMenuManager()"><i class="fa-solid fa-plus"
-                            style="color: var(--primary); width: 20px;"></i> Ürün Ekle / Menüyü Düzenle</button>
+                            style="color: var(--primary); width: 20px;"></i> ÃƒÅ“rün Ekle / Menüyü Düzenle</button>
                     <button
                         style="width: 100%; padding: 15px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 15px;"
                         onclick="openCampaignManager()"><i class="fa-solid fa-bullhorn"
@@ -1859,20 +1845,7 @@
                         onclick="toggleStoreStatus()"><i class="fa-solid fa-store-slash"
                             style="color: var(--text-light); width: 20px;"></i> Dükkanı Kapat</button>
                 </div>
-            
-            <!-- İŞLETME GİRİŞ FORMU -->
-            <div class="login-form" id="tab-res-login">
-                <div class="login-error" id="res-login-error"></div>
-                <div class="form-group"><label>İşletme E-posta</label><input type="email" id="res-login-email"
-                        placeholder="admin@restoran.com"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="res-login-password"
-                        placeholder="Şifreniz"></div>
-                <button class="save-btn" onclick="doResLogin()"><i class="fa-solid fa-store"></i> İşletme Paneline Gir</button>
-                <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-light);">
-                    İşletme hesabı için bizimle iletişime geçin.
-                </div>
             </div>
-        </div>
         </div>
     </main>
 
@@ -1884,7 +1857,7 @@
         </div>
     </div>
 
-    <!-- RESTORAN MENÜ YÖNETİM MODALI -->
+    <!-- RESTORAN MENÃƒÅ“ YÃƒâ€“NETİM MODALI -->
     <div class="modal-overlay" id="res-manage-menu-modal">
         <div class="modal-content" style="max-width: 600px;">
             <span class="close-btn" onclick="closeModals()">&times;</span>
@@ -1892,13 +1865,13 @@
 
             <div id="res-menu-list"
                 style="display:flex; flex-direction:column; gap:15px; max-height:300px; overflow-y:auto; margin-bottom:20px;">
-                <!-- Ürünler -->
+                <!-- ÃƒÅ“rünler -->
             </div>
 
             <div
                 style="background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
-                <h3 style="margin-bottom: 10px; font-size: 16px;">Yeni Ürün Ekle</h3>
-                <input type="text" id="res-new-item-name" placeholder="Ürün Adı"
+                <h3 style="margin-bottom: 10px; font-size: 16px;">Yeni ÃƒÅ“rün Ekle</h3>
+                <input type="text" id="res-new-item-name" placeholder="ÃƒÅ“rün Adı"
                     style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--border); border-radius:8px;">
                 <input type="text" id="res-new-item-desc" placeholder="Açıklama"
                     style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--border); border-radius:8px;">
@@ -1908,19 +1881,6 @@
                     style="width:100%; padding:10px; margin-bottom:10px; border:1px solid var(--border); border-radius:8px;">
                 <button onclick="addResMenuItem()"
                     style="width:100%; background:var(--primary); color:white; padding:10px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Ekle</button>
-            </div>
-        
-            <!-- İŞLETME GİRİŞ FORMU -->
-            <div class="login-form" id="tab-res-login">
-                <div class="login-error" id="res-login-error"></div>
-                <div class="form-group"><label>İşletme E-posta</label><input type="email" id="res-login-email"
-                        placeholder="admin@restoran.com"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="res-login-password"
-                        placeholder="Şifreniz"></div>
-                <button class="save-btn" onclick="doResLogin()"><i class="fa-solid fa-store"></i> İşletme Paneline Gir</button>
-                <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-light);">
-                    İşletme hesabı için bizimle iletişime geçin.
-                </div>
             </div>
         </div>
     </div>
@@ -1934,7 +1894,7 @@
             <div
                 style="background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px;">
                 <h3 style="margin-bottom: 10px; font-size: 16px;">Mevcut Kampanya</h3>
-                <p id="current-campaign-text" style="color:var(--text-light); margin-bottom: 10px;">Şu an aktif bir
+                <p id="current-campaign-text" style="color:var(--text-light); margin-bottom: 10px;">Ã…Âu an aktif bir
                     kampanyanız bulunmuyor.</p>
                 <button id="btn-cancel-campaign" onclick="cancelCampaign()"
                     style="display:none; background:#ef4444; color:white; padding:8px 15px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Kampanyayı
@@ -1947,31 +1907,18 @@
                     <select id="campaign-type"
                         style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px;">
                         <option value="discount_percentage">Tüm Menüde Yüzde İndirim (%)</option>
-                        <option value="discount_amount"> <span>Sepet</span>te Net İndirim (₺)</option>
-                        <option value="free_delivery">Ücretsiz Teslimat</option>
+                        <option value="discount_amount"> <span>Sepet</span>te Net İndirim (Ã¢â€šÂº)</option>
+                        <option value="free_delivery">ÃƒÅ“cretsiz Teslimat</option>
                     </select>
                 </div>
                 <div class="form-group" id="campaign-value-group">
                     <label>İndirim Miktarı</label>
-                    <input type="number" id="campaign-value" placeholder="Örn: 20"
+                    <input type="number" id="campaign-value" placeholder="Ãƒâ€“rn: 20"
                         style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px;">
                 </div>
                 <button onclick="saveCampaign()"
                     style="width:100%; background:var(--primary); color:white; padding:12px; border:none; border-radius:8px; font-weight:bold; cursor:pointer;"><i
                         class="fa-solid fa-bullhorn"></i> Kampanyayı Başlat</button>
-            </div>
-        
-            <!-- İŞLETME GİRİŞ FORMU -->
-            <div class="login-form" id="tab-res-login">
-                <div class="login-error" id="res-login-error"></div>
-                <div class="form-group"><label>İşletme E-posta</label><input type="email" id="res-login-email"
-                        placeholder="admin@restoran.com"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="res-login-password"
-                        placeholder="Şifreniz"></div>
-                <button class="save-btn" onclick="doResLogin()"><i class="fa-solid fa-store"></i> İşletme Paneline Gir</button>
-                <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-light);">
-                    İşletme hesabı için bizimle iletişime geçin.
-                </div>
             </div>
         </div>
     </div>
@@ -1987,17 +1934,17 @@
                     style="background:var(--bg-color); padding:20px; border-radius:12px; text-align:center; border:1px solid var(--border);">
                     <div style="font-size:13px; color:var(--text-light); margin-bottom:5px;">Toplam Kazanç</div>
                     <div style="font-size:24px; font-weight:900; color:var(--success);" id="report-total-earned">
-                        ₺0</div>
+                        Ã¢â€šÂº0</div>
                 </div>
                 <div
                     style="background:var(--bg-color); padding:20px; border-radius:12px; text-align:center; border:1px solid var(--border);">
-                    <div style="font-size:13px; color:var(--text-light); margin-bottom:5px;">Toplam SİPARİŞ
+                    <div style="font-size:13px; color:var(--text-light); margin-bottom:5px;">Toplam Sipariş</div>
                     <div style="font-size:24px; font-weight:900; color:var(--primary);" id="report-total-orders">0</div>
                 </div>
             </div>
 
             <div style="background: white; border:1px solid var(--border); border-radius:12px; padding:15px;">
-                <h3 style="margin-bottom: 15px; font-size: 16px;">Son SİPARİŞ</div>
+                <h3 style="margin-bottom: 15px; font-size: 16px;">Son Siparişler</h3>
                 <div id="report-recent-orders" style="display:flex; flex-direction:column; gap:10px;">
                     <p style="color:var(--text-light); text-align:center; font-size:14px;">Henüz tamamlanmış sipariş
                         bulunmuyor.</p>
@@ -2012,11 +1959,11 @@
             <h2 style="margin-bottom: 20px; font-size: 24px;"> <span>Sepet</span>im</h2>
             <div id="cart-items-container"></div>
             <div class="cart-total" style="display: none;" id="cart-total-section">
-                <span>Ödenecek Tutar:</span>
+                <span>Ãƒâ€“denecek Tutar:</span>
                 <span id="cart-total-price">0 TL</span>
             </div>
             <button class="checkout-btn" id="checkout-btn" style="display: none;"
-                onclick="openAddressSelection()">SİPARİŞ Onayla</button>
+                onclick="openAddressSelection()">Siparişi Onayla</button>
         </div>
     </div>
 
@@ -2024,7 +1971,7 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeModals()">&times;</span>
             <h2 style="margin-bottom: 10px;">Teslimat Adresi</h2>
-            <p style="color: var(--text-light); font-size: 14px;">Lütfen SİPARİŞ teslim edileceği adresi seçin.</p>
+            <p style="color: var(--text-light); font-size: 14px;">Lütfen siparişin teslim edileceği adresi seçin.</p>
             <div class="address-list" id="delivery-address-list"></div>
             <button class="checkout-btn" onclick="startOrderSimulation()">Bu Adrese Söyle</button>
         </div>
@@ -2048,7 +1995,7 @@
                 <div class="profile-stats">
                     <div class="stat-card">
                         <div class="stat-num" id="stat-orders">0</div>
-                        <div class="stat-label">SİPARİŞ
+                        <div class="stat-label">Sipariş</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-num">4.9</div>
@@ -2075,13 +2022,13 @@
                             class="fa-solid fa-chevron-right arrow"></i>
                     </div>
                     <div class="profile-menu-item customer-only" onclick="openSubPanel('orders')">
-                        <i class="fa-solid fa-clock-rotate-left icon"></i><span>Geçmiş SİPARİŞ
+                        <i class="fa-solid fa-clock-rotate-left icon"></i><span>Geçmiş Siparişlerim</span><i
                             class="fa-solid fa-chevron-right arrow"></i>
                     </div>
 
                     <!-- RESTAURANT ONLY -->
                     <div class="profile-menu-item restaurant-only" style="display:none;" onclick="closeModals()">
-                        <i class="fa-solid fa-list-check icon"></i><span>Gelen SİPARİŞ
+                        <i class="fa-solid fa-list-check icon"></i><span>Gelen Siparişler</span><i
                             class="fa-solid fa-chevron-right arrow"></i>
                     </div>
                     <div class="profile-menu-item restaurant-only" style="display:none;" onclick="openResMenuManager()">
@@ -2102,13 +2049,13 @@
                             class="fa-solid fa-chevron-right arrow"></i>
                     </div>
                     <div class="profile-menu-item logout-item" onclick="doLogout()">
-                        <i class="fa-solid fa-right-from-bracket"></i><span>Çıkış Yap</span><i
+                        <i class="fa-solid fa-right-from-bracket"></i><span>Ãƒâ€¡ıkış Yap</span><i
                             class="fa-solid fa-chevron-right arrow"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- PROFİL DÜZENLE -->
+            <!-- PROFİL DÃƒÅ“ZENLE -->
             <div id="profile-edit-profile" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri
                 </div>
@@ -2121,7 +2068,7 @@
                 <div class="form-group"><label>Telefon</label><input type="tel" id="edit-phone" value=""></div>
                 <div class="form-group"><label>Doğum Tarihi</label><input type="date" id="edit-birthdate" value="">
                 </div>
-                <div class="form-group"><label>Yeni Şifre (opsiyonel)</label><input type="password"
+                <div class="form-group"><label>Yeni Ã…Âifre (opsiyonel)</label><input type="password"
                         id="edit-password" placeholder="Değiştirmek için girin"></div>
                 <button class="save-btn" onclick="saveProfile()"><i class="fa-solid fa-check"></i> Değişiklikleri
                     Kaydet</button>
@@ -2191,7 +2138,7 @@
                         <span id="card-preview-exp">MM/YY</span>
                     </div>
                 </div>
-                <div class="form-group"><label>Kart Üzerindeki İsim</label><input type="text" id="card-name"
+                <div class="form-group"><label>Kart ÃƒÅ“zerindeki İsim</label><input type="text" id="card-name"
                         placeholder="Ad Soyad"
                         oninput="document.getElementById('card-preview-name').innerText=this.value||'AD SOYAD'"></div>
                 <div class="form-group"><label>Kart Numarası</label><input type="text" id="card-num-input"
@@ -2213,11 +2160,11 @@
                     Kaydet</button>
             </div>
 
-            <!-- GEÇMİŞ SİPARİŞ -->
+            <!-- GEÃƒâ€¡MİÃ…Â SİPARİÃ…ÂLER -->
             <div id="profile-orders" class="sub-panel">
                 <div class="sub-panel-back" onclick="openSubPanel('main')"><i class="fa-solid fa-arrow-left"></i> Geri
                 </div>
-                <h3>Geçmiş SİPARİŞ</div>
+                <h3>Geçmiş Siparişlerim</h3>
                 <div id="order-history-list"></div>
             </div>
 
@@ -2229,13 +2176,13 @@
                 <div style="display:flex;flex-direction:column;gap:12px;margin-top:5px;">
                     <div class="notif-row">
                         <div><strong>Sipariş Güncellemeleri</strong>
-                            <p>SİPARİŞ durumu değiştiğinde bildir</p>
+                            <p>Siparişin durumu değiştiğinde bildir</p>
                         </div><label class="toggle"><input type="checkbox" checked id="notif-order"><span
                                 class="slider"></span></label>
                     </div>
                     <div class="notif-row">
                         <div><strong>Kampanya & İndirimler</strong>
-                            <p>Özel teklifler ve indirimler</p>
+                            <p>Ãƒâ€“zel teklifler ve indirimler</p>
                         </div><label class="toggle"><input type="checkbox" checked id="notif-promo"><span
                                 class="slider"></span></label>
                     </div>
@@ -2265,7 +2212,7 @@
                     </div>
                 </div>
                 <button class="save-btn" style="margin-top:20px;"
-                    onclick="showToast('Bildirim ayarları kaydedildi ✓')"><i class="fa-solid fa-check"></i>
+                    onclick="showToast('Bildirim ayarları kaydedildi Ã¢Å“â€œ')"><i class="fa-solid fa-check"></i>
                     Kaydet</button>
             </div>
 
@@ -2276,19 +2223,19 @@
                 <h3>Yardım & Destek</h3>
                 <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
                     <div class="support-item" onclick="toggleFaq(this)">
-                        <div class="support-item-head"><span>SİPARİŞ nasıl iptal edebilirim?</span><i
+                        <div class="support-item-head"><span>Siparişimi nasıl iptal edebilirim?</span><i
                                 class="fa-solid fa-chevron-down"></i></div>
                         <div class="faq-body">Sipariş onaylanmadan önce sepet ekranından iptal edebilirsiniz.
                             Onaylandıktan sonra destek hattımızı arayın.</div>
                     </div>
                     <div class="support-item" onclick="toggleFaq(this)">
-                        <div class="support-item-head"><span>Ödeme sorunum var, ne yapmalıyım?</span><i
+                        <div class="support-item-head"><span>Ãƒâ€“deme sorunum var, ne yapmalıyım?</span><i
                                 class="fa-solid fa-chevron-down"></i></div>
-                        <div class="faq-body">Ödeme sorunları için 7/24 destek hattımız: <strong>0850 123 45
+                        <div class="faq-body">Ãƒâ€“deme sorunları için 7/24 destek hattımız: <strong>0850 123 45
                                 67</strong> veya uygulama içi sohbet.</div>
                     </div>
                     <div class="support-item" onclick="toggleFaq(this)">
-                        <div class="support-item-head"><span>SİPARİŞ geç geliyor, ne yapabilirim?</span><i
+                        <div class="support-item-head"><span>Siparişim geç geliyor, ne yapabilirim?</span><i
                                 class="fa-solid fa-chevron-down"></i></div>
                         <div class="faq-body"> <span>Harita</span> ekranından kurye konumunu takip edebilirsiniz. Aşırı
                             gecikmelerde destek hattını arayın.</div>
@@ -2311,20 +2258,7 @@
                             onclick="showToast('WhatsApp desteği başlatılıyor...')"><i
                                 class="fa-brands fa-whatsapp"></i> WhatsApp</button>
                     </div>
-                
-            <!-- İŞLETME GİRİŞ FORMU -->
-            <div class="login-form" id="tab-res-login">
-                <div class="login-error" id="res-login-error"></div>
-                <div class="form-group"><label>İşletme E-posta</label><input type="email" id="res-login-email"
-                        placeholder="admin@restoran.com"></div>
-                <div class="form-group"><label>Şifre</label><input type="password" id="res-login-password"
-                        placeholder="Şifreniz"></div>
-                <button class="save-btn" onclick="doResLogin()"><i class="fa-solid fa-store"></i> İşletme Paneline Gir</button>
-                <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-light);">
-                    İşletme hesabı için bizimle iletişime geçin.
                 </div>
-            </div>
-        </div>
             </div>
 
         </div>
@@ -2384,14 +2318,6 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
     <script type="module">
-        
-        // URL Hash Kontrolü (#admin için)
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash === '#admin') {
-                showLoginRequired();
-                switchLoginTab('res-login');
-            }
-        });
         // ==================== FIREBASE ====================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
@@ -2423,7 +2349,7 @@
         let map, routeControl, kuryeMarker, animasyonInterval;
         let totalOrderCount = 0;
 
-        // 14 FARKLI RESTORAN VE MENÜSÜ EKLENDİ
+        // 14 FARKLI RESTORAN VE MENÃƒÅ“SÃƒÅ“ EKLENDİ
         const resTemplates = [
             {
                 name: "Burger Station", type: "Burger", sponsor: true, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=500&q=80",
@@ -2431,7 +2357,7 @@
             },
             {
                 name: "Smash Burger Co.", type: "Burger", sponsor: false, img: "https://images.unsplash.com/photo-1586816001966-79b736744398?w=500&q=80",
-                menu: [{ id: 102, name: "Double Smash", price: 240, desc: "Çift köfte, özel sos", img: "https://images.unsplash.com/photo-1594212691516-e82fa43ba62a?w=150" }]
+                menu: [{ id: 102, name: "Double Smash", price: 240, desc: "Ãƒâ€¡ift köfte, özel sos", img: "https://images.unsplash.com/photo-1594212691516-e82fa43ba62a?w=150" }]
             },
 
             {
@@ -2454,7 +2380,7 @@
 
             {
                 name: "Sokak Dönercisi", type: "Döner", sponsor: false, img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=500&q=80",
-                menu: [{ id: 401, name: "Et Döner Dürüm", price: 160, desc: "Özel lavaş arası", img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=150" }]
+                menu: [{ id: 401, name: "Et Döner Dürüm", price: 160, desc: "Ãƒâ€“zel lavaş arası", img: "https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=150" }]
             },
             {
                 name: "Tarihi Dönerci", type: "Döner", sponsor: true, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500&q=80",
@@ -2467,7 +2393,7 @@
             },
             {
                 name: "Çikolata Atölyesi", type: "Tatlı", sponsor: false, img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500&q=80",
-                menu: [{ id: 502, name: "San Sebastian", price: 120, desc: "Çikolata soslu", img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=150" }]
+                menu: [{ id: 502, name: "San Sebastian", price: 120, desc: "Ãƒâ€¡ikolata soslu", img: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=150" }]
             },
 
             {
@@ -2526,12 +2452,12 @@
             {
                 name: "Pasta & Börek", type: "Börek", sponsor: false, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80",
                 menu: [{ id: 1101, name: "Su Böreği", price: 95, desc: "Peynirli, ev yapımı", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" },
-                { id: 1102, name: "Sigara Böreği", price: 75, desc: "Çıtır, peynirli", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" }]
+                { id: 1102, name: "Sigara Böreği", price: 75, desc: "Ãƒâ€¡ıtır, peynirli", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150" }]
             },
             {
                 name: "Fırın Köşesi", type: "Börek", sponsor: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80",
                 menu: [{ id: 1103, name: "Ispanaklı Börek", price: 85, desc: "Taze ıspanak", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" },
-                { id: 1104, name: "Kıymalı Pide", price: 110, desc: "Özel kıyma harcı", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" }]
+                { id: 1104, name: "Kıymalı Pide", price: 110, desc: "Ãƒâ€“zel kıyma harcı", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" }]
             }
         ];
 
@@ -2851,9 +2777,9 @@
             } catch (e) {
                 const msgs = {
                     'auth/user-not-found': 'Bu e-posta ile kayıtlı hesap bulunamadı.',
-                    'auth/wrong-password': 'Şifre hatalı.',
+                    'auth/wrong-password': 'Ã…Âifre hatalı.',
                     'auth/invalid-credential': 'E-posta veya şifre hatalı.',
-                    'auth/too-many-requests': 'Çok fazla deneme. Lütfen bekleyin.'
+                    'auth/too-many-requests': 'Ãƒâ€¡ok fazla deneme. Lütfen bekleyin.'
                 };
                 errEl.innerText = msgs[e.code] || 'Giriş başarısız. Lütfen tekrar deneyin.';
                 errEl.style.display = 'block';
@@ -2895,7 +2821,7 @@
                     'auth/invalid-credential': 'E-posta veya şifre hatalı.',
                     'auth/invalid-login-credentials': 'E-posta veya şifre hatalı.',
                     'auth/user-not-found': 'Hesap bulunamadı.',
-                    'auth/wrong-password': 'Şifre hatalı.'
+                    'auth/wrong-password': 'Ã…Âifre hatalı.'
                 };
                 errEl.innerText = msgs[e.code] || ('Giriş başarısız: ' + e.message);
                 errEl.style.display = 'block';
@@ -2920,7 +2846,7 @@
             const btn = document.querySelector('#tab-register .save-btn');
             errEl.style.display = 'none';
             if (!fn || !ln || !email || !pass) { errEl.innerText = 'Ad, soyad, e-posta ve şifre zorunludur.'; errEl.style.display = 'block'; return; }
-            if (pass.length < 8) { errEl.innerText = 'Şifre en az 8 karakter olmalıdır.'; errEl.style.display = 'block'; return; }
+            if (pass.length < 8) { errEl.innerText = 'Ã…Âifre en az 8 karakter olmalıdır.'; errEl.style.display = 'block'; return; }
             if (!addrTitle || !addrDistrict || !addrStreet) { errEl.innerText = 'Lütfen teslimat adresinizi eksiksiz girin.'; errEl.style.display = 'block'; return; }
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Hesap oluşturuluyor...';
@@ -2944,7 +2870,7 @@
                 const msgs = {
                     'auth/email-already-in-use': 'Bu e-posta zaten kayıtlı.',
                     'auth/invalid-email': 'Geçersiz e-posta adresi.',
-                    'auth/weak-password': 'Şifre çok zayıf.'
+                    'auth/weak-password': 'Ã…Âifre çok zayıf.'
                 };
                 errEl.innerText = msgs[e.code] || ('Kayıt başarısız: ' + e.message);
                 errEl.style.display = 'block';
@@ -2965,7 +2891,7 @@
             const btn = document.querySelector('#tab-restaurant .save-btn');
             errEl.style.display = 'none';
             if (!name || !owner || !email || !pass) { errEl.innerText = 'Restoran adı, yetkili, e-posta ve şifre zorunludur.'; errEl.style.display = 'block'; return; }
-            if (pass.length < 8) { errEl.innerText = 'Şifre en az 8 karakter olmalıdır.'; errEl.style.display = 'block'; return; }
+            if (pass.length < 8) { errEl.innerText = 'Ã…Âifre en az 8 karakter olmalıdır.'; errEl.style.display = 'block'; return; }
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Kayıt alınıyor...';
             try {
@@ -2989,7 +2915,7 @@
                 const msgs = {
                     'auth/email-already-in-use': 'Bu e-posta zaten kayıtlı.',
                     'auth/invalid-email': 'Geçersiz e-posta adresi.',
-                    'auth/weak-password': 'Şifre çok zayıf.'
+                    'auth/weak-password': 'Ã…Âifre çok zayıf.'
                 };
                 errEl.innerText = msgs[e.code] || ('Kayıt başarısız: ' + e.message);
                 errEl.style.display = 'block';
@@ -3054,10 +2980,10 @@
 
                 const stats = document.querySelectorAll('.profile-stats .stat-card');
                 if (stats.length === 3) {
-                    stats[0].querySelector('.stat-label').innerText = 'Bekleyen SİPARİŞ
+                    stats[0].querySelector('.stat-label').innerText = 'Bekleyen Sipariş';
                     stats[1].querySelector('.stat-label').innerText = 'Değerlendirme';
                     stats[2].querySelector('.stat-label').innerText = 'Aylık Kazanç';
-                    stats[2].querySelector('.stat-num').innerText = '₺0';
+                    stats[2].querySelector('.stat-num').innerText = 'Ã¢â€šÂº0';
                 }
 
                 const btnStore = document.getElementById('btn-toggle-store');
@@ -3082,7 +3008,7 @@
 
                 const stats = document.querySelectorAll('.profile-stats .stat-card');
                 if (stats.length === 3) {
-                    stats[0].querySelector('.stat-label').innerText = 'SİPARİŞ
+                    stats[0].querySelector('.stat-label').innerText = 'Sipariş';
                     stats[1].querySelector('.stat-label').innerText = 'Puan';
                     stats[2].querySelector('.stat-label').innerText = 'MisKoin';
                     stats[2].querySelector('.stat-num').innerText = '120';
@@ -3174,7 +3100,7 @@
             if (!fn || !ln || !email) { alert('Ad, soyad ve e-posta zorunludur.'); return; }
             userProfile = { ...userProfile, firstname: fn, lastname: ln, email, phone, birthdate: document.getElementById('edit-birthdate').value };
             applyProfileToUI();
-            showToast('Profil güncellendi ✓');
+            showToast('Profil güncellendi Ã¢Å“â€œ');
             saveCurrentUser();
             openSubPanel('main');
         }
@@ -3207,7 +3133,7 @@
             if (!title || !district || !street) { alert('Başlık, ilçe ve sokak zorunludur.'); return; }
             savedAddresses.push({ title, city, district, street, no, desc });
             ['addr-title', 'addr-district', 'addr-street', 'addr-no', 'addr-desc'].forEach(id => document.getElementById(id).value = '');
-            showToast('Adres kaydedildi ✓');
+            showToast('Adres kaydedildi Ã¢Å“â€œ');
             saveCurrentUser();
             openSubPanel('addresses');
         }
@@ -3267,7 +3193,7 @@
             document.getElementById('card-preview-num').innerText = '**** **** **** ****';
             document.getElementById('card-preview-name').innerText = 'AD SOYAD';
             document.getElementById('card-preview-exp').innerText = 'MM/YY';
-            showToast('Kart güvenli şekilde kaydedildi ✓');
+            showToast('Kart güvenli şekilde kaydedildi Ã¢Å“â€œ');
             saveCurrentUser();
             openSubPanel('payment');
         }
@@ -3305,7 +3231,7 @@
             orderHistory[index].rating = rating;
             saveCurrentUser();
             renderOrderHistory();
-            showToast('Değerlendirme kaydedildi ✓');
+            showToast('Değerlendirme kaydedildi Ã¢Å“â€œ');
         }
 
         function showToast(msg) {
@@ -3334,7 +3260,7 @@
             userProfile.isClosed = !userProfile.isClosed;
             saveCurrentUser();
             applyProfileToUI();
-            showToast(userProfile.isClosed ? 'Dükkan geçici olarak kapatıldı.' : 'Dükkan SİPARİŞ açıldı.');
+            showToast(userProfile.isClosed ? 'Dükkan geçici olarak kapatıldı.' : 'Dükkan siparişlere açıldı.');
         }
 
         function openResMenuManager() {
@@ -3357,7 +3283,7 @@
                         <div>
                             <div style="font-weight:bold;">${item.name}</div>
                             <div style="font-size:13px; color:var(--text-light);">${item.desc}</div>
-                            <div style="font-weight:900; color:var(--primary); margin-top:5px;">₺${item.price}</div>
+                            <div style="font-weight:900; color:var(--primary); margin-top:5px;">Ã¢â€šÂº${item.price}</div>
                         </div>
                     </div>
                     <button onclick="deleteResMenuItem(${index})" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:18px; padding:10px;"><i class="fa-solid fa-trash"></i></button>
@@ -3372,7 +3298,7 @@
             const img = document.getElementById('res-new-item-img').value.trim();
 
             if (!name || isNaN(price)) {
-                alert('Ürün adı ve geçerli bir fiyat girmelisiniz.');
+                alert('ÃƒÅ“rün adı ve geçerli bir fiyat girmelisiniz.');
                 return;
             }
 
@@ -3387,7 +3313,7 @@
             document.getElementById('res-new-item-price').value = '';
             document.getElementById('res-new-item-img').value = '';
 
-            showToast('Ürün eklendi!');
+            showToast('ÃƒÅ“rün eklendi!');
         }
 
         function deleteResMenuItem(index) {
@@ -3395,7 +3321,7 @@
                 userProfile.menu.splice(index, 1);
                 saveCurrentUser();
                 renderResMenu();
-                showToast('Ürün silindi.');
+                showToast('ÃƒÅ“rün silindi.');
             }
         }
 
@@ -3406,14 +3332,14 @@
             if (userProfile.campaign && userProfile.campaign.active) {
                 let txt = '';
                 if (userProfile.campaign.type === 'discount_percentage') txt = `Tüm Menüde %${userProfile.campaign.value} İndirim`;
-                else if (userProfile.campaign.type === 'discount_amount') txt = `Sepette ₺${userProfile.campaign.value} İndirim`;
-                else txt = 'Ücretsiz Teslimat';
+                else if (userProfile.campaign.type === 'discount_amount') txt = `Sepette Ã¢â€šÂº${userProfile.campaign.value} İndirim`;
+                else txt = 'ÃƒÅ“cretsiz Teslimat';
                 ct.innerText = `Aktif Kampanya: ${txt}`;
                 ct.style.color = 'var(--success)';
                 ct.style.fontWeight = 'bold';
                 btn.style.display = 'inline-block';
             } else {
-                ct.innerText = 'Şu an aktif bir kampanyanız bulunmuyor.';
+                ct.innerText = 'Ã…Âu an aktif bir kampanyanız bulunmuyor.';
                 ct.style.color = 'var(--text-light)';
                 ct.style.fontWeight = 'normal';
                 btn.style.display = 'none';
@@ -3452,7 +3378,7 @@
                 totalErn = userProfile.orders.reduce((sum, o) => sum + (o.total || 0), 0);
                 totalOrd = userProfile.orders.length;
             }
-            document.getElementById('report-total-earned').innerText = `₺${totalErn}`;
+            document.getElementById('report-total-earned').innerText = `Ã¢â€šÂº${totalErn}`;
             document.getElementById('report-total-orders').innerText = totalOrd;
             document.getElementById('res-reports-modal').style.display = 'flex';
         }
@@ -3510,7 +3436,7 @@
 
             setTimeout(() => {
                 setStepper(2);
-                setTrackingStatus('Hazırlanıyor', 'Åefimiz SİPARİŞ hazırlıyor...');
+                setTrackingStatus('Hazırlanıyor', 'Åefimiz siparişinizi hazırlıyor...');
             }, 1000);
 
             setTimeout(() => {
@@ -3569,7 +3495,7 @@
         function finishOrderSimulation() {
             if (window._animId) { cancelAnimationFrame(window._animId); window._animId = null; }
             setStepper(4);
-            setTrackingStatus('Teslim Edildi!', 'Afiyet olsun! SİPARİŞ ulaştı.');
+            setTrackingStatus('Teslim Edildi!', 'Afiyet olsun! Siparişiniz ulaştı.');
             document.getElementById('eta-box').style.display = 'none';
             orderHistory.unshift({
                 restaurant: activeRestaurant.name,
